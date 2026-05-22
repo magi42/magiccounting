@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 
 #include "AccountListDialog.h"
+#include "AppConfig.h"
 #include "SplitEditorDialog.h"
 
 #include <QComboBox>
@@ -40,8 +41,9 @@ QTableWidgetItem *readOnlyItem(const QString &text = QString())
 }
 }
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(const QString &accountingFolder, QWidget *parent)
     : QMainWindow(parent)
+    , m_initialAccountingFolder(accountingFolder)
 {
     buildUi();
     loadInitialData();
@@ -103,8 +105,11 @@ void MainWindow::buildUi()
 
 void MainWindow::loadInitialData()
 {
+    const QString folder = m_initialAccountingFolder.isEmpty() ? DataStore::defaultDataFolder() : m_initialAccountingFolder;
     QString error;
-    if (!m_store.load(DataStore::defaultDataFolder(), &error)) {
+    if (!m_store.load(folder, &error)) {
+        showError(error);
+    } else if (!AppConfig::saveAccountingFolder(m_store.folderPath(), &error)) {
         showError(error);
     }
     refreshTable();
@@ -465,6 +470,10 @@ void MainWindow::openDataFolder()
 
     QString error;
     if (!m_store.load(folder, &error)) {
+        showError(error);
+        return;
+    }
+    if (!AppConfig::saveAccountingFolder(m_store.folderPath(), &error)) {
         showError(error);
         return;
     }

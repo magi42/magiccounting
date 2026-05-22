@@ -12,6 +12,12 @@ cmake --build build
 
 The project targets C++17 and Qt 5 Widgets.
 
+You can pass the accounting data folder as an optional command-line argument:
+
+```sh
+./build/magiccounting /path/to/accounting-folder
+```
+
 ## Data Files
 
 The app stores editable text data as JSON arrays in a data folder:
@@ -21,6 +27,8 @@ The app stores editable text data as JSON arrays in a data folder:
 - `transactions.json`
 
 Use `File -> Open Data Folder...` to load another set of these files. Transaction edits are written back to `transactions.json` after each valid row edit. Account and party configuration is saved when accepting the corresponding edit dialog.
+
+The last opened accounting folder is stored in the application configuration file `config.json` under Qt's application config folder, and is reopened on the next startup when no command-line folder is provided.
 
 Click or double-click the `Target accounts` cell to edit split rows in a popup. The popup keeps `OK` disabled until the target split total equals the transaction `Amount`. The source account posting is shown as a negative amount, and negative postings are rendered in red.
 

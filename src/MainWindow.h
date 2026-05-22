@@ -13,7 +13,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(const QString &accountingFolder = QString(), QWidget *parent = nullptr);
 
 private:
     enum Column {
@@ -30,6 +30,7 @@ private:
     QTableWidget *m_table = nullptr;
     QVector<int> m_rowToTransaction;
     bool m_refreshing = false;
+    QString m_initialAccountingFolder;
 
     void buildUi();
     void loadInitialData();

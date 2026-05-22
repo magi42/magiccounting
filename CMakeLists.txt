@@ -11,6 +11,8 @@ find_package(Qt5 REQUIRED COMPONENTS Widgets)
 add_executable(magiccounting
     src/AccountListDialog.cpp
     src/AccountListDialog.h
+    src/AppConfig.cpp
+    src/AppConfig.h
     src/DataStore.cpp
     src/DataStore.h
     src/MainWindow.cpp
