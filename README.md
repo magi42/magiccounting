@@ -1,0 +1,2 @@
+# magiccounting
+An accounting software
