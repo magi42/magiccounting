@@ -2,8 +2,10 @@
 
 #include "AccountListDialog.h"
 #include "AppConfig.h"
+#include "LanguageManager.h"
 #include "SplitEditorDialog.h"
 
+#include <QApplication>
 #include <QComboBox>
 #include <QDate>
 #include <QBrush>
@@ -57,25 +59,7 @@ void MainWindow::buildUi()
     m_table->setAlternatingRowColors(true);
     setCentralWidget(m_table);
 
-    auto *fileMenu = menuBar()->addMenu("File");
-    fileMenu->addAction("Open Data Folder...", this, &MainWindow::openDataFolder);
-    fileMenu->addAction("Save", this, &MainWindow::saveTransactions);
-    fileMenu->addSeparator();
-    fileMenu->addAction("Quit", this, &QWidget::close);
-
-    auto *editMenu = menuBar()->addMenu("Edit");
-    editMenu->addAction("Add Transaction", this, &MainWindow::addTransaction);
-    editMenu->addAction("Remove Transaction", this, &MainWindow::removeSelectedTransaction);
-    editMenu->addSeparator();
-    editMenu->addAction("Accounts...", this, &MainWindow::editAccounts);
-    editMenu->addAction("Parties...", this, &MainWindow::editParties);
-
-    auto *toolbar = addToolBar("Transactions");
-    toolbar->addAction("Add", this, &MainWindow::addTransaction);
-    toolbar->addAction("Remove", this, &MainWindow::removeSelectedTransaction);
-    toolbar->addSeparator();
-    toolbar->addAction("Accounts", this, &MainWindow::editAccounts);
-    toolbar->addAction("Parties", this, &MainWindow::editParties);
+    buildMenus();
 
     connect(m_table, &QTableWidget::cellChanged, this, [this](int row, int) {
         if (m_refreshing) {
@@ -99,8 +83,97 @@ void MainWindow::buildUi()
         }
     });
 
-    setWindowTitle("Magic Counting");
+    setWindowTitle(tr("Magic Counting"));
     resize(1100, 620);
+}
+
+void MainWindow::buildMenus()
+{
+    m_fileMenu = menuBar()->addMenu(QString());
+    m_openDataFolderAction = m_fileMenu->addAction(QString(), this, &MainWindow::openDataFolder);
+    m_saveAction = m_fileMenu->addAction(QString(), this, &MainWindow::saveTransactions);
+    m_fileMenu->addSeparator();
+    m_quitAction = m_fileMenu->addAction(QString(), this, &QWidget::close);
+
+    m_editMenu = menuBar()->addMenu(QString());
+    m_addTransactionAction = m_editMenu->addAction(QString(), this, &MainWindow::addTransaction);
+    m_removeTransactionAction = m_editMenu->addAction(QString(), this, &MainWindow::removeSelectedTransaction);
+    m_editMenu->addSeparator();
+    m_editAccountsAction = m_editMenu->addAction(QString(), this, &MainWindow::editAccounts);
+    m_editPartiesAction = m_editMenu->addAction(QString(), this, &MainWindow::editParties);
+
+    m_languageMenu = menuBar()->addMenu(QString());
+    m_languageActionGroup = new QActionGroup(this);
+    m_languageActionGroup->setExclusive(true);
+    m_systemLanguageAction = m_languageMenu->addAction(QString());
+    m_englishLanguageAction = m_languageMenu->addAction(QString());
+    m_finnishLanguageAction = m_languageMenu->addAction(QString());
+    for (QAction *action : {m_systemLanguageAction, m_englishLanguageAction, m_finnishLanguageAction}) {
+        action->setCheckable(true);
+        m_languageActionGroup->addAction(action);
+    }
+    m_systemLanguageAction->setData(QStringLiteral("system"));
+    m_englishLanguageAction->setData(QStringLiteral("en"));
+    m_finnishLanguageAction->setData(QStringLiteral("fi"));
+    connect(m_languageActionGroup, &QActionGroup::triggered, this, [this](QAction *action) {
+        changeLanguage(action->data().toString());
+    });
+
+    m_toolbar = addToolBar(QString());
+    m_toolbarAddAction = m_toolbar->addAction(QString(), this, &MainWindow::addTransaction);
+    m_toolbarRemoveAction = m_toolbar->addAction(QString(), this, &MainWindow::removeSelectedTransaction);
+    m_toolbar->addSeparator();
+    m_toolbarAccountsAction = m_toolbar->addAction(QString(), this, &MainWindow::editAccounts);
+    m_toolbarPartiesAction = m_toolbar->addAction(QString(), this, &MainWindow::editParties);
+
+    retranslateUi();
+}
+
+void MainWindow::retranslateUi()
+{
+    if (m_fileMenu) {
+        m_fileMenu->setTitle(tr("File"));
+        m_openDataFolderAction->setText(tr("Open Data Folder..."));
+        m_saveAction->setText(tr("Save"));
+        m_quitAction->setText(tr("Quit"));
+    }
+    if (m_editMenu) {
+        m_editMenu->setTitle(tr("Edit"));
+        m_addTransactionAction->setText(tr("Add Transaction"));
+        m_removeTransactionAction->setText(tr("Remove Transaction"));
+        m_editAccountsAction->setText(tr("Accounts..."));
+        m_editPartiesAction->setText(tr("Parties..."));
+    }
+    if (m_languageMenu) {
+        m_languageMenu->setTitle(tr("Language"));
+        m_systemLanguageAction->setText(tr("System default"));
+        m_englishLanguageAction->setText(tr("English"));
+        m_finnishLanguageAction->setText(tr("Finnish"));
+
+        const QString languageCode = AppConfig::languageCode();
+        m_systemLanguageAction->setChecked(languageCode == QStringLiteral("system"));
+        m_englishLanguageAction->setChecked(languageCode == QStringLiteral("en"));
+        m_finnishLanguageAction->setChecked(languageCode == QStringLiteral("fi"));
+    }
+    if (m_toolbar) {
+        m_toolbar->setWindowTitle(tr("Transactions"));
+        m_toolbarAddAction->setText(tr("Add"));
+        m_toolbarRemoveAction->setText(tr("Remove"));
+        m_toolbarAccountsAction->setText(tr("Accounts"));
+        m_toolbarPartiesAction->setText(tr("Parties"));
+    }
+
+    updateWindowTitle();
+    updateAccountColumns();
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        retranslateUi();
+        refreshTable();
+    }
+    QMainWindow::changeEvent(event);
 }
 
 void MainWindow::loadInitialData()
@@ -114,12 +187,12 @@ void MainWindow::loadInitialData()
     }
     refreshTable();
     updateWindowTitle();
-    statusBar()->showMessage(QString("Data folder: %1").arg(m_store.folderPath()));
+    statusBar()->showMessage(tr("Data folder: %1").arg(m_store.folderPath()));
 }
 
 void MainWindow::updateWindowTitle()
 {
-    setWindowTitle(QString("Magic Counting - %1").arg(QDir(m_store.folderPath()).filePath("transactions.json")));
+    setWindowTitle(tr("Magic Counting - %1").arg(QDir(m_store.folderPath()).filePath("transactions.json")));
 }
 
 void MainWindow::refreshTable()
@@ -198,7 +271,7 @@ void MainWindow::refreshTable()
 
 void MainWindow::updateAccountColumns()
 {
-    QStringList headers = {"Date", "Source account", "Amount", "Other party", "Target accounts", "Memo"};
+    QStringList headers = {tr("Date"), tr("Source account"), tr("Amount"), tr("Other party"), tr("Target accounts"), tr("Memo")};
     for (const Account &account : m_store.accounts) {
         headers.append(account.name);
     }
@@ -243,12 +316,12 @@ void MainWindow::addOpeningBalanceRow()
     m_table->insertRow(row);
     m_rowToTransaction.append(kOpeningBalanceRow);
 
-    m_table->setItem(row, DateColumn, readOnlyItem("Opening"));
+    m_table->setItem(row, DateColumn, readOnlyItem(tr("Opening")));
     m_table->setItem(row, SourceColumn, readOnlyItem());
     m_table->setItem(row, AmountColumn, readOnlyItem());
     m_table->setItem(row, PartyColumn, readOnlyItem());
     m_table->setItem(row, TargetsColumn, readOnlyItem());
-    m_table->setItem(row, MemoColumn, readOnlyItem("Initial balances"));
+    m_table->setItem(row, MemoColumn, readOnlyItem(tr("Initial balances")));
 
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
         auto *item = new QTableWidgetItem(moneyText(m_store.accounts.at(accountIndex).openingBalance));
@@ -270,7 +343,7 @@ void MainWindow::addMonthBalanceRow(const QString &month, const QMap<QString, do
     m_table->setItem(row, AmountColumn, readOnlyItem());
     m_table->setItem(row, PartyColumn, readOnlyItem());
     m_table->setItem(row, TargetsColumn, readOnlyItem());
-    m_table->setItem(row, MemoColumn, readOnlyItem("Month balance"));
+    m_table->setItem(row, MemoColumn, readOnlyItem(tr("Month balance")));
 
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
         const Account &account = m_store.accounts.at(accountIndex);
@@ -322,7 +395,7 @@ void MainWindow::openSplitEditor(int row)
     bool ok = false;
     Transaction transaction = transactionFromRow(row, &ok);
     if (transaction.amount <= 0.0) {
-        statusBar()->showMessage("Enter a positive Amount before editing target accounts", 5000);
+        statusBar()->showMessage(tr("Enter a positive Amount before editing target accounts"), 5000);
         return;
     }
 
@@ -352,7 +425,7 @@ void MainWindow::saveRowIfValid(int row)
             targetsButton->setText(DataStore::formatSplits(transaction.targets));
             targetsButton->setStyleSheet("color: #b00020;");
         }
-        statusBar()->showMessage("Rows need a source account, positive amount, and matching target total", 5000);
+        statusBar()->showMessage(tr("Rows need a source account, positive amount, and matching target total"), 5000);
         updateComputedCells(row);
         m_refreshing = false;
         return;
@@ -391,7 +464,7 @@ void MainWindow::saveOpeningBalances()
         return;
     }
     refreshTable();
-    statusBar()->showMessage("Opening balances saved", 2000);
+    statusBar()->showMessage(tr("Opening balances saved"), 2000);
 }
 
 void MainWindow::addTransaction()
@@ -461,9 +534,22 @@ void MainWindow::editParties()
     refreshTable();
 }
 
+void MainWindow::changeLanguage(const QString &languageCode)
+{
+    const QString normalizedCode = LanguageManager::normalizeLanguageCode(languageCode);
+    QString error;
+    if (!AppConfig::saveLanguageCode(normalizedCode, &error)) {
+        showError(error);
+        return;
+    }
+    LanguageManager::install(qApp, normalizedCode);
+    retranslateUi();
+    refreshTable();
+}
+
 void MainWindow::openDataFolder()
 {
-    const QString folder = QFileDialog::getExistingDirectory(this, "Open Data Folder", m_store.folderPath());
+    const QString folder = QFileDialog::getExistingDirectory(this, tr("Open Data Folder"), m_store.folderPath());
     if (folder.isEmpty()) {
         return;
     }
@@ -479,7 +565,7 @@ void MainWindow::openDataFolder()
     }
     refreshTable();
     updateWindowTitle();
-    statusBar()->showMessage(QString("Data folder: %1").arg(m_store.folderPath()));
+    statusBar()->showMessage(tr("Data folder: %1").arg(m_store.folderPath()));
 }
 
 void MainWindow::saveTransactions()
@@ -489,12 +575,12 @@ void MainWindow::saveTransactions()
         showError(error);
         return;
     }
-    statusBar()->showMessage("Transactions saved", 2000);
+    statusBar()->showMessage(tr("Transactions saved"), 2000);
 }
 
 void MainWindow::showError(const QString &message)
 {
-    QMessageBox::critical(this, "Magic Counting", message);
+    QMessageBox::critical(this, tr("Magic Counting"), message);
 }
 
 Transaction MainWindow::transactionFromRow(int row, bool *ok) const

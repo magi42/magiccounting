@@ -21,18 +21,18 @@ SplitEditorDialog::SplitEditorDialog(const QList<Account> &accounts, double requ
     , m_table(new QTableWidget(this))
     , m_totalLabel(new QLabel(this))
 {
-    setWindowTitle("Target Accounts");
+    setWindowTitle(tr("Target Accounts"));
 
     m_table->setColumnCount(2);
-    m_table->setHorizontalHeaderLabels({"Target account", "Amount"});
+    m_table->setHorizontalHeaderLabels({tr("Target account"), tr("Amount")});
     m_table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     m_table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     m_table->verticalHeader()->setVisible(false);
 
     auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     m_okButton = buttonBox->button(QDialogButtonBox::Ok);
-    auto *addButton = buttonBox->addButton("Add", QDialogButtonBox::ActionRole);
-    auto *removeButton = buttonBox->addButton("Remove", QDialogButtonBox::ActionRole);
+    auto *addButton = buttonBox->addButton(tr("Add"), QDialogButtonBox::ActionRole);
+    auto *removeButton = buttonBox->addButton(tr("Remove"), QDialogButtonBox::ActionRole);
 
     connect(addButton, &QPushButton::clicked, this, [this]() {
         addRow();
@@ -120,7 +120,7 @@ void SplitEditorDialog::updateValidity()
 {
     const double total = currentTotal();
     const bool valid = totalsMatch();
-    m_totalLabel->setText(QString("Target total: %1 / Amount: %2")
+    m_totalLabel->setText(tr("Target total: %1 / Amount: %2")
                               .arg(QString::number(total, 'f', 2), QString::number(m_requiredTotal, 'f', 2)));
     m_totalLabel->setStyleSheet(valid ? QString() : "color: #b00020;");
     m_okButton->setEnabled(valid);

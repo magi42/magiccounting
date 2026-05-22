@@ -28,7 +28,8 @@ bool readJsonArray(const QString &path, QJsonArray *array, QString *errorMessage
     }
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         if (errorMessage) {
-            *errorMessage = QString("Could not open %1: %2").arg(path, file.errorString());
+            *errorMessage = QCoreApplication::translate("DataStore", "Could not open %1: %2")
+                                .arg(path, file.errorString());
         }
         return false;
     }
@@ -37,7 +38,7 @@ bool readJsonArray(const QString &path, QJsonArray *array, QString *errorMessage
     const QJsonDocument document = QJsonDocument::fromJson(file.readAll(), &parseError);
     if (parseError.error != QJsonParseError::NoError || !document.isArray()) {
         if (errorMessage) {
-            *errorMessage = QString("Could not parse %1 as a JSON array: %2")
+            *errorMessage = QCoreApplication::translate("DataStore", "Could not parse %1 as a JSON array: %2")
                                 .arg(path, parseError.errorString());
         }
         return false;
@@ -52,7 +53,8 @@ bool writeJsonArray(const QString &path, const QJsonArray &array, QString *error
     QFile file(path);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
         if (errorMessage) {
-            *errorMessage = QString("Could not write %1: %2").arg(path, file.errorString());
+            *errorMessage = QCoreApplication::translate("DataStore", "Could not write %1: %2")
+                                .arg(path, file.errorString());
         }
         return false;
     }
@@ -259,7 +261,7 @@ bool DataStore::ensureFolder(QString *errorMessage) const
         return true;
     }
     if (errorMessage) {
-        *errorMessage = QString("Could not create data folder %1").arg(m_folderPath);
+        *errorMessage = QCoreApplication::translate("DataStore", "Could not create data folder %1").arg(m_folderPath);
     }
     return false;
 }

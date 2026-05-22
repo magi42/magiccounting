@@ -2,6 +2,7 @@
 
 #include "AppConfig.h"
 #include "DataStore.h"
+#include "LanguageManager.h"
 
 #include <QApplication>
 #include <QDir>
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QApplication::setOrganizationName("MagicCounting");
     QApplication::setApplicationName("MagicCounting");
+    LanguageManager::install(&app, AppConfig::languageCode());
 
     QString accountingFolder;
     const QStringList arguments = app.arguments();

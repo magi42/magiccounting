@@ -15,8 +15,8 @@ AccountListDialog::AccountListDialog(QWidget *parent)
     layout->addWidget(m_table);
 
     auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    auto *addButton = buttonBox->addButton("Add", QDialogButtonBox::ActionRole);
-    auto *removeButton = buttonBox->addButton("Remove", QDialogButtonBox::ActionRole);
+    auto *addButton = buttonBox->addButton(tr("Add"), QDialogButtonBox::ActionRole);
+    auto *removeButton = buttonBox->addButton(tr("Remove"), QDialogButtonBox::ActionRole);
 
     connect(addButton, &QPushButton::clicked, this, [this]() {
         const int row = m_table->rowCount();
@@ -43,9 +43,9 @@ AccountListDialog::AccountListDialog(QWidget *parent)
 bool AccountListDialog::editAccounts(QWidget *parent, QList<Account> *accounts)
 {
     AccountListDialog dialog(parent);
-    dialog.setWindowTitle("Accounts");
+    dialog.setWindowTitle(dialog.tr("Accounts"));
     dialog.m_table->setColumnCount(2);
-    dialog.m_table->setHorizontalHeaderLabels({"Name", "Kind"});
+    dialog.m_table->setHorizontalHeaderLabels({dialog.tr("Name"), dialog.tr("Kind")});
     dialog.m_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     dialog.m_table->setRowCount(accounts->size());
 
@@ -77,9 +77,9 @@ bool AccountListDialog::editAccounts(QWidget *parent, QList<Account> *accounts)
 bool AccountListDialog::editParties(QWidget *parent, QList<Party> *parties)
 {
     AccountListDialog dialog(parent);
-    dialog.setWindowTitle("Parties");
+    dialog.setWindowTitle(dialog.tr("Parties"));
     dialog.m_table->setColumnCount(1);
-    dialog.m_table->setHorizontalHeaderLabels({"Name"});
+    dialog.m_table->setHorizontalHeaderLabels({dialog.tr("Name")});
     dialog.m_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     dialog.m_table->setRowCount(parties->size());
 

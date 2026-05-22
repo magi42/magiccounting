@@ -18,6 +18,8 @@ You can pass the accounting data folder as an optional command-line argument:
 ./build/magiccounting /path/to/accounting-folder
 ```
 
+The UI uses the system locale by default. Finnish localization is included and is loaded automatically for Finnish system locales. Use `Language` in the menu bar to choose System default, English, or Finnish; the choice is stored in the application configuration file.
+
 ## Data Files
 
 The app stores editable text data as JSON arrays in a data folder:

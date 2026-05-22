@@ -2,10 +2,15 @@
 
 #include "DataStore.h"
 
+#include <QAction>
+#include <QActionGroup>
 #include <QColor>
+#include <QEvent>
 #include <QMainWindow>
 #include <QMap>
+#include <QMenu>
 #include <QTableWidget>
+#include <QToolBar>
 #include <QVector>
 
 class MainWindow : public QMainWindow
@@ -31,8 +36,30 @@ private:
     QVector<int> m_rowToTransaction;
     bool m_refreshing = false;
     QString m_initialAccountingFolder;
+    QMenu *m_fileMenu = nullptr;
+    QMenu *m_editMenu = nullptr;
+    QMenu *m_languageMenu = nullptr;
+    QToolBar *m_toolbar = nullptr;
+    QAction *m_openDataFolderAction = nullptr;
+    QAction *m_saveAction = nullptr;
+    QAction *m_quitAction = nullptr;
+    QAction *m_addTransactionAction = nullptr;
+    QAction *m_removeTransactionAction = nullptr;
+    QAction *m_editAccountsAction = nullptr;
+    QAction *m_editPartiesAction = nullptr;
+    QAction *m_toolbarAddAction = nullptr;
+    QAction *m_toolbarRemoveAction = nullptr;
+    QAction *m_toolbarAccountsAction = nullptr;
+    QAction *m_toolbarPartiesAction = nullptr;
+    QActionGroup *m_languageActionGroup = nullptr;
+    QAction *m_systemLanguageAction = nullptr;
+    QAction *m_englishLanguageAction = nullptr;
+    QAction *m_finnishLanguageAction = nullptr;
 
     void buildUi();
+    void buildMenus();
+    void retranslateUi();
+    void changeEvent(QEvent *event) override;
     void loadInitialData();
     void updateWindowTitle();
     void refreshTable();
@@ -49,6 +76,7 @@ private:
     void removeSelectedTransaction();
     void editAccounts();
     void editParties();
+    void changeLanguage(const QString &languageCode);
     void openDataFolder();
     void saveTransactions();
     void showError(const QString &message);
