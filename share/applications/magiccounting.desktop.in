@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Magic Counting
+Comment=Double-entry accounting
+Exec=magiccounting %f
+Terminal=false
+Categories=Office;Finance;
+MimeType=application/x-magiccounting;
