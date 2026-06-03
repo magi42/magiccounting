@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QDate>
-#include <QDir>
 #include <QList>
 #include <QString>
 
@@ -36,10 +35,11 @@ struct Transaction
 class DataStore
 {
 public:
-    explicit DataStore(const QString &folderPath = QString());
+    explicit DataStore(const QString &filePath = QString());
 
-    const QString &folderPath() const;
-    bool load(const QString &folderPath, QString *errorMessage = nullptr);
+    const QString &filePath() const;
+    bool load(const QString &filePath, QString *errorMessage = nullptr);
+    bool saveAs(const QString &filePath, QString *errorMessage = nullptr);
     bool saveAll(QString *errorMessage = nullptr) const;
     bool saveAccounts(QString *errorMessage = nullptr) const;
     bool saveParties(QString *errorMessage = nullptr) const;
@@ -51,11 +51,12 @@ public:
 
     static QList<Split> parseSplits(const QString &text, bool *ok = nullptr);
     static QString formatSplits(const QList<Split> &splits);
-    static QString defaultDataFolder();
+    static QString defaultAccountingFile();
+    static QString fileFilter();
 
 private:
-    QString m_folderPath;
+    QString m_filePath;
 
-    bool ensureFolder(QString *errorMessage) const;
+    bool ensureParentFolder(QString *errorMessage) const;
     void seedDefaults();
 };

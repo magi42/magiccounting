@@ -49,3 +49,14 @@ target_compile_definitions(magiccounting PRIVATE
 
 add_custom_target(translations ALL DEPENDS ${QM_FILES})
 add_dependencies(magiccounting translations)
+
+configure_file(
+    share/applications/magiccounting.desktop.in
+    ${CMAKE_CURRENT_BINARY_DIR}/magiccounting.desktop
+    @ONLY
+)
+
+install(TARGETS magiccounting RUNTIME DESTINATION bin)
+install(FILES ${QM_FILES} DESTINATION share/magiccounting/translations)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/magiccounting.desktop DESTINATION share/applications)
+install(FILES share/mime/packages/magiccounting.xml DESTINATION share/mime/packages)

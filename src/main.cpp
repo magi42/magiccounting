@@ -14,18 +14,15 @@ int main(int argc, char *argv[])
     QApplication::setApplicationName("MagicCounting");
     LanguageManager::install(&app, AppConfig::languageCode());
 
-    QString accountingFolder;
+    QString accountingFile;
     const QStringList arguments = app.arguments();
     if (arguments.size() > 1) {
-        accountingFolder = QDir(arguments.at(1)).absolutePath();
+        accountingFile = QDir(arguments.at(1)).absolutePath();
     } else {
-        accountingFolder = AppConfig::accountingFolder();
-    }
-    if (accountingFolder.isEmpty()) {
-        accountingFolder = DataStore::defaultDataFolder();
+        accountingFile = AppConfig::accountingFile();
     }
 
-    MainWindow window(accountingFolder);
+    MainWindow window(accountingFile);
     window.show();
 
     return app.exec();

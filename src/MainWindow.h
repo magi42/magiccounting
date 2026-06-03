@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(const QString &accountingFolder = QString(), QWidget *parent = nullptr);
+    explicit MainWindow(const QString &accountingFile = QString(), QWidget *parent = nullptr);
 
 private:
     enum Column {
@@ -35,13 +35,14 @@ private:
     QTableWidget *m_table = nullptr;
     QVector<int> m_rowToTransaction;
     bool m_refreshing = false;
-    QString m_initialAccountingFolder;
+    QString m_initialAccountingFile;
     QMenu *m_fileMenu = nullptr;
     QMenu *m_editMenu = nullptr;
     QMenu *m_languageMenu = nullptr;
     QToolBar *m_toolbar = nullptr;
-    QAction *m_openDataFolderAction = nullptr;
+    QAction *m_openAccountingFileAction = nullptr;
     QAction *m_saveAction = nullptr;
+    QAction *m_saveAsAction = nullptr;
     QAction *m_quitAction = nullptr;
     QAction *m_addTransactionAction = nullptr;
     QAction *m_removeTransactionAction = nullptr;
@@ -77,8 +78,9 @@ private:
     void editAccounts();
     void editParties();
     void changeLanguage(const QString &languageCode);
-    void openDataFolder();
+    void openAccountingFile();
     void saveTransactions();
+    void saveAccountingFileAs();
     void showError(const QString &message);
     Transaction transactionFromRow(int row, bool *ok) const;
     bool targetsMatchAmount(const Transaction &transaction) const;

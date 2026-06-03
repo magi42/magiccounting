@@ -1,7 +1,9 @@
 #include "DataStore.h"
 
 #include <QCoreApplication>
+#include <QDir>
 #include <QFile>
+#include <QFileInfo>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -13,8 +15,9 @@ namespace
 const char *kAccountsFile = "accounts.json";
 const char *kPartiesFile = "parties.json";
 const char *kTransactionsFile = "transactions.json";
+const char *kDefaultAccountingFile = "accounting.macc";
 
-QString filePath(const QString &folder, const char *fileName)
+QString pathInFolder(const QString &folder, const char *fileName)
 {
     return QDir(folder).filePath(QString::fromLatin1(fileName));
 }
@@ -62,41 +65,134 @@ bool writeJsonArray(const QString &path, const QJsonArray &array, QString *error
     file.write(QJsonDocument(array).toJson(QJsonDocument::Indented));
     return true;
 }
+
+QJsonObject accountToJson(const Account &account)
+{
+    QJsonObject object;
+    object["name"] = account.name;
+    object["kind"] = account.kind;
+    object["openingBalance"] = account.openingBalance;
+    return object;
 }
 
-DataStore::DataStore(const QString &folderPath)
-    : m_folderPath(folderPath.isEmpty() ? defaultDataFolder() : folderPath)
+QJsonObject partyToJson(const Party &party)
+{
+    QJsonObject object;
+    object["name"] = party.name;
+    return object;
+}
+
+QJsonObject transactionToJson(const Transaction &transaction)
+{
+    QJsonObject object;
+    object["date"] = transaction.date.toString(Qt::ISODate);
+    object["sourceAccount"] = transaction.sourceAccount;
+    object["amount"] = transaction.amount;
+    object["party"] = transaction.party;
+    object["memo"] = transaction.memo;
+
+    QJsonArray targets;
+    for (const Split &split : transaction.targets) {
+        QJsonObject target;
+        target["account"] = split.account;
+        target["amount"] = split.amount;
+        targets.append(target);
+    }
+    object["targets"] = targets;
+    return object;
+}
+}
+
+DataStore::DataStore(const QString &filePath)
+    : m_filePath(filePath.isEmpty() ? defaultAccountingFile() : filePath)
 {
 }
 
-const QString &DataStore::folderPath() const
+const QString &DataStore::filePath() const
 {
-    return m_folderPath;
+    return m_filePath;
 }
 
-QString DataStore::defaultDataFolder()
+QString DataStore::defaultAccountingFile()
 {
     const QString base = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     if (!base.isEmpty()) {
-        return base;
+        return QDir(base).filePath(QString::fromLatin1(kDefaultAccountingFile));
     }
-    return QDir(QCoreApplication::applicationDirPath()).filePath("data");
+    return QDir(QCoreApplication::applicationDirPath()).filePath(QString::fromLatin1(kDefaultAccountingFile));
 }
 
-bool DataStore::load(const QString &folderPath, QString *errorMessage)
+QString DataStore::fileFilter()
 {
-    m_folderPath = folderPath;
-    if (!ensureFolder(errorMessage)) {
+    return QCoreApplication::translate("DataStore", "Magic Counting files (*.macc);;All files (*)");
+}
+
+bool DataStore::saveAs(const QString &filePath, QString *errorMessage)
+{
+    if (filePath.isEmpty()) {
+        if (errorMessage) {
+            *errorMessage = QCoreApplication::translate("DataStore", "No accounting file selected");
+        }
         return false;
     }
 
+    QString normalizedPath = filePath;
+    if (QFileInfo(normalizedPath).suffix().isEmpty()) {
+        normalizedPath.append(".macc");
+    }
+
+    const QString previousPath = m_filePath;
+    m_filePath = normalizedPath;
+    if (!saveAll(errorMessage)) {
+        m_filePath = previousPath;
+        return false;
+    }
+    return true;
+}
+
+bool DataStore::load(const QString &filePath, QString *errorMessage)
+{
+    m_filePath = filePath;
     QJsonArray accountArray;
     QJsonArray partyArray;
     QJsonArray transactionArray;
-    if (!readJsonArray(filePath(m_folderPath, kAccountsFile), &accountArray, errorMessage)
-        || !readJsonArray(filePath(m_folderPath, kPartiesFile), &partyArray, errorMessage)
-        || !readJsonArray(filePath(m_folderPath, kTransactionsFile), &transactionArray, errorMessage)) {
-        return false;
+
+    const QFileInfo info(m_filePath);
+    if (info.isDir()) {
+        if (!readJsonArray(pathInFolder(m_filePath, kAccountsFile), &accountArray, errorMessage)
+            || !readJsonArray(pathInFolder(m_filePath, kPartiesFile), &partyArray, errorMessage)
+            || !readJsonArray(pathInFolder(m_filePath, kTransactionsFile), &transactionArray, errorMessage)) {
+            return false;
+        }
+        m_filePath = QDir(m_filePath).filePath(QString::fromLatin1(kDefaultAccountingFile));
+    } else {
+        QFile file(m_filePath);
+        if (!file.exists()) {
+            seedDefaults();
+            return saveAll(errorMessage);
+        }
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            if (errorMessage) {
+                *errorMessage = QCoreApplication::translate("DataStore", "Could not open %1: %2")
+                                    .arg(m_filePath, file.errorString());
+            }
+            return false;
+        }
+
+        QJsonParseError parseError;
+        const QJsonDocument document = QJsonDocument::fromJson(file.readAll(), &parseError);
+        if (parseError.error != QJsonParseError::NoError || !document.isObject()) {
+            if (errorMessage) {
+                *errorMessage = QCoreApplication::translate("DataStore", "Could not parse %1 as a Magic Counting file: %2")
+                                    .arg(m_filePath, parseError.errorString());
+            }
+            return false;
+        }
+
+        const QJsonObject root = document.object();
+        accountArray = root.value("accounts").toArray();
+        partyArray = root.value("parties").toArray();
+        transactionArray = root.value("transactions").toArray();
     }
 
     accounts.clear();
@@ -149,67 +245,58 @@ bool DataStore::load(const QString &folderPath, QString *errorMessage)
 
 bool DataStore::saveAll(QString *errorMessage) const
 {
-    return saveAccounts(errorMessage) && saveParties(errorMessage) && saveTransactions(errorMessage);
+    if (!ensureParentFolder(errorMessage)) {
+        return false;
+    }
+
+    QJsonArray accountArray;
+    for (const Account &account : accounts) {
+        accountArray.append(accountToJson(account));
+    }
+
+    QJsonArray partyArray;
+    for (const Party &party : parties) {
+        partyArray.append(partyToJson(party));
+    }
+
+    QJsonArray transactionArray;
+    for (const Transaction &transaction : transactions) {
+        transactionArray.append(transactionToJson(transaction));
+    }
+
+    QJsonObject root;
+    root["format"] = "magiccounting";
+    root["version"] = 1;
+    root["accounts"] = accountArray;
+    root["parties"] = partyArray;
+    root["transactions"] = transactionArray;
+
+    QFile file(m_filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+        if (errorMessage) {
+            *errorMessage = QCoreApplication::translate("DataStore", "Could not write %1: %2")
+                                .arg(m_filePath, file.errorString());
+        }
+        return false;
+    }
+
+    file.write(QJsonDocument(root).toJson(QJsonDocument::Indented));
+    return true;
 }
 
 bool DataStore::saveAccounts(QString *errorMessage) const
 {
-    if (!ensureFolder(errorMessage)) {
-        return false;
-    }
-
-    QJsonArray array;
-    for (const Account &account : accounts) {
-        QJsonObject object;
-        object["name"] = account.name;
-        object["kind"] = account.kind;
-        object["openingBalance"] = account.openingBalance;
-        array.append(object);
-    }
-    return writeJsonArray(filePath(m_folderPath, kAccountsFile), array, errorMessage);
+    return saveAll(errorMessage);
 }
 
 bool DataStore::saveParties(QString *errorMessage) const
 {
-    if (!ensureFolder(errorMessage)) {
-        return false;
-    }
-
-    QJsonArray array;
-    for (const Party &party : parties) {
-        QJsonObject object;
-        object["name"] = party.name;
-        array.append(object);
-    }
-    return writeJsonArray(filePath(m_folderPath, kPartiesFile), array, errorMessage);
+    return saveAll(errorMessage);
 }
 
 bool DataStore::saveTransactions(QString *errorMessage) const
 {
-    if (!ensureFolder(errorMessage)) {
-        return false;
-    }
-
-    QJsonArray array;
-    for (const Transaction &transaction : transactions) {
-        QJsonObject object;
-        object["date"] = transaction.date.toString(Qt::ISODate);
-        object["sourceAccount"] = transaction.sourceAccount;
-        object["amount"] = transaction.amount;
-        object["party"] = transaction.party;
-        object["memo"] = transaction.memo;
-
-        QJsonArray targets;
-        for (const Split &split : transaction.targets) {
-            QJsonObject target;
-            target["account"] = split.account;
-            target["amount"] = split.amount;
-            targets.append(target);
-        }
-        object["targets"] = targets;
-        array.append(object);
-    }
-    return writeJsonArray(filePath(m_folderPath, kTransactionsFile), array, errorMessage);
+    return saveAll(errorMessage);
 }
 
 QList<Split> DataStore::parseSplits(const QString &text, bool *ok)
@@ -251,9 +338,9 @@ QString DataStore::formatSplits(const QList<Split> &splits)
     return parts.join("; ");
 }
 
-bool DataStore::ensureFolder(QString *errorMessage) const
+bool DataStore::ensureParentFolder(QString *errorMessage) const
 {
-    QDir dir(m_folderPath);
+    QDir dir(QFileInfo(m_filePath).absolutePath());
     if (dir.exists()) {
         return true;
     }
@@ -261,7 +348,7 @@ bool DataStore::ensureFolder(QString *errorMessage) const
         return true;
     }
     if (errorMessage) {
-        *errorMessage = QCoreApplication::translate("DataStore", "Could not create data folder %1").arg(m_folderPath);
+        *errorMessage = QCoreApplication::translate("DataStore", "Could not create data folder %1").arg(dir.absolutePath());
     }
     return false;
 }

@@ -10,6 +10,7 @@
 namespace
 {
 const char *kConfigFileName = "config.json";
+const char *kAccountingFileKey = "accountingFile";
 const char *kAccountingFolderKey = "accountingFolder";
 const char *kLanguageKey = "language";
 
@@ -67,6 +68,16 @@ QString AppConfig::configFilePath()
     return QDir(configFolder()).filePath(QString::fromLatin1(kConfigFileName));
 }
 
+QString AppConfig::accountingFile()
+{
+    const QJsonObject object = readConfig();
+    const QString filePath = object.value(kAccountingFileKey).toString();
+    if (!filePath.isEmpty()) {
+        return filePath;
+    }
+    return object.value(kAccountingFolderKey).toString();
+}
+
 QString AppConfig::accountingFolder()
 {
     return readConfig().value(kAccountingFolderKey).toString();
@@ -78,11 +89,17 @@ QString AppConfig::languageCode()
     return code.isEmpty() ? QStringLiteral("system") : code;
 }
 
-bool AppConfig::saveAccountingFolder(const QString &folderPath, QString *errorMessage)
+bool AppConfig::saveAccountingFile(const QString &filePath, QString *errorMessage)
 {
     QJsonObject object = readConfig();
-    object[kAccountingFolderKey] = folderPath;
+    object[kAccountingFileKey] = filePath;
+    object.remove(kAccountingFolderKey);
     return writeConfig(object, errorMessage);
+}
+
+bool AppConfig::saveAccountingFolder(const QString &folderPath, QString *errorMessage)
+{
+    return saveAccountingFile(folderPath, errorMessage);
 }
 
 bool AppConfig::saveLanguageCode(const QString &languageCode, QString *errorMessage)

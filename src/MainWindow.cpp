@@ -11,6 +11,7 @@
 #include <QBrush>
 #include <QColor>
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QFont>
 #include <QHeaderView>
 #include <QMap>
@@ -43,9 +44,9 @@ QTableWidgetItem *readOnlyItem(const QString &text = QString())
 }
 }
 
-MainWindow::MainWindow(const QString &accountingFolder, QWidget *parent)
+MainWindow::MainWindow(const QString &accountingFile, QWidget *parent)
     : QMainWindow(parent)
-    , m_initialAccountingFolder(accountingFolder)
+    , m_initialAccountingFile(accountingFile)
 {
     buildUi();
     loadInitialData();
@@ -90,8 +91,9 @@ void MainWindow::buildUi()
 void MainWindow::buildMenus()
 {
     m_fileMenu = menuBar()->addMenu(QString());
-    m_openDataFolderAction = m_fileMenu->addAction(QString(), this, &MainWindow::openDataFolder);
+    m_openAccountingFileAction = m_fileMenu->addAction(QString(), this, &MainWindow::openAccountingFile);
     m_saveAction = m_fileMenu->addAction(QString(), this, &MainWindow::saveTransactions);
+    m_saveAsAction = m_fileMenu->addAction(QString(), this, &MainWindow::saveAccountingFileAs);
     m_fileMenu->addSeparator();
     m_quitAction = m_fileMenu->addAction(QString(), this, &QWidget::close);
 
@@ -133,8 +135,9 @@ void MainWindow::retranslateUi()
 {
     if (m_fileMenu) {
         m_fileMenu->setTitle(tr("File"));
-        m_openDataFolderAction->setText(tr("Open Data Folder..."));
+        m_openAccountingFileAction->setText(tr("Open Accounting File..."));
         m_saveAction->setText(tr("Save"));
+        m_saveAsAction->setText(tr("Save As..."));
         m_quitAction->setText(tr("Quit"));
     }
     if (m_editMenu) {
@@ -178,21 +181,31 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::loadInitialData()
 {
-    const QString folder = m_initialAccountingFolder.isEmpty() ? DataStore::defaultDataFolder() : m_initialAccountingFolder;
+    QString filePath = m_initialAccountingFile;
+    if (filePath.isEmpty()) {
+        filePath = QFileDialog::getSaveFileName(this,
+                                                tr("Choose Accounting File"),
+                                                DataStore::defaultAccountingFile(),
+                                                DataStore::fileFilter());
+    }
+    if (filePath.isEmpty()) {
+        filePath = DataStore::defaultAccountingFile();
+    }
+
     QString error;
-    if (!m_store.load(folder, &error)) {
+    if (!m_store.load(filePath, &error)) {
         showError(error);
-    } else if (!AppConfig::saveAccountingFolder(m_store.folderPath(), &error)) {
+    } else if (!AppConfig::saveAccountingFile(m_store.filePath(), &error)) {
         showError(error);
     }
     refreshTable();
     updateWindowTitle();
-    statusBar()->showMessage(tr("Data folder: %1").arg(m_store.folderPath()));
+    statusBar()->showMessage(tr("Accounting file: %1").arg(m_store.filePath()));
 }
 
 void MainWindow::updateWindowTitle()
 {
-    setWindowTitle(tr("Magic Counting - %1").arg(QDir(m_store.folderPath()).filePath("transactions.json")));
+    setWindowTitle(tr("Magic Counting - %1").arg(m_store.filePath()));
 }
 
 void MainWindow::refreshTable()
@@ -547,25 +560,28 @@ void MainWindow::changeLanguage(const QString &languageCode)
     refreshTable();
 }
 
-void MainWindow::openDataFolder()
+void MainWindow::openAccountingFile()
 {
-    const QString folder = QFileDialog::getExistingDirectory(this, tr("Open Data Folder"), m_store.folderPath());
-    if (folder.isEmpty()) {
+    const QString filePath = QFileDialog::getOpenFileName(this,
+                                                          tr("Open Accounting File"),
+                                                          QFileInfo(m_store.filePath()).absolutePath(),
+                                                          DataStore::fileFilter());
+    if (filePath.isEmpty()) {
         return;
     }
 
     QString error;
-    if (!m_store.load(folder, &error)) {
+    if (!m_store.load(filePath, &error)) {
         showError(error);
         return;
     }
-    if (!AppConfig::saveAccountingFolder(m_store.folderPath(), &error)) {
+    if (!AppConfig::saveAccountingFile(m_store.filePath(), &error)) {
         showError(error);
         return;
     }
     refreshTable();
     updateWindowTitle();
-    statusBar()->showMessage(tr("Data folder: %1").arg(m_store.folderPath()));
+    statusBar()->showMessage(tr("Accounting file: %1").arg(m_store.filePath()));
 }
 
 void MainWindow::saveTransactions()
@@ -576,6 +592,33 @@ void MainWindow::saveTransactions()
         return;
     }
     statusBar()->showMessage(tr("Transactions saved"), 2000);
+}
+
+void MainWindow::saveAccountingFileAs()
+{
+    QString selectedPath = QFileDialog::getSaveFileName(this,
+                                                        tr("Save Accounting File As"),
+                                                        m_store.filePath(),
+                                                        DataStore::fileFilter());
+    if (selectedPath.isEmpty()) {
+        return;
+    }
+    if (QFileInfo(selectedPath).suffix().isEmpty()) {
+        selectedPath.append(".macc");
+    }
+
+    QString error;
+    if (!m_store.saveAs(selectedPath, &error)) {
+        showError(error);
+        return;
+    }
+    if (!AppConfig::saveAccountingFile(m_store.filePath(), &error)) {
+        showError(error);
+        return;
+    }
+
+    updateWindowTitle();
+    statusBar()->showMessage(tr("Accounting file saved as: %1").arg(m_store.filePath()), 3000);
 }
 
 void MainWindow::showError(const QString &message)
