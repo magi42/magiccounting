@@ -31,6 +31,8 @@ add_executable(magiccounting
     src/AccountListDialog.h
     src/AppConfig.cpp
     src/AppConfig.h
+    src/BankStatementImporter.cpp
+    src/BankStatementImporter.h
     src/DataStore.cpp
     src/DataStore.h
     src/LanguageManager.cpp

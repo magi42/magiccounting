@@ -1,6 +1,7 @@
 #include "AccountListDialog.h"
 
 #include <QDialogButtonBox>
+#include <QComboBox>
 #include <QHeaderView>
 #include <QInputDialog>
 #include <QMap>
@@ -96,6 +97,61 @@ bool AccountListDialog::editParties(QWidget *parent, QList<Party> *parties)
         const QString name = dialog.m_table->item(row, 0) ? dialog.m_table->item(row, 0)->text().trimmed() : QString();
         if (!name.isEmpty()) {
             parties->append({name});
+        }
+    }
+    return true;
+}
+
+bool AccountListDialog::editImportClassificationRules(QWidget *parent,
+                                                      QList<ImportClassificationRule> *rules,
+                                                      const QList<Account> &accounts)
+{
+    AccountListDialog dialog(parent);
+    dialog.setWindowTitle(dialog.tr("Import Classification Rules"));
+    dialog.m_table->setColumnCount(2);
+    dialog.m_table->setHorizontalHeaderLabels({dialog.tr("Other party contains"), dialog.tr("Target account")});
+    dialog.m_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    dialog.m_table->setRowCount(rules->size());
+
+    QStringList accountNames;
+    for (const Account &account : accounts) {
+        accountNames.append(account.name);
+    }
+
+    for (int row = 0; row < rules->size(); ++row) {
+        dialog.m_table->setItem(row, 0, new QTableWidgetItem(rules->at(row).partyPattern));
+
+        auto *accountCombo = new QComboBox(&dialog);
+        accountCombo->setEditable(true);
+        accountCombo->addItems(accountNames);
+        accountCombo->setCurrentText(rules->at(row).account);
+        dialog.m_table->setCellWidget(row, 1, accountCombo);
+    }
+
+    connect(dialog.m_table, &QTableWidget::cellChanged, &dialog, [&dialog, accountNames](int row, int) {
+        if (!dialog.m_table->cellWidget(row, 1)) {
+            auto *accountCombo = new QComboBox(&dialog);
+            accountCombo->setEditable(true);
+            accountCombo->addItems(accountNames);
+            dialog.m_table->setCellWidget(row, 1, accountCombo);
+        }
+    });
+
+    if (dialog.exec() != QDialog::Accepted) {
+        return false;
+    }
+
+    rules->clear();
+    for (int row = 0; row < dialog.m_table->rowCount(); ++row) {
+        const QString partyPattern = dialog.m_table->item(row, 0)
+                                         ? dialog.m_table->item(row, 0)->text().trimmed()
+                                         : QString();
+        const auto *accountCombo = qobject_cast<QComboBox *>(dialog.m_table->cellWidget(row, 1));
+        const QString account = accountCombo
+                                    ? accountCombo->currentText().trimmed()
+                                    : (dialog.m_table->item(row, 1) ? dialog.m_table->item(row, 1)->text().trimmed() : QString());
+        if (!partyPattern.isEmpty() && !account.isEmpty()) {
+            rules->append({partyPattern, account});
         }
     }
     return true;

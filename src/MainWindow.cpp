@@ -2,6 +2,7 @@
 
 #include "AccountListDialog.h"
 #include "AppConfig.h"
+#include "BankStatementImporter.h"
 #include "LanguageManager.h"
 #include "SplitEditorDialog.h"
 
@@ -14,12 +15,16 @@
 #include <QFileInfo>
 #include <QFont>
 #include <QHeaderView>
+#include <QInputDialog>
 #include <QMap>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QStatusBar>
 #include <QToolBar>
+
+#include <algorithm>
+#include <cmath>
 
 namespace
 {
@@ -35,6 +40,7 @@ QString moneyText(double value)
 
 constexpr int kOpeningBalanceRow = -1;
 constexpr int kMonthBalanceRow = -2;
+const char *kUnclassifiedAccount = "Luokittelemattomat";
 
 QTableWidgetItem *readOnlyItem(const QString &text = QString())
 {
@@ -95,6 +101,8 @@ void MainWindow::buildMenus()
     m_saveAction = m_fileMenu->addAction(QString(), this, &MainWindow::saveTransactions);
     m_saveAsAction = m_fileMenu->addAction(QString(), this, &MainWindow::saveAccountingFileAs);
     m_fileMenu->addSeparator();
+    m_importBankStatementAction = m_fileMenu->addAction(QString(), this, &MainWindow::importBankStatement);
+    m_fileMenu->addSeparator();
     m_quitAction = m_fileMenu->addAction(QString(), this, &QWidget::close);
 
     m_editMenu = menuBar()->addMenu(QString());
@@ -103,6 +111,7 @@ void MainWindow::buildMenus()
     m_editMenu->addSeparator();
     m_editAccountsAction = m_editMenu->addAction(QString(), this, &MainWindow::editAccounts);
     m_editPartiesAction = m_editMenu->addAction(QString(), this, &MainWindow::editParties);
+    m_editImportClassificationRulesAction = m_editMenu->addAction(QString(), this, &MainWindow::editImportClassificationRules);
 
     m_languageMenu = menuBar()->addMenu(QString());
     m_languageActionGroup = new QActionGroup(this);
@@ -138,6 +147,7 @@ void MainWindow::retranslateUi()
         m_openAccountingFileAction->setText(tr("Open Accounting File..."));
         m_saveAction->setText(tr("Save"));
         m_saveAsAction->setText(tr("Save As..."));
+        m_importBankStatementAction->setText(tr("Import Bank Statement..."));
         m_quitAction->setText(tr("Quit"));
     }
     if (m_editMenu) {
@@ -146,6 +156,7 @@ void MainWindow::retranslateUi()
         m_removeTransactionAction->setText(tr("Remove Transaction"));
         m_editAccountsAction->setText(tr("Accounts..."));
         m_editPartiesAction->setText(tr("Parties..."));
+        m_editImportClassificationRulesAction->setText(tr("Import Classification Rules..."));
     }
     if (m_languageMenu) {
         m_languageMenu->setTitle(tr("Language"));
@@ -547,6 +558,19 @@ void MainWindow::editParties()
     refreshTable();
 }
 
+void MainWindow::editImportClassificationRules()
+{
+    QList<ImportClassificationRule> rules = AppConfig::importClassificationRules();
+    if (!AccountListDialog::editImportClassificationRules(this, &rules, m_store.accounts)) {
+        return;
+    }
+
+    QString error;
+    if (!AppConfig::saveImportClassificationRules(rules, &error)) {
+        showError(error);
+    }
+}
+
 void MainWindow::changeLanguage(const QString &languageCode)
 {
     const QString normalizedCode = LanguageManager::normalizeLanguageCode(languageCode);
@@ -582,6 +606,105 @@ void MainWindow::openAccountingFile()
     refreshTable();
     updateWindowTitle();
     statusBar()->showMessage(tr("Accounting file: %1").arg(m_store.filePath()));
+}
+
+void MainWindow::importBankStatement()
+{
+    SBankCsvImporter importer;
+    const QString filePath = QFileDialog::getOpenFileName(this,
+                                                          tr("Import Bank Statement"),
+                                                          QFileInfo(m_store.filePath()).absolutePath(),
+                                                          importer.fileFilter());
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    QStringList sourceAccounts;
+    for (const Account &account : m_store.accounts) {
+        if (account.kind == "source") {
+            sourceAccounts.append(account.name);
+        }
+    }
+    if (sourceAccounts.isEmpty()) {
+        for (const Account &account : m_store.accounts) {
+            sourceAccounts.append(account.name);
+        }
+    }
+    if (sourceAccounts.isEmpty()) {
+        sourceAccounts.append(QStringLiteral("S-Pankki"));
+    }
+
+    bool accepted = false;
+    const QString bankAccount = QInputDialog::getItem(this,
+                                                      tr("Import Bank Statement"),
+                                                      tr("Bank account for these transactions:"),
+                                                      sourceAccounts,
+                                                      0,
+                                                      true,
+                                                      &accepted)
+                                    .trimmed();
+    if (!accepted || bankAccount.isEmpty()) {
+        return;
+    }
+
+    QList<ImportedBankTransaction> importedRows;
+    QString error;
+    if (!importer.importFile(filePath, &importedRows, &error)) {
+        showError(error);
+        return;
+    }
+
+    ensureAccount(bankAccount, QStringLiteral("source"));
+    ensureAccount(QString::fromUtf8(kUnclassifiedAccount), QStringLiteral("category"));
+
+    int importedCount = 0;
+    int skippedCount = 0;
+    for (const ImportedBankTransaction &row : importedRows) {
+        if (m_store.hasImportedTransaction(importer.id(), row.externalId)) {
+            ++skippedCount;
+            continue;
+        }
+
+        const double amount = std::abs(row.signedAmount);
+        if (amount == 0.0) {
+            ++skippedCount;
+            continue;
+        }
+
+        const QString party = row.party.isEmpty() ? importer.displayName() : row.party;
+        const QString counterAccount = classifiedAccountForParty(party);
+        ensureAccount(counterAccount, QStringLiteral("category"));
+        ensureParty(party);
+
+        Transaction transaction;
+        transaction.date = row.bookingDate;
+        transaction.amount = amount;
+        transaction.party = party;
+        transaction.memo = row.memo;
+        transaction.importSource = importer.id();
+        transaction.importId = row.externalId;
+        if (row.signedAmount < 0.0) {
+            transaction.sourceAccount = bankAccount;
+            transaction.targets = {{counterAccount, amount}};
+        } else {
+            transaction.sourceAccount = counterAccount;
+            transaction.targets = {{bankAccount, amount}};
+        }
+        m_store.transactions.append(transaction);
+        ++importedCount;
+    }
+
+    std::stable_sort(m_store.transactions.begin(), m_store.transactions.end(), [](const Transaction &left, const Transaction &right) {
+        return left.date < right.date;
+    });
+
+    if (!m_store.saveAll(&error)) {
+        showError(error);
+        return;
+    }
+
+    refreshTable();
+    statusBar()->showMessage(tr("Imported %1 transactions, skipped %2 duplicates").arg(importedCount).arg(skippedCount), 5000);
 }
 
 void MainWindow::saveTransactions()
@@ -673,4 +796,49 @@ double MainWindow::postingForAccount(const Transaction &transaction, const QStri
         }
     }
     return posting;
+}
+
+bool MainWindow::accountExists(const QString &accountName) const
+{
+    for (const Account &account : m_store.accounts) {
+        if (account.name == accountName) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool MainWindow::partyExists(const QString &partyName) const
+{
+    for (const Party &party : m_store.parties) {
+        if (party.name == partyName) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void MainWindow::ensureAccount(const QString &accountName, const QString &kind)
+{
+    if (!accountName.isEmpty() && !accountExists(accountName)) {
+        m_store.accounts.append({accountName, kind, 0.0});
+    }
+}
+
+void MainWindow::ensureParty(const QString &partyName)
+{
+    if (!partyName.isEmpty() && !partyExists(partyName)) {
+        m_store.parties.append({partyName});
+    }
+}
+
+QString MainWindow::classifiedAccountForParty(const QString &partyName) const
+{
+    const QList<ImportClassificationRule> rules = AppConfig::importClassificationRules();
+    for (const ImportClassificationRule &rule : rules) {
+        if (partyName.contains(rule.partyPattern, Qt::CaseInsensitive)) {
+            return rule.account;
+        }
+    }
+    return QString::fromUtf8(kUnclassifiedAccount);
 }

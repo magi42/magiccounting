@@ -30,6 +30,8 @@ struct Transaction
     QString party;
     QList<Split> targets;
     QString memo;
+    QString importSource;
+    QString importId;
 };
 
 class DataStore
@@ -49,6 +51,7 @@ public:
     QList<Party> parties;
     QList<Transaction> transactions;
 
+    bool hasImportedTransaction(const QString &importSource, const QString &importId) const;
     static QList<Split> parseSplits(const QString &text, bool *ok = nullptr);
     static QString formatSplits(const QList<Split> &splits);
     static QString defaultAccountingFile();

@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QFile>
 #include <QCoreApplication>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QStandardPaths>
@@ -13,6 +14,9 @@ const char *kConfigFileName = "config.json";
 const char *kAccountingFileKey = "accountingFile";
 const char *kAccountingFolderKey = "accountingFolder";
 const char *kLanguageKey = "language";
+const char *kImportClassificationRulesKey = "importClassificationRules";
+const char *kPartyPatternKey = "partyPattern";
+const char *kAccountKey = "account";
 
 QString configFolder()
 {
@@ -89,6 +93,21 @@ QString AppConfig::languageCode()
     return code.isEmpty() ? QStringLiteral("system") : code;
 }
 
+QList<ImportClassificationRule> AppConfig::importClassificationRules()
+{
+    QList<ImportClassificationRule> rules;
+    const QJsonArray array = readConfig().value(kImportClassificationRulesKey).toArray();
+    for (const QJsonValue &value : array) {
+        const QJsonObject object = value.toObject();
+        const QString partyPattern = object.value(kPartyPatternKey).toString().trimmed();
+        const QString account = object.value(kAccountKey).toString().trimmed();
+        if (!partyPattern.isEmpty() && !account.isEmpty()) {
+            rules.append({partyPattern, account});
+        }
+    }
+    return rules;
+}
+
 bool AppConfig::saveAccountingFile(const QString &filePath, QString *errorMessage)
 {
     QJsonObject object = readConfig();
@@ -106,5 +125,23 @@ bool AppConfig::saveLanguageCode(const QString &languageCode, QString *errorMess
 {
     QJsonObject object = readConfig();
     object[kLanguageKey] = languageCode;
+    return writeConfig(object, errorMessage);
+}
+
+bool AppConfig::saveImportClassificationRules(const QList<ImportClassificationRule> &rules, QString *errorMessage)
+{
+    QJsonArray array;
+    for (const ImportClassificationRule &rule : rules) {
+        if (rule.partyPattern.trimmed().isEmpty() || rule.account.trimmed().isEmpty()) {
+            continue;
+        }
+        QJsonObject object;
+        object[kPartyPatternKey] = rule.partyPattern.trimmed();
+        object[kAccountKey] = rule.account.trimmed();
+        array.append(object);
+    }
+
+    QJsonObject object = readConfig();
+    object[kImportClassificationRulesKey] = array;
     return writeConfig(object, errorMessage);
 }

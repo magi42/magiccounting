@@ -90,6 +90,10 @@ QJsonObject transactionToJson(const Transaction &transaction)
     object["amount"] = transaction.amount;
     object["party"] = transaction.party;
     object["memo"] = transaction.memo;
+    if (!transaction.importSource.isEmpty() && !transaction.importId.isEmpty()) {
+        object["importSource"] = transaction.importSource;
+        object["importId"] = transaction.importId;
+    }
 
     QJsonArray targets;
     for (const Split &split : transaction.targets) {
@@ -221,6 +225,8 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
         transaction.amount = object.value("amount").toDouble();
         transaction.party = object.value("party").toString();
         transaction.memo = object.value("memo").toString();
+        transaction.importSource = object.value("importSource").toString();
+        transaction.importId = object.value("importId").toString();
 
         const QJsonArray targetArray = object.value("targets").toArray();
         for (const QJsonValue &targetValue : targetArray) {
@@ -297,6 +303,19 @@ bool DataStore::saveParties(QString *errorMessage) const
 bool DataStore::saveTransactions(QString *errorMessage) const
 {
     return saveAll(errorMessage);
+}
+
+bool DataStore::hasImportedTransaction(const QString &importSource, const QString &importId) const
+{
+    if (importSource.isEmpty() || importId.isEmpty()) {
+        return false;
+    }
+    for (const Transaction &transaction : transactions) {
+        if (transaction.importSource == importSource && transaction.importId == importId) {
+            return true;
+        }
+    }
+    return false;
 }
 
 QList<Split> DataStore::parseSplits(const QString &text, bool *ok)

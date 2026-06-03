@@ -26,6 +26,10 @@ The app stores editable text data in one JSON file with the `.macc` extension. T
 
 Use `File -> Open Accounting File...` to load another `.macc` file. Transaction edits, account changes, parties, and opening balances are written back to the active `.macc` file. Use `File -> Save As...` to write the current accounting data to a different `.macc` file and make that file active.
 
+Use `File -> Import Bank Statement...` to import S-Pankki account transactions from a semicolon-separated `.csv` file. The import asks which bookkeeping account represents the bank account. Negative statement rows are posted from that bank account to a counter account, and positive rows are posted from the counter account to the bank account. Imported rows store the statement source and archive identifier, so importing the same CSV again skips already imported transactions.
+
+The default counter account for imported rows is `Luokittelemattomat`. Use `Edit -> Import Classification Rules...` to configure case-insensitive text rules for the other party, for example mapping a grocery store name fragment to a food account.
+
 The last opened accounting file is stored in the application configuration file `config.json` under Qt's application config folder, and is reopened on the next startup when no command-line file is provided. If no previous file exists, the app asks for a `.macc` file name at startup.
 
 Legacy folders containing `accounts.json`, `parties.json`, and `transactions.json` can still be opened by passing the folder path on the command line; the app then saves the data into `accounting.macc` inside that folder.
