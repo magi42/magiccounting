@@ -432,7 +432,10 @@ void MainWindow::openSplitEditor(int row)
     transaction.targets = dialog.splits();
     m_store.transactions[transactionIndex] = transaction;
     refreshTable();
-    saveTransactions();
+    QString error;
+    if (!m_store.saveTransaction(transactionIndex, &error)) {
+        showError(error);
+    }
 }
 
 void MainWindow::saveRowIfValid(int row)
@@ -468,7 +471,12 @@ void MainWindow::saveRowIfValid(int row)
         targetsButton->setStyleSheet(QString());
     }
     m_refreshing = false;
-    saveTransactions();
+    QString error;
+    if (!m_store.saveTransaction(transactionIndex, &error)) {
+        showError(error);
+        return;
+    }
+    statusBar()->showMessage(tr("Transaction saved"), 2000);
 }
 
 void MainWindow::saveOpeningBalances()
@@ -508,7 +516,7 @@ void MainWindow::addTransaction()
             break;
         }
     }
-    m_store.transactions.append({QDate::currentDate(), defaultSource, 0.0, defaultParty, {{defaultTarget, 0.0}}, QString()});
+    m_store.transactions.append({0, QDate::currentDate(), defaultSource, 0.0, defaultParty, {{defaultTarget, 0.0}}, QString()});
     refreshTable();
     const int transactionIndex = m_store.transactions.size() - 1;
     for (int row = 0; row < m_rowToTransaction.size(); ++row) {
@@ -517,7 +525,10 @@ void MainWindow::addTransaction()
             break;
         }
     }
-    saveTransactions();
+    QString error;
+    if (!m_store.saveTransaction(transactionIndex, &error)) {
+        showError(error);
+    }
 }
 
 void MainWindow::removeSelectedTransaction()
@@ -527,9 +538,12 @@ void MainWindow::removeSelectedTransaction()
     if (transactionIndex < 0) {
         return;
     }
-    m_store.transactions.removeAt(transactionIndex);
+    QString error;
+    if (!m_store.removeTransaction(transactionIndex, &error)) {
+        showError(error);
+        return;
+    }
     refreshTable();
-    saveTransactions();
 }
 
 void MainWindow::editAccounts()

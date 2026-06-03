@@ -2,6 +2,7 @@
 
 #include <QDate>
 #include <QList>
+#include <QtGlobal>
 #include <QString>
 
 struct Account
@@ -24,6 +25,7 @@ struct Split
 
 struct Transaction
 {
+    qint64 id = 0;
     QDate date;
     QString sourceAccount;
     double amount = 0.0;
@@ -42,10 +44,12 @@ public:
     const QString &filePath() const;
     bool load(const QString &filePath, QString *errorMessage = nullptr);
     bool saveAs(const QString &filePath, QString *errorMessage = nullptr);
-    bool saveAll(QString *errorMessage = nullptr) const;
-    bool saveAccounts(QString *errorMessage = nullptr) const;
-    bool saveParties(QString *errorMessage = nullptr) const;
-    bool saveTransactions(QString *errorMessage = nullptr) const;
+    bool saveAll(QString *errorMessage = nullptr);
+    bool saveAccounts(QString *errorMessage = nullptr);
+    bool saveParties(QString *errorMessage = nullptr);
+    bool saveTransactions(QString *errorMessage = nullptr);
+    bool saveTransaction(int transactionIndex, QString *errorMessage = nullptr);
+    bool removeTransaction(int transactionIndex, QString *errorMessage = nullptr);
 
     QList<Account> accounts;
     QList<Party> parties;

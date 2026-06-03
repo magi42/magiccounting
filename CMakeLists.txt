@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Sql)
 find_program(LRELEASE_EXECUTABLE lrelease REQUIRED)
 
 set(TS_FILES
@@ -44,7 +44,7 @@ add_executable(magiccounting
     src/main.cpp
 )
 
-target_link_libraries(magiccounting PRIVATE Qt5::Widgets)
+target_link_libraries(magiccounting PRIVATE Qt5::Widgets Qt5::Sql)
 target_compile_definitions(magiccounting PRIVATE
     MAGICCOUNTING_TRANSLATIONS_DIR="${CMAKE_CURRENT_BINARY_DIR}"
 )
