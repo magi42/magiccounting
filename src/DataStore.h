@@ -28,6 +28,7 @@ struct Transaction
 {
     qint64 id = 0;
     QDate date;
+    QDate paymentDate;
     QString sourceAccount;
     double amount = 0.0;
     QString party;
@@ -35,6 +36,7 @@ struct Transaction
     QString memo;
     QString importSource;
     QString importId;
+    QString receiptPath;
 };
 
 class DataStore

@@ -22,18 +22,26 @@ public:
 
 private:
     enum Column {
-        DateColumn,
+        BookingDateColumn,
+        PaymentDateColumn,
         SourceColumn,
         AmountColumn,
         PartyColumn,
+        ReceiptColumn,
         TargetsColumn,
         FixedColumnCount
+    };
+
+    enum class TransactionSortMode {
+        BookingDate,
+        PaymentDate
     };
 
     DataStore m_store;
     QTableWidget *m_table = nullptr;
     QVector<int> m_rowToTransaction;
     bool m_refreshing = false;
+    TransactionSortMode m_transactionSortMode = TransactionSortMode::BookingDate;
     QString m_initialAccountingFile;
     QMenu *m_fileMenu = nullptr;
     QMenu *m_editMenu = nullptr;
@@ -49,6 +57,7 @@ private:
     QAction *m_editAccountsAction = nullptr;
     QAction *m_editPartiesAction = nullptr;
     QAction *m_editImportClassificationRulesAction = nullptr;
+    QAction *m_classifyUnclassifiedAction = nullptr;
     QAction *m_toolbarAddAction = nullptr;
     QAction *m_toolbarRemoveAction = nullptr;
     QAction *m_toolbarAccountsAction = nullptr;
@@ -62,13 +71,20 @@ private:
     void buildMenus();
     void retranslateUi();
     void changeEvent(QEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
     void loadInitialData();
     void updateWindowTitle();
     void refreshTable();
+    void refreshTransactionRow(int row, int transactionIndex);
+    void refreshGeneratedBalanceRows();
+    void refreshRowsAfterTransactionChange(int row);
+    void sortTransactions();
+    QDate sortDateForTransaction(const Transaction &transaction) const;
+    QDate monthEndDate(const QString &month) const;
     void updateAccountColumns();
     void updateComputedCells(int row);
     void addOpeningBalanceRow();
-    void addMonthBalanceRow(const QString &month, const QMap<QString, double> &balances);
+    void addMonthBalanceRow(const QString &month, const QMap<QString, double> &balances, int insertRow = -1);
     void setGeneratedRowBackground(int row, const QColor &color);
     int transactionIndexForRow(int row) const;
     void openTransactionDetailsEditor(int row);
@@ -79,6 +95,7 @@ private:
     void editAccounts();
     void editParties();
     void editImportClassificationRules();
+    void classifyUnclassifiedTransactions();
     void changeLanguage(const QString &languageCode);
     void openAccountingFile();
     void importBankStatement();
@@ -94,4 +111,7 @@ private:
     void ensureParty(const QString &partyName);
     void renameAccountReferences(const QMap<QString, QString> &renamedAccounts);
     QString classifiedAccountForParty(const QString &partyName) const;
+    QString storedReceiptPath(const QString &filePath) const;
+    bool setReceiptForRow(int row, const QString &filePath);
+    void saveAccountOrderFromHeader();
 };

@@ -160,6 +160,10 @@ bool SBankCsvImporter::importFile(const QString &filePath,
         }
 
         const QDate bookingDate = QDate::fromString(cleanField(fields.value(BookingDateColumn)), QStringLiteral("dd.MM.yyyy"));
+        QDate paymentDate = QDate::fromString(cleanField(fields.value(PaymentDateColumn)), QStringLiteral("dd.MM.yyyy"));
+        if (!paymentDate.isValid()) {
+            paymentDate = bookingDate;
+        }
         double amount = 0.0;
         if (!bookingDate.isValid() || !parseSBankAmount(fields.value(AmountColumn), &amount)) {
             if (errorMessage) {
@@ -170,6 +174,7 @@ bool SBankCsvImporter::importFile(const QString &filePath,
 
         ImportedBankTransaction transaction;
         transaction.bookingDate = bookingDate;
+        transaction.paymentDate = paymentDate;
         transaction.signedAmount = amount;
         transaction.party = amount < 0.0 ? cleanField(fields.value(RecipientColumn)) : cleanField(fields.value(PayerColumn));
         transaction.memo = transactionMemo(fields);

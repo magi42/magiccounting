@@ -7,6 +7,7 @@
 struct ImportedBankTransaction
 {
     QDate bookingDate;
+    QDate paymentDate;
     double signedAmount = 0.0;
     QString party;
     QString memo;

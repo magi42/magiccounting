@@ -11,6 +11,9 @@
 #include <QDate>
 #include <QBrush>
 #include <QColor>
+#include <QDragMoveEvent>
+#include <QDropEvent>
+#include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QFont>
@@ -19,9 +22,13 @@
 #include <QMap>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <QMimeData>
 #include <QPushButton>
+#include <QSignalBlocker>
 #include <QStatusBar>
+#include <QTimer>
 #include <QToolBar>
+#include <QUrl>
 
 #include <algorithm>
 #include <cmath>
@@ -65,6 +72,10 @@ void MainWindow::buildUi()
     m_table->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_table->setAlternatingRowColors(true);
     m_table->horizontalHeader()->setSectionsMovable(true);
+    m_table->horizontalHeader()->setDropIndicatorShown(true);
+    m_table->setAcceptDrops(true);
+    m_table->viewport()->setAcceptDrops(true);
+    m_table->viewport()->installEventFilter(this);
     setCentralWidget(m_table);
 
     buildMenus();
@@ -92,6 +103,36 @@ void MainWindow::buildUi()
         }
     });
 
+    connect(m_table->horizontalHeader(), &QHeaderView::sectionClicked, this, [this](int logicalIndex) {
+        if (logicalIndex == BookingDateColumn) {
+            m_transactionSortMode = TransactionSortMode::BookingDate;
+            sortTransactions();
+            refreshTable();
+        } else if (logicalIndex == PaymentDateColumn) {
+            m_transactionSortMode = TransactionSortMode::PaymentDate;
+            sortTransactions();
+            refreshTable();
+        }
+    });
+
+    connect(m_table->horizontalHeader(), &QHeaderView::sectionMoved, this, [this](int logicalIndex, int oldVisualIndex, int newVisualIndex) {
+        if (m_refreshing) {
+            return;
+        }
+        if (logicalIndex < FixedColumnCount || newVisualIndex < FixedColumnCount) {
+            m_refreshing = true;
+            m_table->horizontalHeader()->moveSection(newVisualIndex, oldVisualIndex);
+            m_refreshing = false;
+            return;
+        }
+        QTimer::singleShot(0, this, [this]() {
+            if (!m_refreshing) {
+                saveAccountOrderFromHeader();
+                refreshTable();
+            }
+        });
+    });
+
     setWindowTitle(tr("Magic Counting"));
     resize(1100, 620);
 }
@@ -114,6 +155,7 @@ void MainWindow::buildMenus()
     m_editAccountsAction = m_editMenu->addAction(QString(), this, &MainWindow::editAccounts);
     m_editPartiesAction = m_editMenu->addAction(QString(), this, &MainWindow::editParties);
     m_editImportClassificationRulesAction = m_editMenu->addAction(QString(), this, &MainWindow::editImportClassificationRules);
+    m_classifyUnclassifiedAction = m_editMenu->addAction(QString(), this, &MainWindow::classifyUnclassifiedTransactions);
 
     m_languageMenu = menuBar()->addMenu(QString());
     m_languageActionGroup = new QActionGroup(this);
@@ -159,6 +201,7 @@ void MainWindow::retranslateUi()
         m_editAccountsAction->setText(tr("Accounts..."));
         m_editPartiesAction->setText(tr("Parties..."));
         m_editImportClassificationRulesAction->setText(tr("Import Classification Rules..."));
+        m_classifyUnclassifiedAction->setText(tr("Classify Unclassified"));
     }
     if (m_languageMenu) {
         m_languageMenu->setTitle(tr("Language"));
@@ -190,6 +233,31 @@ void MainWindow::changeEvent(QEvent *event)
         refreshTable();
     }
     QMainWindow::changeEvent(event);
+}
+
+bool MainWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == m_table->viewport()) {
+        if (event->type() == QEvent::DragEnter || event->type() == QEvent::DragMove) {
+            auto *dragEvent = static_cast<QDragMoveEvent *>(event);
+            if (dragEvent->mimeData()->hasUrls() && transactionIndexForRow(m_table->rowAt(dragEvent->pos().y())) >= 0) {
+                dragEvent->acceptProposedAction();
+                return true;
+            }
+        }
+        if (event->type() == QEvent::Drop) {
+            auto *dropEvent = static_cast<QDropEvent *>(event);
+            const QList<QUrl> urls = dropEvent->mimeData()->urls();
+            if (!urls.isEmpty()) {
+                const int row = m_table->rowAt(dropEvent->pos().y());
+                if (setReceiptForRow(row, urls.first().toLocalFile())) {
+                    dropEvent->acceptProposedAction();
+                    return true;
+                }
+            }
+        }
+    }
+    return QMainWindow::eventFilter(watched, event);
 }
 
 void MainWindow::loadInitialData()
@@ -231,79 +299,195 @@ void MainWindow::refreshTable()
 
     addOpeningBalanceRow();
 
+    for (int transactionIndex = 0; transactionIndex < m_store.transactions.size(); ++transactionIndex) {
+        const int row = m_table->rowCount();
+        m_table->insertRow(row);
+        m_rowToTransaction.append(transactionIndex);
+        refreshTransactionRow(row, transactionIndex);
+    }
+
+    m_refreshing = false;
+    refreshGeneratedBalanceRows();
+}
+
+void MainWindow::refreshTransactionRow(int row, int transactionIndex)
+{
+    if (row < 0 || transactionIndex < 0 || transactionIndex >= m_store.transactions.size()) {
+        return;
+    }
+
+    const Transaction &transaction = m_store.transactions.at(transactionIndex);
+    m_table->setItem(row, BookingDateColumn, new QTableWidgetItem(transaction.date.toString(Qt::ISODate)));
+    m_table->setItem(row, PaymentDateColumn, new QTableWidgetItem(transaction.paymentDate.isValid()
+                                                                     ? transaction.paymentDate.toString(Qt::ISODate)
+                                                                     : transaction.date.toString(Qt::ISODate)));
+    auto *amountItem = new QTableWidgetItem(moneyText(transaction.amount));
+    amountItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    m_table->setItem(row, AmountColumn, amountItem);
+    m_table->setItem(row, PartyColumn, new QTableWidgetItem(transaction.party));
+    m_table->setItem(row, ReceiptColumn, readOnlyItem(transaction.receiptPath.isEmpty() ? QString() : tr("Receipt")));
+
+    auto *sourceCombo = new QComboBox(m_table);
+    for (const Account &account : m_store.accounts) {
+        if (account.kind == "source") {
+            sourceCombo->addItem(account.name);
+        }
+    }
+    if (sourceCombo->count() == 0) {
+        for (const Account &account : m_store.accounts) {
+            sourceCombo->addItem(account.name);
+        }
+    }
+    sourceCombo->setEditable(true);
+    sourceCombo->setCurrentText(transaction.sourceAccount);
+
+    connect(sourceCombo, &QComboBox::currentTextChanged, this, [this, sourceCombo](const QString &) {
+        if (m_refreshing) {
+            return;
+        }
+        for (int row = 0; row < m_table->rowCount(); ++row) {
+            if (m_table->cellWidget(row, SourceColumn) == sourceCombo && transactionIndexForRow(row) >= 0) {
+                saveRowIfValid(row);
+                break;
+            }
+        }
+    });
+
+    m_table->setCellWidget(row, SourceColumn, sourceCombo);
+
+    auto *targetsButton = new QPushButton(DataStore::formatSplits(transaction.targets), m_table);
+    targetsButton->setFlat(true);
+    targetsButton->setStyleSheet(targetsMatchAmount(transaction) ? QString() : "color: #b00020;");
+    connect(targetsButton, &QPushButton::clicked, this, [this, targetsButton]() {
+        for (int row = 0; row < m_table->rowCount(); ++row) {
+            if (m_table->cellWidget(row, TargetsColumn) == targetsButton) {
+                openTransactionDetailsEditor(row);
+                break;
+            }
+        }
+    });
+    m_table->setCellWidget(row, TargetsColumn, targetsButton);
+
+    updateComputedCells(row);
+}
+
+void MainWindow::refreshGeneratedBalanceRows()
+{
+    m_refreshing = true;
+    for (int row = m_rowToTransaction.size() - 1; row >= 0; --row) {
+        if (m_rowToTransaction.at(row) == kMonthBalanceRow) {
+            m_table->removeRow(row);
+            m_rowToTransaction.removeAt(row);
+        }
+    }
+
+    QStringList months;
+    for (const Transaction &transaction : m_store.transactions) {
+        const QString month = transaction.date.toString(QStringLiteral("yyyy-MM"));
+        if (!month.isEmpty() && !months.contains(month)) {
+            months.append(month);
+        }
+    }
+    months.sort();
+
     QMap<QString, double> balances;
     for (const Account &account : m_store.accounts) {
         balances.insert(account.name, account.openingBalance);
     }
 
-    for (int transactionIndex = 0; transactionIndex < m_store.transactions.size(); ++transactionIndex) {
-        const Transaction &transaction = m_store.transactions.at(transactionIndex);
-        const int row = m_table->rowCount();
-        m_table->insertRow(row);
-        m_rowToTransaction.append(transactionIndex);
-        m_table->setItem(row, DateColumn, new QTableWidgetItem(transaction.date.toString(Qt::ISODate)));
-        auto *amountItem = new QTableWidgetItem(moneyText(transaction.amount));
-        amountItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        m_table->setItem(row, AmountColumn, amountItem);
-        m_table->setItem(row, PartyColumn, new QTableWidgetItem(transaction.party));
-
-        auto *sourceCombo = new QComboBox(m_table);
-        for (const Account &account : m_store.accounts) {
-            if (account.kind == "source") {
-                sourceCombo->addItem(account.name);
+    for (const QString &month : months) {
+        for (const Transaction &transaction : m_store.transactions) {
+            if (transaction.date.toString(QStringLiteral("yyyy-MM")) == month) {
+                for (const Account &account : m_store.accounts) {
+                    balances[account.name] += postingForAccount(transaction, account.name);
+                }
             }
         }
-        if (sourceCombo->count() == 0) {
-            for (const Account &account : m_store.accounts) {
-                sourceCombo->addItem(account.name);
+
+        const QDate monthEnd = monthEndDate(month);
+        int insertRow = 1;
+        for (int row = 1; row < m_rowToTransaction.size(); ++row) {
+            const int transactionIndex = m_rowToTransaction.at(row);
+            if (transactionIndex == kMonthBalanceRow) {
+                insertRow = row + 1;
+                continue;
+            }
+            if (transactionIndex >= 0 && sortDateForTransaction(m_store.transactions.at(transactionIndex)) <= monthEnd) {
+                insertRow = row + 1;
             }
         }
-        sourceCombo->setEditable(true);
-        sourceCombo->setCurrentText(transaction.sourceAccount);
-
-        connect(sourceCombo, &QComboBox::currentTextChanged, this, [this, row](const QString &) {
-            if (!m_refreshing && transactionIndexForRow(row) >= 0) {
-                saveRowIfValid(row);
-            }
-        });
-
-        m_table->setCellWidget(row, SourceColumn, sourceCombo);
-
-        auto *targetsButton = new QPushButton(DataStore::formatSplits(transaction.targets), m_table);
-        targetsButton->setFlat(true);
-        targetsButton->setStyleSheet(targetsMatchAmount(transaction) ? QString() : "color: #b00020;");
-        connect(targetsButton, &QPushButton::clicked, this, [this, row]() {
-            openTransactionDetailsEditor(row);
-        });
-        m_table->setCellWidget(row, TargetsColumn, targetsButton);
-
-        updateComputedCells(row);
-
-        for (const Account &account : m_store.accounts) {
-            balances[account.name] += postingForAccount(transaction, account.name);
-        }
-
-        const QString month = transaction.date.toString("yyyy-MM");
-        const bool lastTransaction = transactionIndex + 1 == m_store.transactions.size();
-        const QString nextMonth = lastTransaction ? QString() : m_store.transactions.at(transactionIndex + 1).date.toString("yyyy-MM");
-        if (lastTransaction || nextMonth != month) {
-            addMonthBalanceRow(month, balances);
-        }
+        addMonthBalanceRow(month, balances, insertRow);
     }
-
     m_refreshing = false;
+}
+
+void MainWindow::refreshRowsAfterTransactionChange(int row)
+{
+    const int transactionIndex = transactionIndexForRow(row);
+    if (transactionIndex < 0) {
+        return;
+    }
+    m_refreshing = true;
+    refreshTransactionRow(row, transactionIndex);
+    m_refreshing = false;
+    refreshGeneratedBalanceRows();
+}
+
+void MainWindow::sortTransactions()
+{
+    std::stable_sort(m_store.transactions.begin(), m_store.transactions.end(), [this](const Transaction &left, const Transaction &right) {
+        const QDate leftPrimary = sortDateForTransaction(left);
+        const QDate rightPrimary = sortDateForTransaction(right);
+        if (leftPrimary != rightPrimary) {
+            return leftPrimary < rightPrimary;
+        }
+        if (left.date != right.date) {
+            return left.date < right.date;
+        }
+        if (left.paymentDate != right.paymentDate) {
+            return left.paymentDate < right.paymentDate;
+        }
+        return left.id < right.id;
+    });
+}
+
+QDate MainWindow::sortDateForTransaction(const Transaction &transaction) const
+{
+    if (m_transactionSortMode == TransactionSortMode::PaymentDate && transaction.paymentDate.isValid()) {
+        return transaction.paymentDate;
+    }
+    return transaction.date;
+}
+
+QDate MainWindow::monthEndDate(const QString &month) const
+{
+    const QDate firstDay = QDate::fromString(month + QStringLiteral("-01"), Qt::ISODate);
+    if (!firstDay.isValid()) {
+        return QDate();
+    }
+    return QDate(firstDay.year(), firstDay.month(), firstDay.daysInMonth());
 }
 
 void MainWindow::updateAccountColumns()
 {
-    QStringList headers = {tr("Date"), tr("Source account"), tr("Amount"), tr("Other party"), tr("Target accounts")};
+    QStringList headers = {tr("Booked"), tr("Paid"), tr("Source account"), tr("Amount"), tr("Other party"), tr("Receipt"), tr("Target accounts")};
     for (const Account &account : m_store.accounts) {
         headers.append(account.name);
     }
 
     m_table->setColumnCount(FixedColumnCount + m_store.accounts.size());
     m_table->setHorizontalHeaderLabels(headers);
-    m_table->horizontalHeader()->setSectionResizeMode(DateColumn, QHeaderView::ResizeToContents);
+    {
+        const QSignalBlocker blocker(m_table->horizontalHeader());
+        for (int logicalColumn = 0; logicalColumn < m_table->columnCount(); ++logicalColumn) {
+            const int visualIndex = m_table->horizontalHeader()->visualIndex(logicalColumn);
+            if (visualIndex >= 0 && visualIndex != logicalColumn) {
+                m_table->horizontalHeader()->moveSection(visualIndex, logicalColumn);
+            }
+        }
+    }
+    m_table->horizontalHeader()->setSectionResizeMode(BookingDateColumn, QHeaderView::ResizeToContents);
+    m_table->horizontalHeader()->setSectionResizeMode(PaymentDateColumn, QHeaderView::ResizeToContents);
     m_table->horizontalHeader()->setSectionResizeMode(SourceColumn, QHeaderView::ResizeToContents);
     m_table->horizontalHeader()->setSectionResizeMode(AmountColumn, QHeaderView::ResizeToContents);
     m_table->horizontalHeader()->setSectionResizeMode(PartyColumn, QHeaderView::ResizeToContents);
@@ -343,10 +527,12 @@ void MainWindow::addOpeningBalanceRow()
     m_table->insertRow(row);
     m_rowToTransaction.append(kOpeningBalanceRow);
 
-    m_table->setItem(row, DateColumn, readOnlyItem(tr("Opening")));
+    m_table->setItem(row, BookingDateColumn, readOnlyItem(tr("Opening")));
+    m_table->setItem(row, PaymentDateColumn, readOnlyItem());
     m_table->setItem(row, SourceColumn, readOnlyItem());
     m_table->setItem(row, AmountColumn, readOnlyItem());
     m_table->setItem(row, PartyColumn, readOnlyItem());
+    m_table->setItem(row, ReceiptColumn, readOnlyItem());
     m_table->setItem(row, TargetsColumn, readOnlyItem());
 
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
@@ -358,16 +544,22 @@ void MainWindow::addOpeningBalanceRow()
     setGeneratedRowBackground(row, QColor(255, 248, 220));
 }
 
-void MainWindow::addMonthBalanceRow(const QString &month, const QMap<QString, double> &balances)
+void MainWindow::addMonthBalanceRow(const QString &month, const QMap<QString, double> &balances, int insertRow)
 {
-    const int row = m_table->rowCount();
+    const int row = insertRow < 0 ? m_table->rowCount() : insertRow;
     m_table->insertRow(row);
-    m_rowToTransaction.append(kMonthBalanceRow);
+    if (insertRow < 0 || insertRow >= m_rowToTransaction.size()) {
+        m_rowToTransaction.append(kMonthBalanceRow);
+    } else {
+        m_rowToTransaction.insert(row, kMonthBalanceRow);
+    }
 
-    m_table->setItem(row, DateColumn, readOnlyItem(month));
+    m_table->setItem(row, BookingDateColumn, readOnlyItem(month));
+    m_table->setItem(row, PaymentDateColumn, readOnlyItem());
     m_table->setItem(row, SourceColumn, readOnlyItem());
     m_table->setItem(row, AmountColumn, readOnlyItem());
     m_table->setItem(row, PartyColumn, readOnlyItem());
+    m_table->setItem(row, ReceiptColumn, readOnlyItem());
     m_table->setItem(row, TargetsColumn, readOnlyItem());
 
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
@@ -425,18 +617,27 @@ void MainWindow::openTransactionDetailsEditor(int row)
     transaction.importId = m_store.transactions.at(transactionIndex).importId;
     transaction.targets = m_store.transactions.at(transactionIndex).targets;
 
-    TransactionDetailsDialog dialog(m_store.accounts, this);
+    TransactionDetailsDialog dialog(m_store.accounts, m_store.filePath(), this);
     dialog.setTransaction(transaction);
     if (dialog.exec() != QDialog::Accepted) {
         return;
     }
 
+    const QDate previousBookingDate = m_store.transactions.at(transactionIndex).date;
+    const QDate previousPaymentDate = m_store.transactions.at(transactionIndex).paymentDate;
     m_store.transactions[transactionIndex] = dialog.transaction();
-    refreshTable();
+    m_store.transactions[transactionIndex].receiptPath = storedReceiptPath(m_store.transactions.at(transactionIndex).receiptPath);
     QString error;
     if (!m_store.saveTransaction(transactionIndex, &error)) {
         showError(error);
         return;
+    }
+    if (previousBookingDate != m_store.transactions.at(transactionIndex).date
+        || previousPaymentDate != m_store.transactions.at(transactionIndex).paymentDate) {
+        sortTransactions();
+        refreshTable();
+    } else {
+        refreshRowsAfterTransactionChange(row);
     }
     statusBar()->showMessage(tr("Transaction saved"), 2000);
 }
@@ -457,6 +658,7 @@ void MainWindow::saveRowIfValid(int row)
         }
         statusBar()->showMessage(tr("Rows need a source account, positive amount, and matching target total"), 5000);
         updateComputedCells(row);
+        refreshGeneratedBalanceRows();
         m_refreshing = false;
         return;
     }
@@ -465,6 +667,8 @@ void MainWindow::saveRowIfValid(int row)
     if (transactionIndex < 0) {
         return;
     }
+    const QDate previousBookingDate = m_store.transactions.at(transactionIndex).date;
+    const QDate previousPaymentDate = m_store.transactions.at(transactionIndex).paymentDate;
     m_store.transactions[transactionIndex] = transaction;
     m_refreshing = true;
     updateComputedCells(row);
@@ -478,6 +682,12 @@ void MainWindow::saveRowIfValid(int row)
     if (!m_store.saveTransaction(transactionIndex, &error)) {
         showError(error);
         return;
+    }
+    if (previousBookingDate != transaction.date || previousPaymentDate != transaction.paymentDate) {
+        sortTransactions();
+        refreshTable();
+    } else {
+        refreshGeneratedBalanceRows();
     }
     statusBar()->showMessage(tr("Transaction saved"), 2000);
 }
@@ -519,7 +729,7 @@ void MainWindow::addTransaction()
             break;
         }
     }
-    m_store.transactions.append({0, QDate::currentDate(), defaultSource, 0.0, defaultParty, {{defaultTarget, 0.0}}, QString()});
+    m_store.transactions.append({0, QDate::currentDate(), QDate::currentDate(), defaultSource, 0.0, defaultParty, {{defaultTarget, 0.0}}, QString()});
     refreshTable();
     const int transactionIndex = m_store.transactions.size() - 1;
     for (int row = 0; row < m_rowToTransaction.size(); ++row) {
@@ -593,6 +803,48 @@ void MainWindow::editImportClassificationRules()
     if (!AppConfig::saveImportClassificationRules(rules, &error)) {
         showError(error);
     }
+}
+
+void MainWindow::classifyUnclassifiedTransactions()
+{
+    const QString unclassifiedAccount = QString::fromUtf8(kUnclassifiedAccount);
+    int changedCount = 0;
+
+    for (Transaction &transaction : m_store.transactions) {
+        const QString classifiedAccount = classifiedAccountForParty(transaction.party);
+        if (classifiedAccount.isEmpty() || classifiedAccount == unclassifiedAccount) {
+            continue;
+        }
+
+        bool changed = false;
+        if (transaction.sourceAccount == unclassifiedAccount) {
+            transaction.sourceAccount = classifiedAccount;
+            changed = true;
+        }
+        for (Split &split : transaction.targets) {
+            if (split.account == unclassifiedAccount) {
+                split.account = classifiedAccount;
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            ++changedCount;
+        }
+    }
+
+    if (changedCount == 0) {
+        statusBar()->showMessage(tr("No unclassified transactions matched classification rules"), 5000);
+        return;
+    }
+
+    QString error;
+    if (!m_store.saveTransactions(&error)) {
+        showError(error);
+        return;
+    }
+    refreshTable();
+    statusBar()->showMessage(tr("Classified %1 unclassified transactions").arg(changedCount), 5000);
 }
 
 void MainWindow::changeLanguage(const QString &languageCode)
@@ -702,6 +954,7 @@ void MainWindow::importBankStatement()
 
         Transaction transaction;
         transaction.date = row.bookingDate;
+        transaction.paymentDate = row.paymentDate.isValid() ? row.paymentDate : row.bookingDate;
         transaction.amount = amount;
         transaction.party = party;
         transaction.memo = row.memo;
@@ -718,9 +971,7 @@ void MainWindow::importBankStatement()
         ++importedCount;
     }
 
-    std::stable_sort(m_store.transactions.begin(), m_store.transactions.end(), [](const Transaction &left, const Transaction &right) {
-        return left.date < right.date;
-    });
+    sortTransactions();
 
     if (!m_store.saveAll(&error)) {
         showError(error);
@@ -784,12 +1035,18 @@ Transaction MainWindow::transactionFromRow(int row, bool *ok) const
         transaction.memo = storedTransaction.memo;
         transaction.importSource = storedTransaction.importSource;
         transaction.importId = storedTransaction.importId;
+        transaction.receiptPath = storedTransaction.receiptPath;
         transaction.targets = storedTransaction.targets;
     }
-    transaction.date = QDate::fromString(m_table->item(row, DateColumn) ? m_table->item(row, DateColumn)->text().trimmed() : QString(),
+    transaction.date = QDate::fromString(m_table->item(row, BookingDateColumn) ? m_table->item(row, BookingDateColumn)->text().trimmed() : QString(),
                                          Qt::ISODate);
     if (!transaction.date.isValid()) {
         transaction.date = QDate::currentDate();
+    }
+    transaction.paymentDate = QDate::fromString(m_table->item(row, PaymentDateColumn) ? m_table->item(row, PaymentDateColumn)->text().trimmed() : QString(),
+                                                Qt::ISODate);
+    if (!transaction.paymentDate.isValid()) {
+        transaction.paymentDate = transaction.date;
     }
 
     auto *sourceCombo = qobject_cast<QComboBox *>(m_table->cellWidget(row, SourceColumn));
@@ -916,4 +1173,84 @@ QString MainWindow::classifiedAccountForParty(const QString &partyName) const
         }
     }
     return QString::fromUtf8(kUnclassifiedAccount);
+}
+
+QString MainWindow::storedReceiptPath(const QString &filePath) const
+{
+    if (filePath.trimmed().isEmpty()) {
+        return QString();
+    }
+
+    const QFileInfo fileInfo(filePath);
+    if (fileInfo.isRelative()) {
+        return QDir::cleanPath(filePath);
+    }
+
+    const QString absolutePath = fileInfo.absoluteFilePath();
+    const QDir baseDir(QFileInfo(m_store.filePath()).absolutePath());
+    const QString relativePath = baseDir.relativeFilePath(absolutePath);
+    if (!relativePath.startsWith(QStringLiteral("../")) && relativePath != QStringLiteral("..") && !QDir::isAbsolutePath(relativePath)) {
+        return relativePath;
+    }
+    return absolutePath;
+}
+
+bool MainWindow::setReceiptForRow(int row, const QString &filePath)
+{
+    const int transactionIndex = transactionIndexForRow(row);
+    if (transactionIndex < 0 || filePath.isEmpty()) {
+        return false;
+    }
+
+    m_store.transactions[transactionIndex].receiptPath = storedReceiptPath(filePath);
+    QString error;
+    if (!m_store.saveTransaction(transactionIndex, &error)) {
+        showError(error);
+        return false;
+    }
+
+    m_refreshing = true;
+    refreshTransactionRow(row, transactionIndex);
+    m_refreshing = false;
+    statusBar()->showMessage(tr("Receipt attached"), 2000);
+    return true;
+}
+
+void MainWindow::saveAccountOrderFromHeader()
+{
+    if (!m_table || m_store.accounts.size() < 2) {
+        return;
+    }
+
+    QVector<QPair<int, Account>> visualAccounts;
+    visualAccounts.reserve(m_store.accounts.size());
+    for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
+        const int logicalColumn = FixedColumnCount + accountIndex;
+        visualAccounts.append({m_table->horizontalHeader()->visualIndex(logicalColumn), m_store.accounts.at(accountIndex)});
+    }
+    std::sort(visualAccounts.begin(), visualAccounts.end(), [](const auto &left, const auto &right) {
+        return left.first < right.first;
+    });
+
+    QList<Account> orderedAccounts;
+    for (const auto &entry : visualAccounts) {
+        orderedAccounts.append(entry.second);
+    }
+
+    bool changed = false;
+    for (int index = 0; index < orderedAccounts.size(); ++index) {
+        if (orderedAccounts.at(index).name != m_store.accounts.at(index).name) {
+            changed = true;
+            break;
+        }
+    }
+    if (!changed) {
+        return;
+    }
+
+    m_store.accounts = orderedAccounts;
+    QString error;
+    if (!m_store.saveAccounts(&error)) {
+        showError(error);
+    }
 }

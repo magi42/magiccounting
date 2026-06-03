@@ -140,6 +140,10 @@
         <translation>Osapuolet...</translation>
     </message>
     <message>
+        <source>Classify Unclassified</source>
+        <translation>Luokittele luokittelemattomat</translation>
+    </message>
+    <message>
         <location filename="../src/MainWindow.cpp" line="162"/>
         <source>Transactions</source>
         <translation>Tapahtumat</translation>
@@ -218,7 +222,15 @@
     <message>
         <location filename="../src/MainWindow.cpp" line="287"/>
         <source>Date</source>
-        <translation>Päiväys</translation>
+        <translation type="vanished">Päiväys</translation>
+    </message>
+    <message>
+        <source>Booked</source>
+        <translation>Kirjattu</translation>
+    </message>
+    <message>
+        <source>Paid</source>
+        <translation>Maksettu</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.cpp" line="287"/>
@@ -234,6 +246,10 @@
         <location filename="../src/MainWindow.cpp" line="287"/>
         <source>Other party</source>
         <translation>Vastapuoli</translation>
+    </message>
+    <message>
+        <source>Receipt</source>
+        <translation>Kuitti</translation>
     </message>
     <message>
         <location filename="../src/MainWindow.cpp" line="287"/>
@@ -298,6 +314,145 @@
         <location filename="../src/MainWindow.cpp" line="594"/>
         <source>Transactions saved</source>
         <translation>Tapahtumat tallennettu</translation>
+    </message>
+    <message>
+        <source>No unclassified transactions matched classification rules</source>
+        <translation>Luokittelemattomille tapahtumille ei löytynyt luokittelusääntöjä</translation>
+    </message>
+    <message>
+        <source>Classified %1 unclassified transactions</source>
+        <translation>Luokiteltiin %1 luokittelematonta tapahtumaa</translation>
+    </message>
+    <message>
+        <source>Receipt attached</source>
+        <translation>Kuitti liitetty</translation>
+    </message>
+</context>
+<context>
+    <name>TransactionDetailsDialog</name>
+    <message>
+        <source>Transaction Details</source>
+        <translation>Tilitapahtuman tiedot</translation>
+    </message>
+    <message>
+        <source>Booked</source>
+        <translation>Kirjattu</translation>
+    </message>
+    <message>
+        <source>Paid</source>
+        <translation>Maksettu</translation>
+    </message>
+    <message>
+        <source>Source account</source>
+        <translation>Lähdetili</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Summa</translation>
+    </message>
+    <message>
+        <source>Other party</source>
+        <translation>Vastapuoli</translation>
+    </message>
+    <message>
+        <source>Memo</source>
+        <translation>Muistiinpano</translation>
+    </message>
+    <message>
+        <source>Import source</source>
+        <translation>Tuontilähde</translation>
+    </message>
+    <message>
+        <source>Import ID</source>
+        <translation>Tuontitunniste</translation>
+    </message>
+    <message>
+        <source>Counterpart account</source>
+        <translation>Vastatili</translation>
+    </message>
+    <message>
+        <source>Add counterpart</source>
+        <translation>Lisää vastatili</translation>
+    </message>
+    <message>
+        <source>Remove counterpart</source>
+        <translation>Poista vastatili</translation>
+    </message>
+    <message>
+        <source>Receipt</source>
+        <translation>Kuitti</translation>
+    </message>
+    <message>
+        <source>Remove receipt</source>
+        <translation>Poista kuitti</translation>
+    </message>
+    <message>
+        <source>Open receipt</source>
+        <translation>Avaa kuitti</translation>
+    </message>
+    <message>
+        <source>Drop receipt image here</source>
+        <translation>Pudota kuittikuva tähän</translation>
+    </message>
+    <message>
+        <source>No receipt</source>
+        <translation>Ei kuittia</translation>
+    </message>
+    <message>
+        <source>Could not load receipt image</source>
+        <translation type="vanished">Kuittikuvaa ei voitu ladata</translation>
+    </message>
+    <message>
+        <source>Could not load receipt image
+Path: %1
+Reason: %2
+Supported formats: %3</source>
+        <translation>Kuittikuvaa ei voitu ladata
+Polku: %1
+Syy: %2
+Tuetut muodot: %3</translation>
+    </message>
+    <message>
+        <source>PDF receipt attached
+Path: %1</source>
+        <translation type="vanished">PDF-kuitti liitetty
+Polku: %1</translation>
+    </message>
+    <message>
+        <source>Could not render PDF receipt
+Path: %1
+Reason: %2</source>
+        <translation>PDF-kuittia ei voitu renderöidä
+Polku: %1
+Syy: %2</translation>
+    </message>
+    <message>
+        <source>Could not load PDF preview
+Path: %1
+Reason: %2</source>
+        <translation>PDF-esikatselua ei voitu ladata
+Polku: %1
+Syy: %2</translation>
+    </message>
+    <message>
+        <source>Could not create temporary preview folder</source>
+        <translation>Väliaikaista esikatselukansiota ei voitu luoda</translation>
+    </message>
+    <message>
+        <source>pdftoppm did not finish in time</source>
+        <translation>pdftoppm ei valmistunut ajoissa</translation>
+    </message>
+    <message>
+        <source>pdftoppm exited with code %1</source>
+        <translation>pdftoppm päättyi paluukoodilla %1</translation>
+    </message>
+    <message>
+        <source>pdftoppm did not create %1</source>
+        <translation>pdftoppm ei luonut tiedostoa %1</translation>
+    </message>
+    <message>
+        <source>Counterpart total: %1 / Amount: %2</source>
+        <translation>Vastatilien summa: %1 / Summa: %2</translation>
     </message>
 </context>
 <context>
