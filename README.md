@@ -32,10 +32,14 @@ Use `File -> Import Bank Statement...` to import S-Pankki account transactions f
 
 The default counter account for imported rows is `Luokittelemattomat`. Use `Edit -> Import Classification Rules...` to configure case-insensitive text rules for the other party, for example mapping a grocery store name fragment to a food account.
 
+Use `Edit -> Parties...` to assign a default account to a transaction counterpart. Exact counterpart defaults are applied before the broader import classification rules. When an account is renamed in `Edit -> Accounts...`, transactions, counterpart defaults, and import classification rules that reference that account are updated to the new name.
+
 The last opened accounting file is stored in the application configuration file `config.json` under Qt's application config folder, and is reopened on the next startup when no command-line file is provided. If no previous file exists, the app asks for a `.maccd` file name at startup.
 
 Legacy folders containing `accounts.json`, `parties.json`, and `transactions.json` can still be opened by passing the folder path on the command line; the app then saves the data into `accounting.maccd` inside that folder.
 
-Click or double-click the `Target accounts` cell to edit split rows in a popup. The popup keeps `OK` disabled until the target split total equals the transaction `Amount`. The source account posting is shown as a negative amount, and negative postings are rendered in red.
+Double-click a transaction row, or click its `Target accounts` cell, to edit the full transaction details in one dialog. The dialog includes the memo and counterpart account split rows, and keeps `OK` disabled until the target split total equals the transaction `Amount`. The memo is not shown as a separate table column. The source account posting is shown as a negative amount, and negative postings are rendered in red.
+
+Account posting columns can be reordered by dragging their headers and resized from the header edges.
 
 The first row is an opening-balance row. Enter each account's initial balance directly in that row; values are saved in the active accounting file. The app inserts a generated balance row after the last transaction of each month, showing each account's balance after that month.

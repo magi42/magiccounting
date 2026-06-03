@@ -41,7 +41,7 @@ AccountListDialog::AccountListDialog(QWidget *parent)
     layout->addWidget(buttonBox);
 }
 
-bool AccountListDialog::editAccounts(QWidget *parent, QList<Account> *accounts)
+bool AccountListDialog::editAccounts(QWidget *parent, QList<Account> *accounts, QMap<QString, QString> *renamedAccounts)
 {
     AccountListDialog dialog(parent);
     dialog.setWindowTitle(dialog.tr("Accounts"));
@@ -51,7 +51,9 @@ bool AccountListDialog::editAccounts(QWidget *parent, QList<Account> *accounts)
     dialog.m_table->setRowCount(accounts->size());
 
     for (int row = 0; row < accounts->size(); ++row) {
-        dialog.m_table->setItem(row, 0, new QTableWidgetItem(accounts->at(row).name));
+        auto *nameItem = new QTableWidgetItem(accounts->at(row).name);
+        nameItem->setData(Qt::UserRole, accounts->at(row).name);
+        dialog.m_table->setItem(row, 0, nameItem);
         dialog.m_table->setItem(row, 1, new QTableWidgetItem(accounts->at(row).kind));
     }
 
@@ -59,34 +61,65 @@ bool AccountListDialog::editAccounts(QWidget *parent, QList<Account> *accounts)
         return false;
     }
 
-    QMap<QString, double> existingBalances;
+    QMap<QString, double> originalBalances;
     for (const Account &account : *accounts) {
-        existingBalances.insert(account.name, account.openingBalance);
+        originalBalances.insert(account.name, account.openingBalance);
     }
 
+    if (renamedAccounts) {
+        renamedAccounts->clear();
+    }
     accounts->clear();
     for (int row = 0; row < dialog.m_table->rowCount(); ++row) {
-        const QString name = dialog.m_table->item(row, 0) ? dialog.m_table->item(row, 0)->text().trimmed() : QString();
+        QTableWidgetItem *nameItem = dialog.m_table->item(row, 0);
+        const QString name = nameItem ? nameItem->text().trimmed() : QString();
+        const QString originalName = nameItem ? nameItem->data(Qt::UserRole).toString() : QString();
         const QString kind = dialog.m_table->item(row, 1) ? dialog.m_table->item(row, 1)->text().trimmed() : QString();
         if (!name.isEmpty()) {
-            accounts->append({name, kind.isEmpty() ? "category" : kind, existingBalances.value(name, 0.0)});
+            accounts->append({name,
+                              kind.isEmpty() ? "category" : kind,
+                              originalName.isEmpty() ? 0.0 : originalBalances.value(originalName, 0.0)});
+            if (renamedAccounts && originalName != name && !originalName.isEmpty()) {
+                renamedAccounts->insert(originalName, name);
+            }
         }
     }
     return true;
 }
 
-bool AccountListDialog::editParties(QWidget *parent, QList<Party> *parties)
+bool AccountListDialog::editParties(QWidget *parent, QList<Party> *parties, const QList<Account> &accounts)
 {
     AccountListDialog dialog(parent);
     dialog.setWindowTitle(dialog.tr("Parties"));
-    dialog.m_table->setColumnCount(1);
-    dialog.m_table->setHorizontalHeaderLabels({dialog.tr("Name")});
+    dialog.m_table->setColumnCount(2);
+    dialog.m_table->setHorizontalHeaderLabels({dialog.tr("Name"), dialog.tr("Default account")});
     dialog.m_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     dialog.m_table->setRowCount(parties->size());
 
+    QStringList accountNames;
+    for (const Account &account : accounts) {
+        accountNames.append(account.name);
+    }
+
     for (int row = 0; row < parties->size(); ++row) {
         dialog.m_table->setItem(row, 0, new QTableWidgetItem(parties->at(row).name));
+        auto *accountCombo = new QComboBox(&dialog);
+        accountCombo->setEditable(true);
+        accountCombo->addItem(QString());
+        accountCombo->addItems(accountNames);
+        accountCombo->setCurrentText(parties->at(row).defaultAccount);
+        dialog.m_table->setCellWidget(row, 1, accountCombo);
     }
+
+    connect(dialog.m_table, &QTableWidget::cellChanged, &dialog, [&dialog, accountNames](int row, int) {
+        if (!dialog.m_table->cellWidget(row, 1)) {
+            auto *accountCombo = new QComboBox(&dialog);
+            accountCombo->setEditable(true);
+            accountCombo->addItem(QString());
+            accountCombo->addItems(accountNames);
+            dialog.m_table->setCellWidget(row, 1, accountCombo);
+        }
+    });
 
     if (dialog.exec() != QDialog::Accepted) {
         return false;
@@ -95,8 +128,12 @@ bool AccountListDialog::editParties(QWidget *parent, QList<Party> *parties)
     parties->clear();
     for (int row = 0; row < dialog.m_table->rowCount(); ++row) {
         const QString name = dialog.m_table->item(row, 0) ? dialog.m_table->item(row, 0)->text().trimmed() : QString();
+        const auto *accountCombo = qobject_cast<QComboBox *>(dialog.m_table->cellWidget(row, 1));
+        const QString defaultAccount = accountCombo
+                                           ? accountCombo->currentText().trimmed()
+                                           : (dialog.m_table->item(row, 1) ? dialog.m_table->item(row, 1)->text().trimmed() : QString());
         if (!name.isEmpty()) {
-            parties->append({name});
+            parties->append({name, defaultAccount});
         }
     }
     return true;

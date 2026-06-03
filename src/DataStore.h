@@ -15,6 +15,7 @@ struct Account
 struct Party
 {
     QString name;
+    QString defaultAccount;
 };
 
 struct Split

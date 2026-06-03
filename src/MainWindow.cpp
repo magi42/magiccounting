@@ -4,7 +4,7 @@
 #include "AppConfig.h"
 #include "BankStatementImporter.h"
 #include "LanguageManager.h"
-#include "SplitEditorDialog.h"
+#include "TransactionDetailsDialog.h"
 
 #include <QApplication>
 #include <QComboBox>
@@ -64,6 +64,7 @@ void MainWindow::buildUi()
     m_table->verticalHeader()->setVisible(false);
     m_table->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_table->setAlternatingRowColors(true);
+    m_table->horizontalHeader()->setSectionsMovable(true);
     setCentralWidget(m_table);
 
     buildMenus();
@@ -85,8 +86,9 @@ void MainWindow::buildUi()
     });
 
     connect(m_table, &QTableWidget::cellDoubleClicked, this, [this](int row, int column) {
-        if (column == TargetsColumn) {
-            openSplitEditor(row);
+        Q_UNUSED(column);
+        if (transactionIndexForRow(row) >= 0) {
+            openTransactionDetailsEditor(row);
         }
     });
 
@@ -244,7 +246,6 @@ void MainWindow::refreshTable()
         amountItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         m_table->setItem(row, AmountColumn, amountItem);
         m_table->setItem(row, PartyColumn, new QTableWidgetItem(transaction.party));
-        m_table->setItem(row, MemoColumn, new QTableWidgetItem(transaction.memo));
 
         auto *sourceCombo = new QComboBox(m_table);
         for (const Account &account : m_store.accounts) {
@@ -272,7 +273,7 @@ void MainWindow::refreshTable()
         targetsButton->setFlat(true);
         targetsButton->setStyleSheet(targetsMatchAmount(transaction) ? QString() : "color: #b00020;");
         connect(targetsButton, &QPushButton::clicked, this, [this, row]() {
-            openSplitEditor(row);
+            openTransactionDetailsEditor(row);
         });
         m_table->setCellWidget(row, TargetsColumn, targetsButton);
 
@@ -295,7 +296,7 @@ void MainWindow::refreshTable()
 
 void MainWindow::updateAccountColumns()
 {
-    QStringList headers = {tr("Date"), tr("Source account"), tr("Amount"), tr("Other party"), tr("Target accounts"), tr("Memo")};
+    QStringList headers = {tr("Date"), tr("Source account"), tr("Amount"), tr("Other party"), tr("Target accounts")};
     for (const Account &account : m_store.accounts) {
         headers.append(account.name);
     }
@@ -306,10 +307,12 @@ void MainWindow::updateAccountColumns()
     m_table->horizontalHeader()->setSectionResizeMode(SourceColumn, QHeaderView::ResizeToContents);
     m_table->horizontalHeader()->setSectionResizeMode(AmountColumn, QHeaderView::ResizeToContents);
     m_table->horizontalHeader()->setSectionResizeMode(PartyColumn, QHeaderView::ResizeToContents);
-    m_table->horizontalHeader()->setSectionResizeMode(TargetsColumn, QHeaderView::Stretch);
-    m_table->horizontalHeader()->setSectionResizeMode(MemoColumn, QHeaderView::Stretch);
+    m_table->horizontalHeader()->setSectionResizeMode(TargetsColumn, QHeaderView::Interactive);
     for (int column = FixedColumnCount; column < m_table->columnCount(); ++column) {
-        m_table->horizontalHeader()->setSectionResizeMode(column, QHeaderView::ResizeToContents);
+        m_table->horizontalHeader()->setSectionResizeMode(column, QHeaderView::Interactive);
+        if (m_table->columnWidth(column) < 90) {
+            m_table->setColumnWidth(column, 110);
+        }
     }
 }
 
@@ -345,7 +348,6 @@ void MainWindow::addOpeningBalanceRow()
     m_table->setItem(row, AmountColumn, readOnlyItem());
     m_table->setItem(row, PartyColumn, readOnlyItem());
     m_table->setItem(row, TargetsColumn, readOnlyItem());
-    m_table->setItem(row, MemoColumn, readOnlyItem(tr("Initial balances")));
 
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
         auto *item = new QTableWidgetItem(moneyText(m_store.accounts.at(accountIndex).openingBalance));
@@ -367,7 +369,6 @@ void MainWindow::addMonthBalanceRow(const QString &month, const QMap<QString, do
     m_table->setItem(row, AmountColumn, readOnlyItem());
     m_table->setItem(row, PartyColumn, readOnlyItem());
     m_table->setItem(row, TargetsColumn, readOnlyItem());
-    m_table->setItem(row, MemoColumn, readOnlyItem(tr("Month balance")));
 
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
         const Account &account = m_store.accounts.at(accountIndex);
@@ -409,7 +410,7 @@ int MainWindow::transactionIndexForRow(int row) const
     return m_rowToTransaction.at(row);
 }
 
-void MainWindow::openSplitEditor(int row)
+void MainWindow::openTransactionDetailsEditor(int row)
 {
     const int transactionIndex = transactionIndexForRow(row);
     if (transactionIndex < 0) {
@@ -418,24 +419,26 @@ void MainWindow::openSplitEditor(int row)
 
     bool ok = false;
     Transaction transaction = transactionFromRow(row, &ok);
-    if (transaction.amount <= 0.0) {
-        statusBar()->showMessage(tr("Enter a positive Amount before editing target accounts"), 5000);
-        return;
-    }
+    transaction.id = m_store.transactions.at(transactionIndex).id;
+    transaction.memo = m_store.transactions.at(transactionIndex).memo;
+    transaction.importSource = m_store.transactions.at(transactionIndex).importSource;
+    transaction.importId = m_store.transactions.at(transactionIndex).importId;
+    transaction.targets = m_store.transactions.at(transactionIndex).targets;
 
-    SplitEditorDialog dialog(m_store.accounts, transaction.amount, this);
-    dialog.setSplits(m_store.transactions.at(transactionIndex).targets);
+    TransactionDetailsDialog dialog(m_store.accounts, this);
+    dialog.setTransaction(transaction);
     if (dialog.exec() != QDialog::Accepted) {
         return;
     }
 
-    transaction.targets = dialog.splits();
-    m_store.transactions[transactionIndex] = transaction;
+    m_store.transactions[transactionIndex] = dialog.transaction();
     refreshTable();
     QString error;
     if (!m_store.saveTransaction(transactionIndex, &error)) {
         showError(error);
+        return;
     }
+    statusBar()->showMessage(tr("Transaction saved"), 2000);
 }
 
 void MainWindow::saveRowIfValid(int row)
@@ -548,12 +551,19 @@ void MainWindow::removeSelectedTransaction()
 
 void MainWindow::editAccounts()
 {
-    if (!AccountListDialog::editAccounts(this, &m_store.accounts)) {
+    QMap<QString, QString> renamedAccounts;
+    if (!AccountListDialog::editAccounts(this, &m_store.accounts, &renamedAccounts)) {
         return;
     }
 
+    renameAccountReferences(renamedAccounts);
+
     QString error;
-    if (!m_store.saveAccounts(&error)) {
+    if (!renamedAccounts.isEmpty()) {
+        if (!m_store.saveAll(&error)) {
+            showError(error);
+        }
+    } else if (!m_store.saveAccounts(&error)) {
         showError(error);
     }
     refreshTable();
@@ -561,7 +571,7 @@ void MainWindow::editAccounts()
 
 void MainWindow::editParties()
 {
-    if (!AccountListDialog::editParties(this, &m_store.parties)) {
+    if (!AccountListDialog::editParties(this, &m_store.parties, m_store.accounts)) {
         return;
     }
 
@@ -741,7 +751,7 @@ void MainWindow::saveAccountingFileAs()
         return;
     }
     if (QFileInfo(selectedPath).suffix().isEmpty()) {
-        selectedPath.append(".macc");
+        selectedPath.append(".maccd");
     }
 
     QString error;
@@ -768,6 +778,14 @@ Transaction MainWindow::transactionFromRow(int row, bool *ok) const
     Transaction transaction;
     const int transactionIndex = transactionIndexForRow(row);
     bool valid = transactionIndex >= 0 && row < m_table->rowCount();
+    if (transactionIndex >= 0) {
+        const Transaction &storedTransaction = m_store.transactions.at(transactionIndex);
+        transaction.id = storedTransaction.id;
+        transaction.memo = storedTransaction.memo;
+        transaction.importSource = storedTransaction.importSource;
+        transaction.importId = storedTransaction.importId;
+        transaction.targets = storedTransaction.targets;
+    }
     transaction.date = QDate::fromString(m_table->item(row, DateColumn) ? m_table->item(row, DateColumn)->text().trimmed() : QString(),
                                          Qt::ISODate);
     if (!transaction.date.isValid()) {
@@ -779,8 +797,6 @@ Transaction MainWindow::transactionFromRow(int row, bool *ok) const
     bool amountOk = false;
     transaction.amount = m_table->item(row, AmountColumn) ? m_table->item(row, AmountColumn)->text().trimmed().toDouble(&amountOk) : 0.0;
     transaction.party = m_table->item(row, PartyColumn) ? m_table->item(row, PartyColumn)->text().trimmed() : QString();
-    transaction.memo = m_table->item(row, MemoColumn) ? m_table->item(row, MemoColumn)->text() : QString();
-    transaction.targets = transactionIndex >= 0 ? m_store.transactions.at(transactionIndex).targets : QList<Split>();
     valid = valid && amountOk && transaction.amount > 0.0 && !transaction.sourceAccount.isEmpty() && targetsMatchAmount(transaction);
 
     if (ok) {
@@ -842,12 +858,57 @@ void MainWindow::ensureAccount(const QString &accountName, const QString &kind)
 void MainWindow::ensureParty(const QString &partyName)
 {
     if (!partyName.isEmpty() && !partyExists(partyName)) {
-        m_store.parties.append({partyName});
+        m_store.parties.append({partyName, QString()});
+    }
+}
+
+void MainWindow::renameAccountReferences(const QMap<QString, QString> &renamedAccounts)
+{
+    if (renamedAccounts.isEmpty()) {
+        return;
+    }
+
+    for (Transaction &transaction : m_store.transactions) {
+        if (renamedAccounts.contains(transaction.sourceAccount)) {
+            transaction.sourceAccount = renamedAccounts.value(transaction.sourceAccount);
+        }
+        for (Split &split : transaction.targets) {
+            if (renamedAccounts.contains(split.account)) {
+                split.account = renamedAccounts.value(split.account);
+            }
+        }
+    }
+
+    for (Party &party : m_store.parties) {
+        if (renamedAccounts.contains(party.defaultAccount)) {
+            party.defaultAccount = renamedAccounts.value(party.defaultAccount);
+        }
+    }
+
+    QList<ImportClassificationRule> rules = AppConfig::importClassificationRules();
+    bool rulesChanged = false;
+    for (ImportClassificationRule &rule : rules) {
+        if (renamedAccounts.contains(rule.account)) {
+            rule.account = renamedAccounts.value(rule.account);
+            rulesChanged = true;
+        }
+    }
+    if (rulesChanged) {
+        QString error;
+        if (!AppConfig::saveImportClassificationRules(rules, &error)) {
+            showError(error);
+        }
     }
 }
 
 QString MainWindow::classifiedAccountForParty(const QString &partyName) const
 {
+    for (const Party &party : m_store.parties) {
+        if (party.name.compare(partyName, Qt::CaseInsensitive) == 0 && !party.defaultAccount.isEmpty()) {
+            return party.defaultAccount;
+        }
+    }
+
     const QList<ImportClassificationRule> rules = AppConfig::importClassificationRules();
     for (const ImportClassificationRule &rule : rules) {
         if (partyName.contains(rule.partyPattern, Qt::CaseInsensitive)) {

@@ -39,8 +39,8 @@ add_executable(magiccounting
     src/LanguageManager.h
     src/MainWindow.cpp
     src/MainWindow.h
-    src/SplitEditorDialog.cpp
-    src/SplitEditorDialog.h
+    src/TransactionDetailsDialog.cpp
+    src/TransactionDetailsDialog.h
     src/main.cpp
 )
 

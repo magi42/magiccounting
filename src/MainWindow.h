@@ -27,7 +27,6 @@ private:
         AmountColumn,
         PartyColumn,
         TargetsColumn,
-        MemoColumn,
         FixedColumnCount
     };
 
@@ -72,7 +71,7 @@ private:
     void addMonthBalanceRow(const QString &month, const QMap<QString, double> &balances);
     void setGeneratedRowBackground(int row, const QColor &color);
     int transactionIndexForRow(int row) const;
-    void openSplitEditor(int row);
+    void openTransactionDetailsEditor(int row);
     void saveRowIfValid(int row);
     void saveOpeningBalances();
     void addTransaction();
@@ -93,5 +92,6 @@ private:
     bool partyExists(const QString &partyName) const;
     void ensureAccount(const QString &accountName, const QString &kind);
     void ensureParty(const QString &partyName);
+    void renameAccountReferences(const QMap<QString, QString> &renamedAccounts);
     QString classifiedAccountForParty(const QString &partyName) const;
 };

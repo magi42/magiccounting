@@ -85,6 +85,9 @@ QJsonObject partyToJson(const Party &party)
 {
     QJsonObject object;
     object["name"] = party.name;
+    if (!party.defaultAccount.isEmpty()) {
+        object["defaultAccount"] = party.defaultAccount;
+    }
     return object;
 }
 
@@ -171,15 +174,39 @@ bool execSql(QSqlDatabase &database, const QString &sql, QString *errorMessage)
     return false;
 }
 
+bool columnExists(QSqlDatabase &database, const QString &table, const QString &column, QString *errorMessage)
+{
+    QSqlQuery query(database);
+    query.prepare(QStringLiteral("PRAGMA table_info(%1)").arg(table));
+    if (!query.exec()) {
+        if (errorMessage) {
+            *errorMessage = QCoreApplication::translate("DataStore", "Database error: %1").arg(sqlError(query));
+        }
+        return false;
+    }
+    while (query.next()) {
+        if (query.value(1).toString() == column) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool createSchema(QSqlDatabase &database, QString *errorMessage)
 {
-    return execSql(database, QStringLiteral("PRAGMA foreign_keys = ON"), errorMessage)
+    if (!(execSql(database, QStringLiteral("PRAGMA foreign_keys = ON"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY, kind TEXT NOT NULL, opening_balance REAL NOT NULL DEFAULT 0)"), errorMessage)
-        && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS parties (name TEXT PRIMARY KEY)"), errorMessage)
+        && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS parties (name TEXT PRIMARY KEY, default_account TEXT)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS transactions (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT NOT NULL, source_account TEXT NOT NULL, amount REAL NOT NULL, party TEXT, memo TEXT, import_source TEXT, import_id TEXT)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS splits (transaction_id INTEGER NOT NULL, position INTEGER NOT NULL, account TEXT NOT NULL, amount REAL NOT NULL, PRIMARY KEY (transaction_id, position), FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE)"), errorMessage)
-        && execSql(database, QStringLiteral("CREATE UNIQUE INDEX IF NOT EXISTS transactions_import_unique ON transactions(import_source, import_id) WHERE import_source <> '' AND import_id <> ''"), errorMessage);
+        && execSql(database, QStringLiteral("CREATE UNIQUE INDEX IF NOT EXISTS transactions_import_unique ON transactions(import_source, import_id) WHERE import_source <> '' AND import_id <> ''"), errorMessage))) {
+        return false;
+    }
+    if (!columnExists(database, QStringLiteral("parties"), QStringLiteral("default_account"), errorMessage)) {
+        return execSql(database, QStringLiteral("ALTER TABLE parties ADD COLUMN default_account TEXT"), errorMessage);
+    }
+    return true;
 }
 
 bool insertAccount(QSqlDatabase &database, const Account &account, QString *errorMessage)
@@ -202,8 +229,9 @@ bool insertAccount(QSqlDatabase &database, const Account &account, QString *erro
 bool insertParty(QSqlDatabase &database, const Party &party, QString *errorMessage)
 {
     QSqlQuery query(database);
-    query.prepare(QStringLiteral("INSERT INTO parties (name) VALUES (?)"));
+    query.prepare(QStringLiteral("INSERT INTO parties (name, default_account) VALUES (?, ?)"));
     query.addBindValue(party.name);
+    query.addBindValue(party.defaultAccount);
     if (query.exec()) {
         return true;
     }
@@ -379,7 +407,7 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
 
         parties.clear();
         QSqlQuery partyQuery(connection.database);
-        if (!partyQuery.exec(QStringLiteral("SELECT name FROM parties ORDER BY rowid"))) {
+        if (!partyQuery.exec(QStringLiteral("SELECT name, default_account FROM parties ORDER BY rowid"))) {
             if (errorMessage) {
                 *errorMessage = QCoreApplication::translate("DataStore", "Could not load parties: %1")
                                     .arg(sqlError(partyQuery));
@@ -387,7 +415,7 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
             return false;
         }
         while (partyQuery.next()) {
-            parties.append({partyQuery.value(0).toString()});
+            parties.append({partyQuery.value(0).toString(), partyQuery.value(1).toString()});
         }
 
         transactions.clear();
@@ -475,7 +503,7 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
     parties.clear();
     for (const QJsonValue &value : partyArray) {
         const QJsonObject object = value.toObject();
-        parties.append({object.value("name").toString()});
+        parties.append({object.value("name").toString(), object.value("defaultAccount").toString()});
     }
 
     transactions.clear();
@@ -881,9 +909,9 @@ void DataStore::seedDefaults()
         {"income", "category", 0.0},
     };
     parties = {
-        {"Grocery shop"},
-        {"Fuel station"},
-        {"Employer"},
+        {"Grocery shop", "food"},
+        {"Fuel station", "car"},
+        {"Employer", "income"},
     };
     transactions = {
         {0, QDate::currentDate(), "bank", 24.90, "Grocery shop", {{"food", 24.90}}, "Weekly groceries"},
