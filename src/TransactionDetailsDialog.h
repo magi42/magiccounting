@@ -37,6 +37,7 @@ private:
     QTextEdit *m_memoEdit = nullptr;
     QLineEdit *m_importSourceEdit = nullptr;
     QLineEdit *m_importIdEdit = nullptr;
+    QComboBox *m_reviewStatusCombo = nullptr;
     QString m_accountingFilePath;
     QString m_receiptPath;
     QLabel *m_receiptImageLabel = nullptr;
@@ -47,6 +48,7 @@ private:
     QTableWidget *m_targetsTable = nullptr;
     QLabel *m_totalLabel = nullptr;
     QPushButton *m_okButton = nullptr;
+    QPushButton *m_approveButton = nullptr;
 
     void addSplitRow(const Split &split = Split());
     void updateValidity();
@@ -61,4 +63,6 @@ private:
     QString renderPdfPreview(const QString &path, QString *errorMessage) const;
     void showReceiptImage(const QImage &image);
     double imageWidthMillimeters(const QImage &image) const;
+    QString currentReviewStatus() const;
+    void setReviewStatus(const QString &status);
 };

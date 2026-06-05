@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include <QSignalBlocker>
 #include <QStatusBar>
+#include <QScrollBar>
 #include <QTimer>
 #include <QToolBar>
 #include <QUrl>
@@ -48,6 +49,9 @@ QString moneyText(double value)
 constexpr int kOpeningBalanceRow = -1;
 constexpr int kMonthBalanceRow = -2;
 const char *kUnclassifiedAccount = "Luokittelemattomat";
+const char *kReviewUnchecked = "unchecked";
+const char *kReviewProblem = "problem";
+const char *kReviewApproved = "approved";
 
 QTableWidgetItem *readOnlyItem(const QString &text = QString())
 {
@@ -77,6 +81,29 @@ void MainWindow::buildUi()
     m_table->viewport()->setAcceptDrops(true);
     m_table->viewport()->installEventFilter(this);
     setCentralWidget(m_table);
+
+    m_frozenView = new QTableView(m_table);
+    m_frozenView->setModel(m_table->model());
+    m_frozenView->setFocusPolicy(Qt::NoFocus);
+    m_frozenView->verticalHeader()->hide();
+    m_frozenView->horizontalHeader()->setSectionsMovable(false);
+    m_frozenView->setSelectionModel(m_table->selectionModel());
+    m_frozenView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_frozenView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_frozenView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_frozenView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_frozenView->setAcceptDrops(true);
+    m_frozenView->viewport()->setAcceptDrops(true);
+    m_frozenView->viewport()->installEventFilter(this);
+    m_frozenView->show();
+    m_frozenView->raise();
+
+    connect(m_table->verticalScrollBar(), &QScrollBar::valueChanged, m_frozenView->verticalScrollBar(), &QScrollBar::setValue);
+    connect(m_frozenView, &QTableView::doubleClicked, this, [this](const QModelIndex &index) {
+        if (transactionIndexForRow(index.row()) >= 0) {
+            openTransactionDetailsEditor(index.row());
+        }
+    });
 
     buildMenus();
 
@@ -112,6 +139,13 @@ void MainWindow::buildUi()
             m_transactionSortMode = TransactionSortMode::PaymentDate;
             sortTransactions();
             refreshTable();
+        }
+    });
+
+    connect(m_table->horizontalHeader(), &QHeaderView::sectionResized, this, [this](int logicalIndex, int, int newSize) {
+        if (m_frozenView && isFrozenColumn(logicalIndex)) {
+            m_frozenView->setColumnWidth(logicalIndex, newSize);
+            updateFrozenTableGeometry();
         }
     });
 
@@ -237,10 +271,11 @@ void MainWindow::changeEvent(QEvent *event)
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
-    if (watched == m_table->viewport()) {
+    if (watched == m_table->viewport() || (m_frozenView && watched == m_frozenView->viewport())) {
+        auto *view = watched == m_table->viewport() ? static_cast<QTableView *>(m_table) : m_frozenView;
         if (event->type() == QEvent::DragEnter || event->type() == QEvent::DragMove) {
             auto *dragEvent = static_cast<QDragMoveEvent *>(event);
-            if (dragEvent->mimeData()->hasUrls() && transactionIndexForRow(m_table->rowAt(dragEvent->pos().y())) >= 0) {
+            if (dragEvent->mimeData()->hasUrls() && transactionIndexForRow(view->rowAt(dragEvent->pos().y())) >= 0) {
                 dragEvent->acceptProposedAction();
                 return true;
             }
@@ -249,7 +284,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
             auto *dropEvent = static_cast<QDropEvent *>(event);
             const QList<QUrl> urls = dropEvent->mimeData()->urls();
             if (!urls.isEmpty()) {
-                const int row = m_table->rowAt(dropEvent->pos().y());
+                const int row = view->rowAt(dropEvent->pos().y());
                 if (setReceiptForRow(row, urls.first().toLocalFile())) {
                     dropEvent->acceptProposedAction();
                     return true;
@@ -258,6 +293,12 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QMainWindow::eventFilter(watched, event);
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    updateFrozenTableGeometry();
 }
 
 void MainWindow::loadInitialData()
@@ -308,6 +349,8 @@ void MainWindow::refreshTable()
 
     m_refreshing = false;
     refreshGeneratedBalanceRows();
+    updateFrozenColumns();
+    updateFrozenTableGeometry();
 }
 
 void MainWindow::refreshTransactionRow(int row, int transactionIndex)
@@ -321,6 +364,7 @@ void MainWindow::refreshTransactionRow(int row, int transactionIndex)
     m_table->setItem(row, PaymentDateColumn, new QTableWidgetItem(transaction.paymentDate.isValid()
                                                                      ? transaction.paymentDate.toString(Qt::ISODate)
                                                                      : transaction.date.toString(Qt::ISODate)));
+    m_table->setItem(row, SourceColumn, new QTableWidgetItem(transaction.sourceAccount));
     auto *amountItem = new QTableWidgetItem(moneyText(transaction.amount));
     amountItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
     m_table->setItem(row, AmountColumn, amountItem);
@@ -357,7 +401,13 @@ void MainWindow::refreshTransactionRow(int row, int transactionIndex)
 
     auto *targetsButton = new QPushButton(DataStore::formatSplits(transaction.targets), m_table);
     targetsButton->setFlat(true);
-    targetsButton->setStyleSheet(targetsMatchAmount(transaction) ? QString() : "color: #b00020;");
+    const QColor reviewColor = reviewStatusColor(transaction.reviewStatus);
+    auto *targetsItem = readOnlyItem(DataStore::formatSplits(transaction.targets));
+    targetsItem->setBackground(QBrush(reviewColor));
+    m_table->setItem(row, TargetsColumn, targetsItem);
+    targetsButton->setStyleSheet(QStringLiteral("background-color: %1;%2")
+                                     .arg(reviewColor.name(),
+                                          targetsMatchAmount(transaction) ? QString() : QStringLiteral("color: #b00020;")));
     connect(targetsButton, &QPushButton::clicked, this, [this, targetsButton]() {
         for (int row = 0; row < m_table->rowCount(); ++row) {
             if (m_table->cellWidget(row, TargetsColumn) == targetsButton) {
@@ -419,6 +469,8 @@ void MainWindow::refreshGeneratedBalanceRows()
         addMonthBalanceRow(month, balances, insertRow);
     }
     m_refreshing = false;
+    updateFrozenColumns();
+    updateFrozenTableGeometry();
 }
 
 void MainWindow::refreshRowsAfterTransactionChange(int row)
@@ -498,6 +550,52 @@ void MainWindow::updateAccountColumns()
             m_table->setColumnWidth(column, 110);
         }
     }
+    updateFrozenColumns();
+    updateFrozenTableGeometry();
+}
+
+void MainWindow::updateFrozenColumns()
+{
+    if (!m_frozenView) {
+        return;
+    }
+    m_frozenView->setModel(m_table->model());
+    for (int column = 0; column < m_table->columnCount(); ++column) {
+        m_frozenView->setColumnHidden(column, !isFrozenColumn(column));
+        m_frozenView->setColumnWidth(column, m_table->columnWidth(column));
+    }
+    for (int row = 0; row < m_table->rowCount(); ++row) {
+        m_frozenView->setRowHeight(row, m_table->rowHeight(row));
+    }
+}
+
+void MainWindow::updateFrozenTableGeometry()
+{
+    if (!m_frozenView || !m_table) {
+        return;
+    }
+    int frozenWidth = m_table->verticalHeader()->width() + m_table->frameWidth();
+    for (int column = 0; column < m_table->columnCount(); ++column) {
+        if (isFrozenColumn(column)) {
+            frozenWidth += m_table->columnWidth(column);
+        }
+    }
+    m_frozenView->setGeometry(m_table->verticalHeader()->width() + m_table->frameWidth(),
+                              m_table->frameWidth(),
+                              frozenWidth - m_table->verticalHeader()->width() - m_table->frameWidth(),
+                              m_table->viewport()->height() + m_table->horizontalHeader()->height());
+    m_frozenView->raise();
+}
+
+bool MainWindow::isFrozenColumn(int logicalColumn) const
+{
+    if (logicalColumn < FixedColumnCount) {
+        return true;
+    }
+    const int accountIndex = logicalColumn - FixedColumnCount;
+    return accountIndex >= 0
+        && accountIndex < m_store.accounts.size()
+        && m_store.accounts.at(accountIndex).kind == QStringLiteral("source");
 }
 
 void MainWindow::updateComputedCells(int row)
@@ -615,6 +713,7 @@ void MainWindow::openTransactionDetailsEditor(int row)
     transaction.memo = m_store.transactions.at(transactionIndex).memo;
     transaction.importSource = m_store.transactions.at(transactionIndex).importSource;
     transaction.importId = m_store.transactions.at(transactionIndex).importId;
+    transaction.reviewStatus = m_store.transactions.at(transactionIndex).reviewStatus;
     transaction.targets = m_store.transactions.at(transactionIndex).targets;
 
     TransactionDetailsDialog dialog(m_store.accounts, m_store.filePath(), this);
@@ -654,7 +753,12 @@ void MainWindow::saveRowIfValid(int row)
         m_refreshing = true;
         if (auto *targetsButton = qobject_cast<QPushButton *>(m_table->cellWidget(row, TargetsColumn))) {
             targetsButton->setText(DataStore::formatSplits(transaction.targets));
-            targetsButton->setStyleSheet("color: #b00020;");
+            targetsButton->setStyleSheet(QStringLiteral("background-color: %1; color: #b00020;")
+                                             .arg(reviewStatusColor(transaction.reviewStatus).name()));
+        }
+        if (auto *targetsItem = m_table->item(row, TargetsColumn)) {
+            targetsItem->setText(DataStore::formatSplits(transaction.targets));
+            targetsItem->setBackground(QBrush(reviewStatusColor(transaction.reviewStatus)));
         }
         statusBar()->showMessage(tr("Rows need a source account, positive amount, and matching target total"), 5000);
         updateComputedCells(row);
@@ -671,11 +775,18 @@ void MainWindow::saveRowIfValid(int row)
     const QDate previousPaymentDate = m_store.transactions.at(transactionIndex).paymentDate;
     m_store.transactions[transactionIndex] = transaction;
     m_refreshing = true;
+    if (auto *sourceItem = m_table->item(row, SourceColumn)) {
+        sourceItem->setText(transaction.sourceAccount);
+    }
     updateComputedCells(row);
 
     if (auto *targetsButton = qobject_cast<QPushButton *>(m_table->cellWidget(row, TargetsColumn))) {
         targetsButton->setText(DataStore::formatSplits(transaction.targets));
-        targetsButton->setStyleSheet(QString());
+        targetsButton->setStyleSheet(QStringLiteral("background-color: %1;").arg(reviewStatusColor(transaction.reviewStatus).name()));
+    }
+    if (auto *targetsItem = m_table->item(row, TargetsColumn)) {
+        targetsItem->setText(DataStore::formatSplits(transaction.targets));
+        targetsItem->setBackground(QBrush(reviewStatusColor(transaction.reviewStatus)));
     }
     m_refreshing = false;
     QString error;
@@ -729,7 +840,7 @@ void MainWindow::addTransaction()
             break;
         }
     }
-    m_store.transactions.append({0, QDate::currentDate(), QDate::currentDate(), defaultSource, 0.0, defaultParty, {{defaultTarget, 0.0}}, QString()});
+    m_store.transactions.append({0, QDate::currentDate(), QDate::currentDate(), defaultSource, 0.0, defaultParty, {{defaultTarget, 0.0}}, QString(), QString(), QString(), QString(), QString::fromLatin1(kReviewUnchecked)});
     refreshTable();
     const int transactionIndex = m_store.transactions.size() - 1;
     for (int row = 0; row < m_rowToTransaction.size(); ++row) {
@@ -960,6 +1071,7 @@ void MainWindow::importBankStatement()
         transaction.memo = row.memo;
         transaction.importSource = importer.id();
         transaction.importId = row.externalId;
+        transaction.reviewStatus = QString::fromLatin1(kReviewUnchecked);
         if (row.signedAmount < 0.0) {
             transaction.sourceAccount = bankAccount;
             transaction.targets = {{counterAccount, amount}};
@@ -1036,6 +1148,7 @@ Transaction MainWindow::transactionFromRow(int row, bool *ok) const
         transaction.importSource = storedTransaction.importSource;
         transaction.importId = storedTransaction.importId;
         transaction.receiptPath = storedTransaction.receiptPath;
+        transaction.reviewStatus = storedTransaction.reviewStatus;
         transaction.targets = storedTransaction.targets;
     }
     transaction.date = QDate::fromString(m_table->item(row, BookingDateColumn) ? m_table->item(row, BookingDateColumn)->text().trimmed() : QString(),
@@ -1203,6 +1316,7 @@ bool MainWindow::setReceiptForRow(int row, const QString &filePath)
     }
 
     m_store.transactions[transactionIndex].receiptPath = storedReceiptPath(filePath);
+    m_store.transactions[transactionIndex].reviewStatus = QString::fromLatin1(kReviewUnchecked);
     QString error;
     if (!m_store.saveTransaction(transactionIndex, &error)) {
         showError(error);
@@ -1214,6 +1328,26 @@ bool MainWindow::setReceiptForRow(int row, const QString &filePath)
     m_refreshing = false;
     statusBar()->showMessage(tr("Receipt attached"), 2000);
     return true;
+}
+
+QString MainWindow::normalizedReviewStatus(const QString &status) const
+{
+    if (status == QString::fromLatin1(kReviewProblem) || status == QString::fromLatin1(kReviewApproved)) {
+        return status;
+    }
+    return QString::fromLatin1(kReviewUnchecked);
+}
+
+QColor MainWindow::reviewStatusColor(const QString &status) const
+{
+    const QString normalized = normalizedReviewStatus(status);
+    if (normalized == QString::fromLatin1(kReviewApproved)) {
+        return QColor(0, 128, 0);
+    }
+    if (normalized == QString::fromLatin1(kReviewProblem)) {
+        return QColor(255, 204, 204);
+    }
+    return QColor(255, 245, 157);
 }
 
 void MainWindow::saveAccountOrderFromHeader()

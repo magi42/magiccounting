@@ -43,6 +43,7 @@ TransactionDetailsDialog::TransactionDetailsDialog(const QList<Account> &account
     , m_memoEdit(new QTextEdit(this))
     , m_importSourceEdit(new QLineEdit(this))
     , m_importIdEdit(new QLineEdit(this))
+    , m_reviewStatusCombo(new QComboBox(this))
     , m_accountingFilePath(accountingFilePath)
     , m_receiptImageLabel(new QLabel(this))
     , m_receiptPathLabel(new QLabel(this))
@@ -86,6 +87,10 @@ TransactionDetailsDialog::TransactionDetailsDialog(const QList<Account> &account
     formLayout->addRow(tr("Memo"), m_memoEdit);
     formLayout->addRow(tr("Import source"), m_importSourceEdit);
     formLayout->addRow(tr("Import ID"), m_importIdEdit);
+    m_reviewStatusCombo->addItem(tr("Unchecked"), QStringLiteral("unchecked"));
+    m_reviewStatusCombo->addItem(tr("Problem"), QStringLiteral("problem"));
+    m_reviewStatusCombo->addItem(tr("Approved"), QStringLiteral("approved"));
+    formLayout->addRow(tr("Review status"), m_reviewStatusCombo);
 
     m_targetsTable->setColumnCount(2);
     m_targetsTable->setHorizontalHeaderLabels({tr("Counterpart account"), tr("Amount")});
@@ -108,6 +113,7 @@ TransactionDetailsDialog::TransactionDetailsDialog(const QList<Account> &account
 
     auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     m_okButton = buttonBox->button(QDialogButtonBox::Ok);
+    m_approveButton = buttonBox->addButton(tr("Approve"), QDialogButtonBox::AcceptRole);
     auto *addSplitButton = buttonBox->addButton(tr("Add counterpart"), QDialogButtonBox::ActionRole);
     auto *removeSplitButton = buttonBox->addButton(tr("Remove counterpart"), QDialogButtonBox::ActionRole);
     auto *removeReceiptButton = buttonBox->addButton(tr("Remove receipt"), QDialogButtonBox::ActionRole);
@@ -125,6 +131,10 @@ TransactionDetailsDialog::TransactionDetailsDialog(const QList<Account> &account
     });
     connect(removeReceiptButton, &QPushButton::clicked, this, [this]() {
         setReceiptPath(QString());
+    });
+    connect(m_approveButton, &QPushButton::clicked, this, [this]() {
+        setReviewStatus(QStringLiteral("approved"));
+        accept();
     });
     connect(m_openReceiptButton, &QPushButton::clicked, this, [this]() {
         const QString path = absoluteReceiptPath();
@@ -171,6 +181,7 @@ void TransactionDetailsDialog::setTransaction(const Transaction &transaction)
     m_memoEdit->setPlainText(transaction.memo);
     m_importSourceEdit->setText(transaction.importSource);
     m_importIdEdit->setText(transaction.importId);
+    setReviewStatus(transaction.reviewStatus);
     setReceiptPath(transaction.receiptPath);
 
     m_targetsTable->setRowCount(0);
@@ -196,6 +207,7 @@ Transaction TransactionDetailsDialog::transaction() const
     transaction.importSource = m_importSourceEdit->text().trimmed();
     transaction.importId = m_importIdEdit->text().trimmed();
     transaction.receiptPath = m_receiptPath;
+    transaction.reviewStatus = currentReviewStatus();
     transaction.targets = splits();
     return transaction;
 }
@@ -290,6 +302,7 @@ bool TransactionDetailsDialog::eventFilter(QObject *watched, QEvent *event)
             const QList<QUrl> urls = dropEvent->mimeData()->urls();
             if (!urls.isEmpty()) {
                 setReceiptPath(urls.first().toLocalFile());
+                setReviewStatus(QStringLiteral("unchecked"));
                 dropEvent->acceptProposedAction();
                 return true;
             }
@@ -394,6 +407,21 @@ double TransactionDetailsDialog::imageWidthMillimeters(const QImage &image) cons
         return 0.0;
     }
     return (static_cast<double>(image.width()) / static_cast<double>(image.dotsPerMeterX())) * 1000.0;
+}
+
+QString TransactionDetailsDialog::currentReviewStatus() const
+{
+    const QString status = m_reviewStatusCombo->currentData().toString();
+    return status.isEmpty() ? QStringLiteral("unchecked") : status;
+}
+
+void TransactionDetailsDialog::setReviewStatus(const QString &status)
+{
+    const QString normalized = status == QStringLiteral("problem") || status == QStringLiteral("approved")
+        ? status
+        : QStringLiteral("unchecked");
+    const int index = m_reviewStatusCombo->findData(normalized);
+    m_reviewStatusCombo->setCurrentIndex(index < 0 ? 0 : index);
 }
 
 bool TransactionDetailsDialog::receiptIsPdf() const

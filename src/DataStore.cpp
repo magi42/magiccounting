@@ -108,6 +108,9 @@ QJsonObject transactionToJson(const Transaction &transaction)
     if (!transaction.receiptPath.isEmpty()) {
         object["receiptPath"] = transaction.receiptPath;
     }
+    if (!transaction.reviewStatus.isEmpty()) {
+        object["reviewStatus"] = transaction.reviewStatus;
+    }
     if (!transaction.importSource.isEmpty() && !transaction.importId.isEmpty()) {
         object["importSource"] = transaction.importSource;
         object["importId"] = transaction.importId;
@@ -204,7 +207,7 @@ bool createSchema(QSqlDatabase &database, QString *errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY, kind TEXT NOT NULL, opening_balance REAL NOT NULL DEFAULT 0)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS parties (name TEXT PRIMARY KEY, default_account TEXT)"), errorMessage)
-        && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS transactions (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT NOT NULL, payment_date TEXT, source_account TEXT NOT NULL, amount REAL NOT NULL, party TEXT, memo TEXT, import_source TEXT, import_id TEXT, receipt_path TEXT)"), errorMessage)
+        && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS transactions (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT NOT NULL, payment_date TEXT, source_account TEXT NOT NULL, amount REAL NOT NULL, party TEXT, memo TEXT, import_source TEXT, import_id TEXT, receipt_path TEXT, review_status TEXT)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS splits (transaction_id INTEGER NOT NULL, position INTEGER NOT NULL, account TEXT NOT NULL, amount REAL NOT NULL, PRIMARY KEY (transaction_id, position), FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE UNIQUE INDEX IF NOT EXISTS transactions_import_unique ON transactions(import_source, import_id) WHERE import_source <> '' AND import_id <> ''"), errorMessage))) {
         return false;
@@ -220,7 +223,12 @@ bool createSchema(QSqlDatabase &database, QString *errorMessage)
         }
     }
     if (!columnExists(database, QStringLiteral("transactions"), QStringLiteral("payment_date"), errorMessage)) {
-        return execSql(database, QStringLiteral("ALTER TABLE transactions ADD COLUMN payment_date TEXT"), errorMessage);
+        if (!execSql(database, QStringLiteral("ALTER TABLE transactions ADD COLUMN payment_date TEXT"), errorMessage)) {
+            return false;
+        }
+    }
+    if (!columnExists(database, QStringLiteral("transactions"), QStringLiteral("review_status"), errorMessage)) {
+        return execSql(database, QStringLiteral("ALTER TABLE transactions ADD COLUMN review_status TEXT"), errorMessage);
     }
     return true;
 }
@@ -293,7 +301,7 @@ bool saveTransactionToDatabase(QSqlDatabase &database, Transaction *transaction,
 {
     if (transaction->id > 0) {
         QSqlQuery query(database);
-        query.prepare(QStringLiteral("UPDATE transactions SET date = ?, payment_date = ?, source_account = ?, amount = ?, party = ?, memo = ?, import_source = ?, import_id = ?, receipt_path = ? WHERE id = ?"));
+        query.prepare(QStringLiteral("UPDATE transactions SET date = ?, payment_date = ?, source_account = ?, amount = ?, party = ?, memo = ?, import_source = ?, import_id = ?, receipt_path = ?, review_status = ? WHERE id = ?"));
         query.addBindValue(transaction->date.toString(Qt::ISODate));
         query.addBindValue(transaction->paymentDate.isValid() ? transaction->paymentDate.toString(Qt::ISODate) : QString());
         query.addBindValue(transaction->sourceAccount);
@@ -303,6 +311,7 @@ bool saveTransactionToDatabase(QSqlDatabase &database, Transaction *transaction,
         query.addBindValue(transaction->importSource);
         query.addBindValue(transaction->importId);
         query.addBindValue(transaction->receiptPath);
+        query.addBindValue(transaction->reviewStatus);
         query.addBindValue(transaction->id);
         if (!query.exec()) {
             if (errorMessage) {
@@ -313,7 +322,7 @@ bool saveTransactionToDatabase(QSqlDatabase &database, Transaction *transaction,
         }
     } else {
         QSqlQuery query(database);
-        query.prepare(QStringLiteral("INSERT INTO transactions (date, payment_date, source_account, amount, party, memo, import_source, import_id, receipt_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"));
+        query.prepare(QStringLiteral("INSERT INTO transactions (date, payment_date, source_account, amount, party, memo, import_source, import_id, receipt_path, review_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
         query.addBindValue(transaction->date.toString(Qt::ISODate));
         query.addBindValue(transaction->paymentDate.isValid() ? transaction->paymentDate.toString(Qt::ISODate) : QString());
         query.addBindValue(transaction->sourceAccount);
@@ -323,6 +332,7 @@ bool saveTransactionToDatabase(QSqlDatabase &database, Transaction *transaction,
         query.addBindValue(transaction->importSource);
         query.addBindValue(transaction->importId);
         query.addBindValue(transaction->receiptPath);
+        query.addBindValue(transaction->reviewStatus);
         if (!query.exec()) {
             if (errorMessage) {
                 *errorMessage = QCoreApplication::translate("DataStore", "Could not insert transaction: %1")
@@ -440,7 +450,7 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
 
         transactions.clear();
         QSqlQuery transactionQuery(connection.database);
-        if (!transactionQuery.exec(QStringLiteral("SELECT id, date, payment_date, source_account, amount, party, memo, import_source, import_id, receipt_path FROM transactions ORDER BY date, id"))) {
+        if (!transactionQuery.exec(QStringLiteral("SELECT id, date, payment_date, source_account, amount, party, memo, import_source, import_id, receipt_path, review_status FROM transactions ORDER BY date, id"))) {
             if (errorMessage) {
                 *errorMessage = QCoreApplication::translate("DataStore", "Could not load transactions: %1")
                                     .arg(sqlError(transactionQuery));
@@ -465,6 +475,7 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
             transaction.importSource = transactionQuery.value(7).toString();
             transaction.importId = transactionQuery.value(8).toString();
             transaction.receiptPath = transactionQuery.value(9).toString();
+            transaction.reviewStatus = transactionQuery.value(10).toString();
 
             QSqlQuery splitQuery(connection.database);
             splitQuery.prepare(QStringLiteral("SELECT account, amount FROM splits WHERE transaction_id = ? ORDER BY position"));
@@ -551,6 +562,7 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
         transaction.importSource = object.value("importSource").toString();
         transaction.importId = object.value("importId").toString();
         transaction.receiptPath = object.value("receiptPath").toString();
+        transaction.reviewStatus = object.value("reviewStatus").toString();
 
         const QJsonArray targetArray = object.value("targets").toArray();
         for (const QJsonValue &targetValue : targetArray) {

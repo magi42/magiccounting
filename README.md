@@ -40,6 +40,7 @@ The last opened accounting file is stored in the application configuration file 
 Legacy folders containing `accounts.json`, `parties.json`, and `transactions.json` can still be opened by passing the folder path on the command line; the app then saves the data into `accounting.maccd` inside that folder.
 
 Double-click a transaction row, or click its `Target accounts` cell, to edit the full transaction details in one dialog. The dialog includes the memo, receipt preview, and counterpart account split rows, and keeps `OK` disabled until the target split total equals the transaction `Amount`. The memo is not shown as a separate table column. The source account posting is shown as a negative amount, and negative postings are rendered in red.
+Each transaction has a review status shown by the `Target accounts` background color: unchecked is yellow, problem is red, and approved is green. The transaction dialog has an approval button and a review status selector. Dropping a new receipt onto a transaction resets the status to unchecked.
 
 Receipt files are stored as file paths, not as bytes in the database. Drop an image file, typically a JPEG receipt scan, or a PDF receipt from outside the application onto a transaction row or onto the receipt panel in the transaction dialog to attach it. Paths under the accounting file folder are saved relative to that folder.
 PDF receipts are previewed by rendering the first page to a temporary JPEG with Poppler's `pdftoppm` command when it is available.
@@ -47,5 +48,6 @@ PDF receipts are previewed by rendering the first page to a temporary JPEG with 
 Click the `Booked` or `Paid` column header to order transactions by the booked or paid date. Monthly balance rows are still calculated from booked dates, so a transaction booked in one month and paid in the next is included in the booked month balance before the later paid date appears.
 
 Account posting columns can be reordered by dragging their headers and resized from the header edges. The account order is saved in the accounting file.
+The first transaction columns and source account posting columns remain frozen while horizontally scrolling the remaining account columns.
 
 The first row is an opening-balance row. Enter each account's initial balance directly in that row; values are saved in the active accounting file. The app inserts a generated balance row after the last transaction of each month, showing each account's balance after that month.

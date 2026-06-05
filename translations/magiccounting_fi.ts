@@ -367,6 +367,26 @@
         <translation>Tuontitunniste</translation>
     </message>
     <message>
+        <source>Review status</source>
+        <translation>Tarkistustila</translation>
+    </message>
+    <message>
+        <source>Unchecked</source>
+        <translation>Tarkastamaton</translation>
+    </message>
+    <message>
+        <source>Problem</source>
+        <translation>Ongelma</translation>
+    </message>
+    <message>
+        <source>Approved</source>
+        <translation>Hyväksytty</translation>
+    </message>
+    <message>
+        <source>Approve</source>
+        <translation>Hyväksy</translation>
+    </message>
+    <message>
         <source>Counterpart account</source>
         <translation>Vastatili</translation>
     </message>

@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QMenu>
+#include <QTableView>
 #include <QTableWidget>
 #include <QToolBar>
 #include <QVector>
@@ -39,6 +40,7 @@ private:
 
     DataStore m_store;
     QTableWidget *m_table = nullptr;
+    QTableView *m_frozenView = nullptr;
     QVector<int> m_rowToTransaction;
     bool m_refreshing = false;
     TransactionSortMode m_transactionSortMode = TransactionSortMode::BookingDate;
@@ -72,6 +74,7 @@ private:
     void retranslateUi();
     void changeEvent(QEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
     void loadInitialData();
     void updateWindowTitle();
     void refreshTable();
@@ -82,6 +85,9 @@ private:
     QDate sortDateForTransaction(const Transaction &transaction) const;
     QDate monthEndDate(const QString &month) const;
     void updateAccountColumns();
+    void updateFrozenColumns();
+    void updateFrozenTableGeometry();
+    bool isFrozenColumn(int logicalColumn) const;
     void updateComputedCells(int row);
     void addOpeningBalanceRow();
     void addMonthBalanceRow(const QString &month, const QMap<QString, double> &balances, int insertRow = -1);
@@ -114,4 +120,6 @@ private:
     QString storedReceiptPath(const QString &filePath) const;
     bool setReceiptForRow(int row, const QString &filePath);
     void saveAccountOrderFromHeader();
+    QString normalizedReviewStatus(const QString &status) const;
+    QColor reviewStatusColor(const QString &status) const;
 };

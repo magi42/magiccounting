@@ -37,6 +37,7 @@ struct Transaction
     QString importSource;
     QString importId;
     QString receiptPath;
+    QString reviewStatus;
 };
 
 class DataStore
