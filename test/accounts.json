@@ -1,0 +1,32 @@
+[
+    {
+        "kind": "source",
+        "name": "bank",
+        "openingBalance": 100
+    },
+    {
+        "kind": "source",
+        "name": "cash",
+        "openingBalance": 0
+    },
+    {
+        "kind": "category",
+        "name": "home",
+        "openingBalance": 0
+    },
+    {
+        "kind": "category",
+        "name": "car",
+        "openingBalance": 0
+    },
+    {
+        "kind": "category",
+        "name": "food",
+        "openingBalance": 0
+    },
+    {
+        "kind": "category",
+        "name": "income",
+        "openingBalance": 0
+    }
+]

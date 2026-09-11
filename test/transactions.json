@@ -1,0 +1,32 @@
+[
+    {
+        "amount": 24.9,
+        "date": "2026-05-22",
+        "memo": "Weekly groceries",
+        "party": "Grocery shop",
+        "sourceAccount": "bank",
+        "targets": [
+            {
+                "account": "food",
+                "amount": 24.9
+            }
+        ]
+    },
+    {
+        "amount": 15.7,
+        "date": "2026-05-22",
+        "memo": "Fuel and snack",
+        "party": "Fuel station",
+        "sourceAccount": "cash",
+        "targets": [
+            {
+                "account": "car",
+                "amount": 12.5
+            },
+            {
+                "account": "food",
+                "amount": 3.2
+            }
+        ]
+    }
+]

@@ -30,6 +30,30 @@
         <translation>Tyyppi</translation>
     </message>
     <message>
+        <source>Asset account</source>
+        <translation>Vastaavaa-tili</translation>
+    </message>
+    <message>
+        <source>Income/expense account</source>
+        <translation>Tuotto-/kulutili</translation>
+    </message>
+    <message>
+        <source>Account group</source>
+        <translation>Tiliryhmä</translation>
+    </message>
+    <message>
+        <source>Parent account</source>
+        <translation>Ylätili</translation>
+    </message>
+    <message>
+        <source>Problem</source>
+        <translation>Ongelma</translation>
+    </message>
+    <message>
+        <source>This account is an account group but has direct money postings. Create a new account and move this account's child accounts under it.</source>
+        <translation>Tämä tili on tiliryhmä, mutta sillä on suoria rahakirjauksia. Luo uusi tili ja siirrä tämän tilin alatilit sen alle.</translation>
+    </message>
+    <message>
         <location filename="../src/AccountListDialog.cpp" line="80"/>
         <source>Parties</source>
         <translation>Osapuolet</translation>

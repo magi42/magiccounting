@@ -78,6 +78,9 @@ QJsonObject accountToJson(const Account &account)
     object["name"] = account.name;
     object["kind"] = account.kind;
     object["openingBalance"] = account.openingBalance;
+    if (!account.parentAccount.isEmpty()) {
+        object["parentAccount"] = account.parentAccount;
+    }
     return object;
 }
 
@@ -205,7 +208,7 @@ bool createSchema(QSqlDatabase &database, QString *errorMessage)
 {
     if (!(execSql(database, QStringLiteral("PRAGMA foreign_keys = ON"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL)"), errorMessage)
-        && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY, kind TEXT NOT NULL, opening_balance REAL NOT NULL DEFAULT 0)"), errorMessage)
+        && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY, kind TEXT NOT NULL, opening_balance REAL NOT NULL DEFAULT 0, parent_account TEXT)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS parties (name TEXT PRIMARY KEY, default_account TEXT)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS transactions (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT NOT NULL, payment_date TEXT, source_account TEXT NOT NULL, amount REAL NOT NULL, party TEXT, memo TEXT, import_source TEXT, import_id TEXT, receipt_path TEXT, review_status TEXT)"), errorMessage)
         && execSql(database, QStringLiteral("CREATE TABLE IF NOT EXISTS splits (transaction_id INTEGER NOT NULL, position INTEGER NOT NULL, account TEXT NOT NULL, amount REAL NOT NULL, PRIMARY KEY (transaction_id, position), FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE)"), errorMessage)
@@ -214,6 +217,11 @@ bool createSchema(QSqlDatabase &database, QString *errorMessage)
     }
     if (!columnExists(database, QStringLiteral("parties"), QStringLiteral("default_account"), errorMessage)) {
         if (!execSql(database, QStringLiteral("ALTER TABLE parties ADD COLUMN default_account TEXT"), errorMessage)) {
+            return false;
+        }
+    }
+    if (!columnExists(database, QStringLiteral("accounts"), QStringLiteral("parent_account"), errorMessage)) {
+        if (!execSql(database, QStringLiteral("ALTER TABLE accounts ADD COLUMN parent_account TEXT"), errorMessage)) {
             return false;
         }
     }
@@ -236,10 +244,11 @@ bool createSchema(QSqlDatabase &database, QString *errorMessage)
 bool insertAccount(QSqlDatabase &database, const Account &account, QString *errorMessage)
 {
     QSqlQuery query(database);
-    query.prepare(QStringLiteral("INSERT INTO accounts (name, kind, opening_balance) VALUES (?, ?, ?)"));
+    query.prepare(QStringLiteral("INSERT INTO accounts (name, kind, opening_balance, parent_account) VALUES (?, ?, ?, ?)"));
     query.addBindValue(account.name);
     query.addBindValue(account.kind);
     query.addBindValue(account.openingBalance);
+    query.addBindValue(account.parentAccount);
     if (query.exec()) {
         return true;
     }
@@ -422,7 +431,7 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
 
         accounts.clear();
         QSqlQuery accountQuery(connection.database);
-        if (!accountQuery.exec(QStringLiteral("SELECT name, kind, opening_balance FROM accounts ORDER BY rowid"))) {
+        if (!accountQuery.exec(QStringLiteral("SELECT name, kind, opening_balance, parent_account FROM accounts ORDER BY rowid"))) {
             if (errorMessage) {
                 *errorMessage = QCoreApplication::translate("DataStore", "Could not load accounts: %1")
                                     .arg(sqlError(accountQuery));
@@ -432,7 +441,8 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
         while (accountQuery.next()) {
             accounts.append({accountQuery.value(0).toString(),
                              accountQuery.value(1).toString(),
-                             accountQuery.value(2).toDouble()});
+                             accountQuery.value(2).toDouble(),
+                             accountQuery.value(3).toString()});
         }
 
         parties.clear();
@@ -533,7 +543,8 @@ bool DataStore::load(const QString &filePath, QString *errorMessage)
         const QJsonObject object = value.toObject();
         accounts.append({object.value("name").toString(),
                          object.value("kind").toString("category"),
-                         object.value("openingBalance").toDouble()});
+                         object.value("openingBalance").toDouble(),
+                         object.value("parentAccount").toString()});
     }
 
     parties.clear();

@@ -1,6 +1,6 @@
-# Magic Counting
+# Magic Ac'counting
 
-Magic Counting is a Qt Widgets double-accounting app. The main window edits account transactions in a table. Each transaction has booked and paid dates, a source account, an amount, the other party, one or more target account splits, a memo, and computed posting columns for every configured account.
+Magic Ac'counting is a Qt Widgets double-accounting app. The main window edits account transactions in a table. Each transaction has booked and paid dates, a source account, an amount, the other party, one or more target account splits, a memo, and computed posting columns for every configured account.
 
 ## Build
 
@@ -48,6 +48,7 @@ PDF receipts are previewed by rendering the first page to a temporary JPEG with 
 Click the `Booked` or `Paid` column header to order transactions by the booked or paid date. Monthly balance rows are still calculated from booked dates, so a transaction booked in one month and paid in the next is included in the booked month balance before the later paid date appears.
 
 Account posting columns can be reordered by dragging their headers and resized from the header edges. The account order is saved in the accounting file.
+Accounts can be arranged hierarchically in the tree table under `Edit -> Accounts...`. Accounts with child accounts are saved as account groups, and an account group with direct postings is marked as a problem in the account editor. Parent account headers show `+` or `-`; clicking the header collapses or expands the child account columns. When collapsed, the parent column shows the total for the parent and its children.
 The first transaction columns and source account posting columns remain frozen while horizontally scrolling the remaining account columns.
 
 The first row is an opening-balance row. Enter each account's initial balance directly in that row; values are saved in the active accounting file. The app inserts a generated balance row after the last transaction of each month, showing each account's balance after that month.

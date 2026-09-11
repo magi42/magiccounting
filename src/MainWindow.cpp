@@ -30,6 +30,7 @@
 #include <QTimer>
 #include <QToolBar>
 #include <QUrl>
+#include <QWheelEvent>
 
 #include <algorithm>
 #include <cmath>
@@ -59,6 +60,21 @@ QTableWidgetItem *readOnlyItem(const QString &text = QString())
     item->setFlags(item->flags() & ~Qt::ItemIsEditable);
     return item;
 }
+
+class NoWheelComboBox : public QComboBox
+{
+public:
+    explicit NoWheelComboBox(QWidget *parent = nullptr)
+        : QComboBox(parent)
+    {
+    }
+
+protected:
+    void wheelEvent(QWheelEvent *event) override
+    {
+        event->ignore();
+    }
+};
 }
 
 MainWindow::MainWindow(const QString &accountingFile, QWidget *parent)
@@ -139,6 +155,11 @@ void MainWindow::buildUi()
             m_transactionSortMode = TransactionSortMode::PaymentDate;
             sortTransactions();
             refreshTable();
+        } else if (logicalIndex >= FixedColumnCount) {
+            const int accountIndex = logicalIndex - FixedColumnCount;
+            if (accountIndex >= 0 && accountIndex < m_store.accounts.size()) {
+                toggleAccountGroup(m_store.accounts.at(accountIndex).name);
+            }
         }
     });
 
@@ -371,7 +392,7 @@ void MainWindow::refreshTransactionRow(int row, int transactionIndex)
     m_table->setItem(row, PartyColumn, new QTableWidgetItem(transaction.party));
     m_table->setItem(row, ReceiptColumn, readOnlyItem(transaction.receiptPath.isEmpty() ? QString() : tr("Receipt")));
 
-    auto *sourceCombo = new QComboBox(m_table);
+    auto *sourceCombo = new NoWheelComboBox(m_table);
     for (const Account &account : m_store.accounts) {
         if (account.kind == "source") {
             sourceCombo->addItem(account.name);
@@ -379,7 +400,9 @@ void MainWindow::refreshTransactionRow(int row, int transactionIndex)
     }
     if (sourceCombo->count() == 0) {
         for (const Account &account : m_store.accounts) {
-            sourceCombo->addItem(account.name);
+            if (account.kind != QStringLiteral("group")) {
+                sourceCombo->addItem(account.name);
+            }
         }
     }
     sourceCombo->setEditable(true);
@@ -524,7 +547,11 @@ void MainWindow::updateAccountColumns()
 {
     QStringList headers = {tr("Booked"), tr("Paid"), tr("Source account"), tr("Amount"), tr("Other party"), tr("Receipt"), tr("Target accounts")};
     for (const Account &account : m_store.accounts) {
-        headers.append(account.name);
+        if (accountHasChildren(account.name)) {
+            headers.append(QStringLiteral("%1 %2").arg(accountIsCollapsedGroup(account.name) ? QStringLiteral("+") : QStringLiteral("-"), account.name));
+        } else {
+            headers.append(account.name);
+        }
     }
 
     m_table->setColumnCount(FixedColumnCount + m_store.accounts.size());
@@ -550,8 +577,38 @@ void MainWindow::updateAccountColumns()
             m_table->setColumnWidth(column, 110);
         }
     }
+    applyAccountColumnVisibility();
     updateFrozenColumns();
     updateFrozenTableGeometry();
+}
+
+void MainWindow::applyAccountColumnVisibility()
+{
+    for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
+        const Account &account = m_store.accounts.at(accountIndex);
+        bool hidden = false;
+        QString parentName = account.parentAccount;
+        QSet<QString> seen;
+        while (!parentName.isEmpty() && !seen.contains(parentName)) {
+            seen.insert(parentName);
+            if (m_collapsedAccountGroups.contains(parentName)) {
+                hidden = true;
+                break;
+            }
+            bool found = false;
+            for (const Account &parentAccount : m_store.accounts) {
+                if (parentAccount.name == parentName) {
+                    parentName = parentAccount.parentAccount;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                break;
+            }
+        }
+        m_table->setColumnHidden(FixedColumnCount + accountIndex, hidden);
+    }
 }
 
 void MainWindow::updateFrozenColumns()
@@ -561,7 +618,7 @@ void MainWindow::updateFrozenColumns()
     }
     m_frozenView->setModel(m_table->model());
     for (int column = 0; column < m_table->columnCount(); ++column) {
-        m_frozenView->setColumnHidden(column, !isFrozenColumn(column));
+        m_frozenView->setColumnHidden(column, !isFrozenColumn(column) || m_table->isColumnHidden(column));
         m_frozenView->setColumnWidth(column, m_table->columnWidth(column));
     }
     for (int row = 0; row < m_table->rowCount(); ++row) {
@@ -576,7 +633,7 @@ void MainWindow::updateFrozenTableGeometry()
     }
     int frozenWidth = m_table->verticalHeader()->width() + m_table->frameWidth();
     for (int column = 0; column < m_table->columnCount(); ++column) {
-        if (isFrozenColumn(column)) {
+        if (isFrozenColumn(column) && !m_table->isColumnHidden(column)) {
             frozenWidth += m_table->columnWidth(column);
         }
     }
@@ -608,7 +665,10 @@ void MainWindow::updateComputedCells(int row)
     const Transaction &transaction = m_store.transactions.at(transactionIndex);
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
         const int column = FixedColumnCount + accountIndex;
-        const double posting = postingForAccount(transaction, m_store.accounts.at(accountIndex).name);
+        const Account &account = m_store.accounts.at(accountIndex);
+        const double posting = accountIsCollapsedGroup(account.name)
+                                   ? aggregatePostingForAccount(transaction, account.name)
+                                   : postingForAccount(transaction, account.name);
         auto *item = new QTableWidgetItem(posting == 0.0 ? QString() : moneyText(posting));
         item->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         item->setFlags(item->flags() & ~Qt::ItemIsEditable);
@@ -634,8 +694,15 @@ void MainWindow::addOpeningBalanceRow()
     m_table->setItem(row, TargetsColumn, readOnlyItem());
 
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
-        auto *item = new QTableWidgetItem(moneyText(m_store.accounts.at(accountIndex).openingBalance));
+        const Account &account = m_store.accounts.at(accountIndex);
+        const double balance = accountIsCollapsedGroup(account.name)
+                                   ? aggregateOpeningBalanceForAccount(account.name)
+                                   : account.openingBalance;
+        auto *item = new QTableWidgetItem(moneyText(balance));
         item->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        if (accountIsCollapsedGroup(account.name)) {
+            item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+        }
         m_table->setItem(row, FixedColumnCount + accountIndex, item);
     }
 
@@ -662,9 +729,12 @@ void MainWindow::addMonthBalanceRow(const QString &month, const QMap<QString, do
 
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
         const Account &account = m_store.accounts.at(accountIndex);
-        auto *item = readOnlyItem(moneyText(balances.value(account.name, 0.0)));
+        const double balance = accountIsCollapsedGroup(account.name)
+                                   ? aggregateBalanceForAccount(balances, account.name)
+                                   : balances.value(account.name, 0.0);
+        auto *item = readOnlyItem(moneyText(balance));
         item->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        if (balances.value(account.name, 0.0) < 0.0) {
+        if (balance < 0.0) {
             item->setForeground(QBrush(Qt::red));
         }
         m_table->setItem(row, FixedColumnCount + accountIndex, item);
@@ -806,6 +876,9 @@ void MainWindow::saveRowIfValid(int row)
 void MainWindow::saveOpeningBalances()
 {
     for (int accountIndex = 0; accountIndex < m_store.accounts.size(); ++accountIndex) {
+        if (accountIsCollapsedGroup(m_store.accounts.at(accountIndex).name)) {
+            continue;
+        }
         bool ok = false;
         const int column = FixedColumnCount + accountIndex;
         const double balance = m_table->item(0, column) ? m_table->item(0, column)->text().trimmed().toDouble(&ok) : 0.0;
@@ -835,7 +908,7 @@ void MainWindow::addTransaction()
     const QString defaultParty;
     QString defaultTarget = "food";
     for (const Account &account : m_store.accounts) {
-        if (account.kind != "source") {
+        if (account.kind != "source" && account.kind != "group") {
             defaultTarget = account.name;
             break;
         }
@@ -873,7 +946,7 @@ void MainWindow::removeSelectedTransaction()
 void MainWindow::editAccounts()
 {
     QMap<QString, QString> renamedAccounts;
-    if (!AccountListDialog::editAccounts(this, &m_store.accounts, &renamedAccounts)) {
+    if (!AccountListDialog::editAccounts(this, &m_store.accounts, m_store.transactions, &renamedAccounts)) {
         return;
     }
 
@@ -1014,7 +1087,9 @@ void MainWindow::importBankStatement()
     }
     if (sourceAccounts.isEmpty()) {
         for (const Account &account : m_store.accounts) {
-            sourceAccounts.append(account.name);
+            if (account.kind != "group") {
+                sourceAccounts.append(account.name);
+            }
         }
     }
     if (sourceAccounts.isEmpty()) {
@@ -1198,6 +1273,78 @@ double MainWindow::postingForAccount(const Transaction &transaction, const QStri
     return posting;
 }
 
+double MainWindow::aggregatePostingForAccount(const Transaction &transaction, const QString &accountName) const
+{
+    double total = postingForAccount(transaction, accountName);
+    for (const QString &childName : childAccounts(accountName)) {
+        total += aggregatePostingForAccount(transaction, childName);
+    }
+    return total;
+}
+
+double MainWindow::aggregateOpeningBalanceForAccount(const QString &accountName) const
+{
+    double total = 0.0;
+    for (const Account &account : m_store.accounts) {
+        if (account.name == accountName) {
+            total += account.openingBalance;
+            break;
+        }
+    }
+    for (const QString &childName : childAccounts(accountName)) {
+        total += aggregateOpeningBalanceForAccount(childName);
+    }
+    return total;
+}
+
+double MainWindow::aggregateBalanceForAccount(const QMap<QString, double> &balances, const QString &accountName) const
+{
+    double total = balances.value(accountName, 0.0);
+    for (const QString &childName : childAccounts(accountName)) {
+        total += aggregateBalanceForAccount(balances, childName);
+    }
+    return total;
+}
+
+QStringList MainWindow::childAccounts(const QString &accountName) const
+{
+    QStringList children;
+    for (const Account &account : m_store.accounts) {
+        if (account.parentAccount == accountName) {
+            children.append(account.name);
+        }
+    }
+    return children;
+}
+
+bool MainWindow::accountHasChildren(const QString &accountName) const
+{
+    for (const Account &account : m_store.accounts) {
+        if (account.parentAccount == accountName) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool MainWindow::accountIsCollapsedGroup(const QString &accountName) const
+{
+    return accountHasChildren(accountName) && m_collapsedAccountGroups.contains(accountName);
+}
+
+void MainWindow::toggleAccountGroup(const QString &accountName)
+{
+    if (!accountHasChildren(accountName)) {
+        return;
+    }
+    if (m_collapsedAccountGroups.contains(accountName)) {
+        m_collapsedAccountGroups.remove(accountName);
+    } else {
+        m_collapsedAccountGroups.insert(accountName);
+    }
+    refreshTable();
+}
+
 bool MainWindow::accountExists(const QString &accountName) const
 {
     for (const Account &account : m_store.accounts) {
@@ -1221,7 +1368,7 @@ bool MainWindow::partyExists(const QString &partyName) const
 void MainWindow::ensureAccount(const QString &accountName, const QString &kind)
 {
     if (!accountName.isEmpty() && !accountExists(accountName)) {
-        m_store.accounts.append({accountName, kind, 0.0});
+        m_store.accounts.append({accountName, kind, 0.0, QString()});
     }
 }
 
@@ -1252,6 +1399,12 @@ void MainWindow::renameAccountReferences(const QMap<QString, QString> &renamedAc
     for (Party &party : m_store.parties) {
         if (renamedAccounts.contains(party.defaultAccount)) {
             party.defaultAccount = renamedAccounts.value(party.defaultAccount);
+        }
+    }
+
+    for (Account &account : m_store.accounts) {
+        if (renamedAccounts.contains(account.parentAccount)) {
+            account.parentAccount = renamedAccounts.value(account.parentAccount);
         }
     }
 

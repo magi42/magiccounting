@@ -19,6 +19,7 @@
 #include <QStringList>
 #include <QUrl>
 #include <QVBoxLayout>
+#include <QWheelEvent>
 
 namespace
 {
@@ -28,6 +29,21 @@ qint64 moneyCents(double value)
 {
     return qRound64(value * 100.0);
 }
+
+class NoWheelComboBox : public QComboBox
+{
+public:
+    explicit NoWheelComboBox(QWidget *parent = nullptr)
+        : QComboBox(parent)
+    {
+    }
+
+protected:
+    void wheelEvent(QWheelEvent *event) override
+    {
+        event->ignore();
+    }
+};
 }
 
 TransactionDetailsDialog::TransactionDetailsDialog(const QList<Account> &accounts,
@@ -37,13 +53,13 @@ TransactionDetailsDialog::TransactionDetailsDialog(const QList<Account> &account
     , m_accounts(accounts)
     , m_bookingDateEdit(new QDateEdit(this))
     , m_paymentDateEdit(new QDateEdit(this))
-    , m_sourceAccountCombo(new QComboBox(this))
+    , m_sourceAccountCombo(new NoWheelComboBox(this))
     , m_amountSpin(new QDoubleSpinBox(this))
     , m_partyEdit(new QLineEdit(this))
     , m_memoEdit(new QTextEdit(this))
     , m_importSourceEdit(new QLineEdit(this))
     , m_importIdEdit(new QLineEdit(this))
-    , m_reviewStatusCombo(new QComboBox(this))
+    , m_reviewStatusCombo(new NoWheelComboBox(this))
     , m_accountingFilePath(accountingFilePath)
     , m_receiptImageLabel(new QLabel(this))
     , m_receiptPathLabel(new QLabel(this))
@@ -66,7 +82,9 @@ TransactionDetailsDialog::TransactionDetailsDialog(const QList<Account> &account
     }
     if (m_sourceAccountCombo->count() == 0) {
         for (const Account &account : m_accounts) {
-            m_sourceAccountCombo->addItem(account.name);
+            if (account.kind != "group") {
+                m_sourceAccountCombo->addItem(account.name);
+            }
         }
     }
     m_sourceAccountCombo->setEditable(true);
@@ -217,16 +235,18 @@ void TransactionDetailsDialog::addSplitRow(const Split &split)
     const int row = m_targetsTable->rowCount();
     m_targetsTable->insertRow(row);
 
-    auto *accountCombo = new QComboBox(m_targetsTable);
+    auto *accountCombo = new NoWheelComboBox(m_targetsTable);
     accountCombo->setEditable(true);
     for (const Account &account : m_accounts) {
-        if (account.kind != "source") {
+        if (account.kind != "source" && account.kind != "group") {
             accountCombo->addItem(account.name);
         }
     }
     if (accountCombo->count() == 0) {
         for (const Account &account : m_accounts) {
-            accountCombo->addItem(account.name);
+            if (account.kind != "group") {
+                accountCombo->addItem(account.name);
+            }
         }
     }
     if (!split.account.isEmpty()) {

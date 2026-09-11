@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QMenu>
+#include <QSet>
 #include <QTableView>
 #include <QTableWidget>
 #include <QToolBar>
@@ -68,6 +69,7 @@ private:
     QAction *m_systemLanguageAction = nullptr;
     QAction *m_englishLanguageAction = nullptr;
     QAction *m_finnishLanguageAction = nullptr;
+    QSet<QString> m_collapsedAccountGroups;
 
     void buildUi();
     void buildMenus();
@@ -85,6 +87,7 @@ private:
     QDate sortDateForTransaction(const Transaction &transaction) const;
     QDate monthEndDate(const QString &month) const;
     void updateAccountColumns();
+    void applyAccountColumnVisibility();
     void updateFrozenColumns();
     void updateFrozenTableGeometry();
     bool isFrozenColumn(int logicalColumn) const;
@@ -111,6 +114,13 @@ private:
     Transaction transactionFromRow(int row, bool *ok) const;
     bool targetsMatchAmount(const Transaction &transaction) const;
     double postingForAccount(const Transaction &transaction, const QString &accountName) const;
+    double aggregatePostingForAccount(const Transaction &transaction, const QString &accountName) const;
+    double aggregateOpeningBalanceForAccount(const QString &accountName) const;
+    double aggregateBalanceForAccount(const QMap<QString, double> &balances, const QString &accountName) const;
+    QStringList childAccounts(const QString &accountName) const;
+    bool accountHasChildren(const QString &accountName) const;
+    bool accountIsCollapsedGroup(const QString &accountName) const;
+    void toggleAccountGroup(const QString &accountName);
     bool accountExists(const QString &accountName) const;
     bool partyExists(const QString &partyName) const;
     void ensureAccount(const QString &accountName, const QString &kind);

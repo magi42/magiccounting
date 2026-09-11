@@ -10,6 +10,7 @@ struct Account
     QString name;
     QString kind;
     double openingBalance = 0.0;
+    QString parentAccount;
 };
 
 struct Party

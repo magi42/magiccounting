@@ -1,0 +1,6064 @@
+{
+    "accounts": [
+        {
+            "kind": "source",
+            "name": "cash",
+            "openingBalance": 0
+        },
+        {
+            "kind": "category",
+            "name": "home",
+            "openingBalance": 0
+        },
+        {
+            "kind": "category",
+            "name": "car",
+            "openingBalance": 0
+        },
+        {
+            "kind": "category",
+            "name": "food",
+            "openingBalance": 0
+        },
+        {
+            "kind": "category",
+            "name": "income",
+            "openingBalance": 0
+        },
+        {
+            "kind": "source",
+            "name": "S-Pankki",
+            "openingBalance": 0
+        },
+        {
+            "kind": "category",
+            "name": "Luokittelemattomat",
+            "openingBalance": 0
+        }
+    ],
+    "format": "magiccounting",
+    "parties": [
+        {
+            "name": "Grocery shop"
+        },
+        {
+            "name": "Fuel station"
+        },
+        {
+            "name": "Employer"
+        },
+        {
+            "name": "EasyPark Oy"
+        },
+        {
+            "name": "NORDNET BANK AB SUOMEN SIVULIIKE"
+        },
+        {
+            "name": "VFI*MINIGOLF PARK AY"
+        },
+        {
+            "name": "PTL*Iltalehti"
+        },
+        {
+            "name": "Prisma Itäharju"
+        },
+        {
+            "name": "Varsinais-Suomen Asumisoikeus Oy"
+        },
+        {
+            "name": "S-Market Halinen"
+        },
+        {
+            "name": "OPENAI *CHATGPT SUBSCR"
+        },
+        {
+            "name": "TURUN KUNINGAS"
+        },
+        {
+            "name": "WL*GOOGLE  YouTube"
+        },
+        {
+            "name": "If Vahinkovakuutus Oyj, Suomen sivu"
+        },
+        {
+            "name": "Prisma Tampereentie"
+        },
+        {
+            "name": "KANSANELÄKELAITOS"
+        },
+        {
+            "name": "VFI*TOEBOYS CRAFT OY"
+        },
+        {
+            "name": "VFI*LELULIIKE CASAGRANDE"
+        },
+        {
+            "name": "IKEA RAISIO IF CUSTOMER R"
+        },
+        {
+            "name": "IKEA RAISIO HFB ECO"
+        },
+        {
+            "name": "CLAS OHLSON 214"
+        },
+        {
+            "name": "Suomalainen Kirjakauppa R"
+        },
+        {
+            "name": "WL*GOOGLE  YouTubePremiu"
+        },
+        {
+            "name": "Spotify P42F574F65"
+        },
+        {
+            "name": "APTEEKKI TAMPEREENTIE"
+        },
+        {
+            "name": "SUNO INC."
+        },
+        {
+            "name": "OPENART* TKWDXOD7"
+        },
+        {
+            "name": "TOKMANNI LANSIKESKUS"
+        },
+        {
+            "name": "GRÖNROOS MARKO ANTERO"
+        },
+        {
+            "name": "IKEA RAISIO HFB MAIN"
+        },
+        {
+            "name": "DNA Oyj"
+        },
+        {
+            "name": "Elisa Oyj"
+        },
+        {
+            "name": "BAUHAUS TURKU"
+        },
+        {
+            "name": "Puuilo Turku"
+        },
+        {
+            "name": "Oy Turku Energia-Åbo Energi Ab"
+        },
+        {
+            "name": "TRANSCRIBETOTEXT.AI"
+        },
+        {
+            "name": "BILTEMA RAISIO"
+        },
+        {
+            "name": "NETFLIX.COM"
+        },
+        {
+            "name": "VERKKOKAUPPA.COM MYYMALAT"
+        },
+        {
+            "name": "NESTE EXPRESS TURKU"
+        },
+        {
+            "name": "MOTONET OY TURK"
+        },
+        {
+            "name": "Prime Video"
+        },
+        {
+            "name": "VFI*MUOVITUKKU SIIVONEN O"
+        },
+        {
+            "name": "TOK"
+        },
+        {
+            "name": "VARSINAIS-SUOMEN HYVINVOINTIALUE"
+        },
+        {
+            "name": "Prime Video Channels"
+        },
+        {
+            "name": "X CORP. PAID FEATURES"
+        },
+        {
+            "name": "ALKO TURKU TAMPEREENTIE"
+        },
+        {
+            "name": "SANOMA MEDIA FINLAND"
+        },
+        {
+            "name": "SHANYING MO"
+        },
+        {
+            "name": "Spotify P41E972D2F"
+        },
+        {
+            "name": "Dropbox*4Z7TDVLMJ5ST"
+        },
+        {
+            "name": "PLAYSTATION"
+        },
+        {
+            "name": "Someron apteekki"
+        },
+        {
+            "name": "S-Market Somero"
+        },
+        {
+            "name": "TOKMANNI SOMERO"
+        },
+        {
+            "name": "PAYPAL *SIEPER GMBH"
+        },
+        {
+            "name": "THOMANN DE"
+        },
+        {
+            "name": "SP FLEA LELUKAUPPA"
+        },
+        {
+            "name": "K-market Kanslerintie"
+        },
+        {
+            "name": "VFI*SOITIN-LAINE OY"
+        },
+        {
+            "name": "VFI*RENGAS TURKU OY"
+        },
+        {
+            "name": "Netflix.com"
+        },
+        {
+            "name": "Google YouTubePremium"
+        },
+        {
+            "name": "K-market Halinen"
+        },
+        {
+            "name": "Spotify P40E5893E5"
+        },
+        {
+            "name": "XXL FIN 707 SKA"
+        },
+        {
+            "name": "KIRPPIS-CENTER"
+        },
+        {
+            "name": "OPENART AI"
+        },
+        {
+            "name": "LUMA AI DREAM MACHINE"
+        },
+        {
+            "name": "LinkedIn*P838058013"
+        },
+        {
+            "name": "VISMA PAYMENTS OY"
+        },
+        {
+            "name": "BILTEMA SUOMI"
+        },
+        {
+            "name": "Power Raisio Turku"
+        },
+        {
+            "name": "ABC Turku S-market Haline"
+        },
+        {
+            "name": "BYGGMAX RAISIO 3104"
+        },
+        {
+            "name": "IKEA RAISIO KIOSK"
+        },
+        {
+            "name": "ULOSOTTOLAITOS"
+        },
+        {
+            "name": "MOTONET OY - 61"
+        },
+        {
+            "name": "TIETOKONEKAUPPA"
+        },
+        {
+            "name": "JYSK RAISIO F903"
+        },
+        {
+            "name": "EUROKANGAS MYLL"
+        },
+        {
+            "name": "FOLI"
+        },
+        {
+            "name": "AWS EMEA"
+        },
+        {
+            "name": "NESTE EXPRESS RAISIO MYLL"
+        },
+        {
+            "name": "Spotify P3FD7E7847"
+        },
+        {
+            "name": "MIDJOURNEY INC."
+        },
+        {
+            "name": "Piihovi"
+        },
+        {
+            "name": "ABC Piihovi"
+        },
+        {
+            "name": "PlayStation Network"
+        },
+        {
+            "name": "Jula Raisio"
+        },
+        {
+            "name": "Google One"
+        },
+        {
+            "name": "Raw Organic Oy Mylly"
+        },
+        {
+            "name": "OPENAI"
+        },
+        {
+            "name": "Prisma Mylly"
+        },
+        {
+            "name": "Google Play Apps"
+        },
+        {
+            "name": "K-CITYMARKET TURKU KUPITT"
+        },
+        {
+            "name": "Spotify P3ED8EC697"
+        },
+        {
+            "name": "MOB.PAY*ANU IRENE YLLIKAI"
+        },
+        {
+            "name": "TREENIKAUPPA.FI"
+        },
+        {
+            "name": "Suomen Punainen Risti"
+        },
+        {
+            "name": "PRISMA VERKKOKA"
+        },
+        {
+            "name": "NETFLIX INTERNATIONAL B.V"
+        },
+        {
+            "name": "Suomalainen Kirjakauppa T"
+        },
+        {
+            "name": "Triopak Oy"
+        },
+        {
+            "name": "TURUN OSUUSKAUPPA"
+        },
+        {
+            "name": "Turun Kansallinen Kirjaka"
+        }
+    ],
+    "transactions": [
+        {
+            "amount": 34.64,
+            "date": "2026-01-02",
+            "importId": "20260102390003686282",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260101101801",
+            "party": "AWS EMEA",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 34.64
+                }
+            ]
+        },
+        {
+            "amount": 2,
+            "date": "2026-01-02",
+            "importId": "20260102390003217283",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260101000001",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2
+                }
+            ]
+        },
+        {
+            "amount": 1027.61,
+            "date": "2026-01-02",
+            "memo": "E-LASKU | Reference: 00000080080701620363",
+            "party": "Varsinais-Suomen Asumisoikeus Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "home",
+                    "amount": 1027.61
+                }
+            ]
+        },
+        {
+            "amount": 21.9,
+            "date": "2026-01-02",
+            "importId": "20260102390001496219",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 251231100061",
+            "party": "OPENAI *CHATGPT SUBSCR",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.9
+                }
+            ]
+        },
+        {
+            "amount": 31.6,
+            "date": "2026-01-02",
+            "importId": "20260102390001170008",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 251231836536",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 31.6
+                }
+            ]
+        },
+        {
+            "amount": 42.84,
+            "date": "2026-01-02",
+            "importId": "20260102390000248000",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 251231050213",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 42.84
+                }
+            ]
+        },
+        {
+            "amount": 48.56,
+            "date": "2026-01-05",
+            "importId": "20260105390003368489",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260103800331",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 48.56
+                }
+            ]
+        },
+        {
+            "amount": 33.09,
+            "date": "2026-01-05",
+            "importId": "20260105390002414627",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260103051368",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 33.09
+                }
+            ]
+        },
+        {
+            "amount": 14,
+            "date": "2026-01-05",
+            "importId": "20260105390001449815",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260102800256",
+            "party": "TURUN KUNINGAS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14
+                }
+            ]
+        },
+        {
+            "amount": 3,
+            "date": "2026-01-05",
+            "importId": "20260105390001449813",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260102800256",
+            "party": "TURUN KUNINGAS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3
+                }
+            ]
+        },
+        {
+            "amount": 39.78,
+            "date": "2026-01-05",
+            "importId": "20260105390000449460",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260102032463",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 39.78
+                }
+            ]
+        },
+        {
+            "amount": 4.13,
+            "date": "2026-01-07",
+            "importId": "20260107390002049567",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260106001982",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 4.13
+                }
+            ]
+        },
+        {
+            "amount": 9.99,
+            "date": "2026-01-07",
+            "importId": "20260107390000475117",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260105105224",
+            "party": "Prime Video Channels",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.99
+                }
+            ]
+        },
+        {
+            "amount": 14.92,
+            "date": "2026-01-07",
+            "importId": "20260107390000149763",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260105077273",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.92
+                }
+            ]
+        },
+        {
+            "amount": 7.99,
+            "date": "2026-01-08",
+            "importId": "20260108390001157308",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260108000952",
+            "party": "Google Play Apps",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 7.99
+                }
+            ]
+        },
+        {
+            "amount": 26.95,
+            "date": "2026-01-08",
+            "importId": "20260108390000902332",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260107000009",
+            "party": "Turun Kansallinen Kirjaka",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 26.95
+                }
+            ]
+        },
+        {
+            "amount": 21.9,
+            "date": "2026-01-08",
+            "importId": "20260108390000852536",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260107000005",
+            "party": "Suomalainen Kirjakauppa R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.9
+                }
+            ]
+        },
+        {
+            "amount": 34.16,
+            "date": "2026-01-08",
+            "importId": "20260108390000305754",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260107078893",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 34.16
+                }
+            ]
+        },
+        {
+            "amount": 51.7,
+            "date": "2026-01-09",
+            "importId": "20260109390004969070",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260108000005",
+            "party": "Suomalainen Kirjakauppa T",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 51.7
+                }
+            ]
+        },
+        {
+            "amount": 11.9,
+            "date": "2026-01-09",
+            "importId": "20260109390004854667",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260108132611",
+            "party": "Triopak Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 11.9
+                }
+            ]
+        },
+        {
+            "amount": 5.73,
+            "date": "2026-01-09",
+            "importId": "20260109390004818622",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260108001971",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 5.73
+                }
+            ]
+        },
+        {
+            "amount": 12.25,
+            "date": "2026-01-09",
+            "importId": "20260109390003130817",
+            "importSource": "s-pankki-csv",
+            "memo": "BONUS",
+            "party": "TURUN OSUUSKAUPPA",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 12.25
+                }
+            ]
+        },
+        {
+            "amount": 2.45,
+            "date": "2026-01-09",
+            "importId": "20260109390002307669",
+            "importSource": "s-pankki-csv",
+            "memo": "MAKSUTAPAETU",
+            "party": "TURUN OSUUSKAUPPA",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 2.45
+                }
+            ]
+        },
+        {
+            "amount": 17.99,
+            "date": "2026-01-12",
+            "importId": "20260112390003857646",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260112000691",
+            "party": "NETFLIX INTERNATIONAL B.V",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.99
+                }
+            ]
+        },
+        {
+            "amount": 41.32,
+            "date": "2026-01-12",
+            "importId": "20260112390001633070",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260110070524",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 41.32
+                }
+            ]
+        },
+        {
+            "amount": 12.48,
+            "date": "2026-01-12",
+            "importId": "20260112390001021918",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260109000016",
+            "party": "MOTONET OY TURK",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 12.48
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-01-12",
+            "importId": "20260112390000780816",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260109109103",
+            "party": "Prime Video",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 21.95,
+            "date": "2026-01-13",
+            "importId": "20260113390001008117",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260112801322",
+            "party": "CLAS OHLSON 214",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.95
+                }
+            ]
+        },
+        {
+            "amount": 71.88,
+            "date": "2026-01-13",
+            "importId": "20260113390000980831",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260112000013",
+            "party": "MOTONET OY TURK",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 71.88
+                }
+            ]
+        },
+        {
+            "amount": 16.95,
+            "date": "2026-01-13",
+            "importId": "20260113390000938309",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260112000010",
+            "party": "PRISMA VERKKOKA",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 16.95
+                }
+            ]
+        },
+        {
+            "amount": 11.9,
+            "date": "2026-01-13",
+            "importId": "20260113390000859260",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260112000004",
+            "party": "Suomalainen Kirjakauppa R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 11.9
+                }
+            ]
+        },
+        {
+            "amount": 23.53,
+            "date": "2026-01-13",
+            "importId": "20260113390000160833",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260112055157",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 23.53
+                }
+            ]
+        },
+        {
+            "amount": 48.56,
+            "date": "2026-01-14",
+            "importId": "20260114390001097990",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260113801327",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 48.56
+                }
+            ]
+        },
+        {
+            "amount": 26.31,
+            "date": "2026-01-14",
+            "importId": "20260114390000322249",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260113062403",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 26.31
+                }
+            ]
+        },
+        {
+            "amount": 1.11,
+            "date": "2026-01-15",
+            "importId": "20260115390001179205",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260114002234",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1.11
+                }
+            ]
+        },
+        {
+            "amount": 31.74,
+            "date": "2026-01-19",
+            "importId": "20260119390003612009",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260118000021",
+            "party": "K-CITYMARKET TURKU KUPITT",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 31.74
+                }
+            ]
+        },
+        {
+            "amount": 70.07,
+            "date": "2026-01-19",
+            "importId": "20260119390003000748",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260118077814",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 70.07
+                }
+            ]
+        },
+        {
+            "amount": 19.8,
+            "date": "2026-01-19",
+            "importId": "20260119390002755703",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260117096288",
+            "party": "VFI*MUOVITUKKU SIIVONEN O",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.8
+                }
+            ]
+        },
+        {
+            "amount": 15.97,
+            "date": "2026-01-19",
+            "importId": "20260119390002561898",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260117500187",
+            "party": "IKEA RAISIO IF CUSTOMER R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 15.97
+                }
+            ]
+        },
+        {
+            "amount": 4.99,
+            "date": "2026-01-19",
+            "importId": "20260119390002561881",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260117500187",
+            "party": "IKEA RAISIO HFB ECO",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 4.99
+                }
+            ]
+        },
+        {
+            "amount": 16.68,
+            "date": "2026-01-19",
+            "importId": "20260119390000837724",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260116000002",
+            "party": "K-CITYMARKET TURKU KUPITT",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 16.68
+                }
+            ]
+        },
+        {
+            "amount": 21.04,
+            "date": "2026-01-19",
+            "importId": "20260119390000408448",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260116064007",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.04
+                }
+            ]
+        },
+        {
+            "amount": 39.77,
+            "date": "2026-01-20",
+            "importId": "20260120390000462962",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260119078595",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 39.77
+                }
+            ]
+        },
+        {
+            "amount": 4.95,
+            "date": "2026-01-21",
+            "importId": "20260121390000880362",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260120000004",
+            "party": "Suomalainen Kirjakauppa R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 4.95
+                }
+            ]
+        },
+        {
+            "amount": 46.04,
+            "date": "2026-01-21",
+            "importId": "20260121390000744594",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260120000022",
+            "party": "K-CITYMARKET TURKU KUPITT",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 46.04
+                }
+            ]
+        },
+        {
+            "amount": 2.42,
+            "date": "2026-01-21",
+            "importId": "20260121390000700497",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260120002089",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2.42
+                }
+            ]
+        },
+        {
+            "amount": 39.8,
+            "date": "2026-01-21",
+            "importId": "20260121390000687117",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260119100029",
+            "party": "TREENIKAUPPA.FI",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 39.8
+                }
+            ]
+        },
+        {
+            "amount": 20,
+            "date": "2026-01-21",
+            "importId": "20260121390000231860",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000000500105963209",
+            "party": "Suomen Punainen Risti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 20
+                }
+            ]
+        },
+        {
+            "amount": 115.2,
+            "date": "2026-01-21",
+            "importId": "20260121390000210790",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000000004430496688",
+            "party": "Oy Turku Energia-Åbo Energi Ab",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 115.2
+                }
+            ]
+        },
+        {
+            "amount": 36.85,
+            "date": "2026-01-21",
+            "importId": "20260121390000209803",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260120129751",
+            "party": "Prisma Mylly",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 36.85
+                }
+            ]
+        },
+        {
+            "amount": 43.84,
+            "date": "2026-01-22",
+            "importId": "20260122390001278809",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260121096399",
+            "party": "APTEEKKI TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 43.84
+                }
+            ]
+        },
+        {
+            "amount": 120,
+            "date": "2026-01-22",
+            "importId": "20260122390001106974",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260121802129",
+            "party": "NESTE EXPRESS RAISIO MYLL",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 120
+                }
+            ]
+        },
+        {
+            "amount": 17.49,
+            "date": "2026-01-22",
+            "importId": "20260122390001094441",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260121802201",
+            "party": "TOKMANNI LANSIKESKUS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.49
+                }
+            ]
+        },
+        {
+            "amount": 5.99,
+            "date": "2026-01-22",
+            "importId": "20260122390000809456",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260121000000",
+            "party": "KIRPPIS-CENTER",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 5.99
+                }
+            ]
+        },
+        {
+            "amount": 28,
+            "date": "2026-01-22",
+            "importId": "20260122390000241245",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260121059354",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 28
+                }
+            ]
+        },
+        {
+            "amount": 48.56,
+            "date": "2026-01-23",
+            "importId": "20260123390001270275",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260122802228",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 48.56
+                }
+            ]
+        },
+        {
+            "amount": 13.9,
+            "date": "2026-01-23",
+            "importId": "20260123390000332599",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00663025308222771037",
+            "party": "DNA Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 13.9
+                }
+            ]
+        },
+        {
+            "amount": 29.7,
+            "date": "2026-01-23",
+            "importId": "20260123390000240004",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260122082540",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 29.7
+                }
+            ]
+        },
+        {
+            "amount": 9.99,
+            "date": "2026-01-26",
+            "importId": "20260126390003860127",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260125096521",
+            "party": "VERKKOKAUPPA.COM MYYMALAT",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.99
+                }
+            ]
+        },
+        {
+            "amount": 1.4,
+            "date": "2026-01-26",
+            "importId": "20260126390003690283",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260125000007",
+            "party": "BAUHAUS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1.4
+                }
+            ]
+        },
+        {
+            "amount": 44.49,
+            "date": "2026-01-26",
+            "importId": "20260126390003057210",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000000803620579943",
+            "party": "Elisa Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 44.49
+                }
+            ]
+        },
+        {
+            "amount": 14.28,
+            "date": "2026-01-26",
+            "importId": "20260126390002945656",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260125073244",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.28
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-01-26",
+            "importId": "20260126390002217555",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260124000002",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 18.45,
+            "date": "2026-01-27",
+            "importId": "20260127390001033326",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260126802722",
+            "party": "CLAS OHLSON 214",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 18.45
+                }
+            ]
+        },
+        {
+            "amount": 44.8,
+            "date": "2026-01-27",
+            "importId": "20260127390000890189",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260126000004",
+            "party": "Suomalainen Kirjakauppa R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 44.8
+                }
+            ]
+        },
+        {
+            "amount": 90,
+            "date": "2026-01-27",
+            "importId": "20260127390000597088",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Thanks for helping me with getting the cloths in Tori. Fi. The extra 10e is for gas.",
+            "party": "SHANYING MO",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 90
+                }
+            ]
+        },
+        {
+            "amount": 10.87,
+            "date": "2026-01-28",
+            "importId": "20260128390001236570",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260127100062",
+            "party": "MIDJOURNEY INC.",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 10.87
+                }
+            ]
+        },
+        {
+            "amount": 80,
+            "date": "2026-01-28",
+            "importId": "20260128390001135892",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260127096584",
+            "party": "MOB.PAY*ANU IRENE YLLIKAI",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 80
+                }
+            ]
+        },
+        {
+            "amount": 17.99,
+            "date": "2026-01-28",
+            "importId": "20260128390000941764",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260127802822",
+            "party": "CLAS OHLSON 214",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.99
+                }
+            ]
+        },
+        {
+            "amount": 5.9,
+            "date": "2026-01-28",
+            "importId": "20260128390000804184",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260127000004",
+            "party": "Suomalainen Kirjakauppa R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 5.9
+                }
+            ]
+        },
+        {
+            "amount": 14.99,
+            "date": "2026-01-30",
+            "importId": "20260130390001623406",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260129001383",
+            "party": "Google YouTubePremium",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.99
+                }
+            ]
+        },
+        {
+            "amount": 24.9,
+            "date": "2026-01-30",
+            "importId": "20260130390001294129",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260129000012",
+            "party": "MOTONET OY TURK",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 24.9
+                }
+            ]
+        },
+        {
+            "amount": 83.59,
+            "date": "2026-01-30",
+            "importId": "20260130390001277633",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260129000011",
+            "party": "BAUHAUS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 83.59
+                }
+            ]
+        },
+        {
+            "amount": 12.99,
+            "date": "2026-01-30",
+            "importId": "20260130390000881489",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260129003405",
+            "party": "Spotify P3ED8EC697",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 12.99
+                }
+            ]
+        },
+        {
+            "amount": 28.07,
+            "date": "2026-01-30",
+            "importId": "20260130390000251193",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260129087069",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 28.07
+                }
+            ]
+        },
+        {
+            "amount": 34.27,
+            "date": "2026-02-02",
+            "importId": "20260202390004827365",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260202109247",
+            "party": "AWS EMEA",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 34.27
+                }
+            ]
+        },
+        {
+            "amount": 2,
+            "date": "2026-02-02",
+            "importId": "20260202390004343488",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260201000001",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2
+                }
+            ]
+        },
+        {
+            "amount": 7.99,
+            "date": "2026-02-02",
+            "importId": "20260202390004176945",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260201002700",
+            "party": "Google Play Apps",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 7.99
+                }
+            ]
+        },
+        {
+            "amount": 1027.61,
+            "date": "2026-02-02",
+            "importId": "20260202390003605863",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000080080701620363",
+            "party": "Varsinais-Suomen Asumisoikeus Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1027.61
+                }
+            ]
+        },
+        {
+            "amount": 20.9,
+            "date": "2026-02-02",
+            "importId": "20260202390003419452",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260201086564",
+            "party": "Prisma Mylly",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 20.9
+                }
+            ]
+        },
+        {
+            "amount": 61.07,
+            "date": "2026-02-02",
+            "importId": "20260202390002635347",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260131000027",
+            "party": "K-CITYMARKET TURKU KUPITT",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 61.07
+                }
+            ]
+        },
+        {
+            "amount": 21.71,
+            "date": "2026-02-02",
+            "importId": "20260202390002493250",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260131100036",
+            "party": "OPENAI *CHATGPT SUBSCR",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.71
+                }
+            ]
+        },
+        {
+            "amount": 5.9,
+            "date": "2026-02-02",
+            "importId": "20260202390002017334",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260131096723",
+            "party": "VFI*MUOVITUKKU SIIVONEN O",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 5.9
+                }
+            ]
+        },
+        {
+            "amount": 27.02,
+            "date": "2026-02-03",
+            "importId": "20260203390000366280",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260202045137",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 27.02
+                }
+            ]
+        },
+        {
+            "amount": 8,
+            "date": "2026-02-04",
+            "importId": "20260204390001406522",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260203100014",
+            "party": "X CORP. PAID FEATURES",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 8
+                }
+            ]
+        },
+        {
+            "amount": 2.45,
+            "date": "2026-02-04",
+            "importId": "20260204390000773680",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260203002176",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2.45
+                }
+            ]
+        },
+        {
+            "amount": 39.62,
+            "date": "2026-02-06",
+            "importId": "20260206390001177644",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260205096875",
+            "party": "APTEEKKI TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 39.62
+                }
+            ]
+        },
+        {
+            "amount": 9.99,
+            "date": "2026-02-06",
+            "importId": "20260206390000756882",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260205102370",
+            "party": "Prime Video Channels",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.99
+                }
+            ]
+        },
+        {
+            "amount": 69.68,
+            "date": "2026-02-06",
+            "importId": "20260206390000410046",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260205071818",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 69.68
+                }
+            ]
+        },
+        {
+            "amount": 10.93,
+            "date": "2026-02-09",
+            "importId": "20260209390004207572",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260209100005",
+            "party": "OPENAI",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 10.93
+                }
+            ]
+        },
+        {
+            "amount": 102.94,
+            "date": "2026-02-09",
+            "importId": "20260209390004002391",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260208803930",
+            "party": "NESTE EXPRESS RAISIO MYLL",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 102.94
+                }
+            ]
+        },
+        {
+            "amount": 33.91,
+            "date": "2026-02-09",
+            "importId": "20260209390003162343",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260208056937",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 33.91
+                }
+            ]
+        },
+        {
+            "amount": 1.28,
+            "date": "2026-02-09",
+            "importId": "20260209390002768936",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260208001978",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1.28
+                }
+            ]
+        },
+        {
+            "amount": 29.44,
+            "date": "2026-02-09",
+            "importId": "20260209390001845751",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260207088286",
+            "party": "Prisma Mylly",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 29.44
+                }
+            ]
+        },
+        {
+            "amount": 3.53,
+            "date": "2026-02-10",
+            "importId": "20260210390005124085",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260210002192",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.53
+                }
+            ]
+        },
+        {
+            "amount": 20.63,
+            "date": "2026-02-10",
+            "importId": "20260210390005034934",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260209804101",
+            "party": "TOKMANNI LANSIKESKUS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 20.63
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-02-10",
+            "importId": "20260210390004970927",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260209103287",
+            "party": "Prime Video",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 44.78,
+            "date": "2026-02-10",
+            "importId": "20260210390004832467",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260209000011",
+            "party": "MOTONET OY TURK",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 44.78
+                }
+            ]
+        },
+        {
+            "amount": 18.25,
+            "date": "2026-02-10",
+            "importId": "20260210390004256667",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260209038112",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 18.25
+                }
+            ]
+        },
+        {
+            "amount": 12.45,
+            "date": "2026-02-10",
+            "importId": "20260210390003026317",
+            "importSource": "s-pankki-csv",
+            "memo": "BONUS",
+            "party": "TOK",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 12.45
+                }
+            ]
+        },
+        {
+            "amount": 2.4,
+            "date": "2026-02-10",
+            "importId": "20260210390002233902",
+            "importSource": "s-pankki-csv",
+            "memo": "MAKSUTAPAETU",
+            "party": "TOK",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 2.4
+                }
+            ]
+        },
+        {
+            "amount": 85.86,
+            "date": "2026-02-11",
+            "importId": "20260211390001454465",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Kilometrikorvaukset 26.1.2026, 30.1.2026 ja 31.1.2026.",
+            "party": "VARSINAIS-SUOMEN HYVINVOINTIALUE",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 85.86
+                }
+            ]
+        },
+        {
+            "amount": 168,
+            "date": "2026-02-11",
+            "importId": "20260211390001454330",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Luonapitokorvaukset 12/25 ja 1/26.",
+            "party": "VARSINAIS-SUOMEN HYVINVOINTIALUE",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 168
+                }
+            ]
+        },
+        {
+            "amount": 168,
+            "date": "2026-02-11",
+            "importId": "20260211390001454266",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Luonapitokorvaukset 12/25 ja 1/26.",
+            "party": "VARSINAIS-SUOMEN HYVINVOINTIALUE",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 168
+                }
+            ]
+        },
+        {
+            "amount": 52.98,
+            "date": "2026-02-11",
+            "importId": "20260211390001238721",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260210097024",
+            "party": "VERKKOKAUPPA.COM MYYMALAT",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 52.98
+                }
+            ]
+        },
+        {
+            "amount": 35.04,
+            "date": "2026-02-11",
+            "importId": "20260211390000925465",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260210000004",
+            "party": "Raw Organic Oy Mylly",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 35.04
+                }
+            ]
+        },
+        {
+            "amount": 18.95,
+            "date": "2026-02-11",
+            "importId": "20260211390000914783",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260210000005",
+            "party": "Suomalainen Kirjakauppa R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 18.95
+                }
+            ]
+        },
+        {
+            "amount": 17.99,
+            "date": "2026-02-12",
+            "importId": "20260212390001311528",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260212194701",
+            "party": "Netflix.com",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.99
+                }
+            ]
+        },
+        {
+            "amount": 19.99,
+            "date": "2026-02-16",
+            "importId": "20260216390004244058",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260214003721",
+            "party": "Google One",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.99
+                }
+            ]
+        },
+        {
+            "amount": 49.09,
+            "date": "2026-02-16",
+            "importId": "20260216390002986215",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260214097174",
+            "party": "VFI*MUOVITUKKU SIIVONEN O",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 49.09
+                }
+            ]
+        },
+        {
+            "amount": 4.9,
+            "date": "2026-02-16",
+            "importId": "20260216390001344267",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260214002100",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 4.9
+                }
+            ]
+        },
+        {
+            "amount": 25.68,
+            "date": "2026-02-16",
+            "importId": "20260216390000185463",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260213048219",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 25.68
+                }
+            ]
+        },
+        {
+            "amount": 4.43,
+            "date": "2026-02-17",
+            "importId": "20260217390001202342",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260217002033",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 4.43
+                }
+            ]
+        },
+        {
+            "amount": 48.56,
+            "date": "2026-02-17",
+            "importId": "20260217390001121692",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260216804721",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 48.56
+                }
+            ]
+        },
+        {
+            "amount": 31.19,
+            "date": "2026-02-17",
+            "importId": "20260217390000334682",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260216070488",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 31.19
+                }
+            ]
+        },
+        {
+            "amount": 13.9,
+            "date": "2026-02-23",
+            "importId": "20260223390002944828",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00663025308229554710",
+            "party": "DNA Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 13.9
+                }
+            ]
+        },
+        {
+            "amount": 24.66,
+            "date": "2026-02-23",
+            "importId": "20260223390002541622",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260221097383",
+            "party": "VFI*MUOVITUKKU SIIVONEN O",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 24.66
+                }
+            ]
+        },
+        {
+            "amount": 42.45,
+            "date": "2026-02-23",
+            "importId": "20260223390002441700",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260221805301",
+            "party": "TOKMANNI LANSIKESKUS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 42.45
+                }
+            ]
+        },
+        {
+            "amount": 69.95,
+            "date": "2026-02-23",
+            "importId": "20260223390002115298",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260221000628",
+            "party": "PlayStation Network",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 69.95
+                }
+            ]
+        },
+        {
+            "amount": 31.96,
+            "date": "2026-02-23",
+            "importId": "20260223390002023112",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260221002863",
+            "party": "Jula Raisio",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 31.96
+                }
+            ]
+        },
+        {
+            "amount": 25.9,
+            "date": "2026-02-23",
+            "importId": "20260223390001659890",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260221063510",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 25.9
+                }
+            ]
+        },
+        {
+            "amount": 20.01,
+            "date": "2026-02-23",
+            "importId": "20260223390001659578",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260221074610",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 20.01
+                }
+            ]
+        },
+        {
+            "amount": 52.79,
+            "date": "2026-02-23",
+            "importId": "20260223390000223864",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260220040347",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 52.79
+                }
+            ]
+        },
+        {
+            "amount": 6.83,
+            "date": "2026-02-24",
+            "importId": "20260224390001133055",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260224001943",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.83
+                }
+            ]
+        },
+        {
+            "amount": 47.84,
+            "date": "2026-02-24",
+            "importId": "20260224390000155663",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000000803620579943",
+            "party": "Elisa Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 47.84
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-02-25",
+            "importId": "20260225390000840719",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260224000002",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 22.73,
+            "date": "2026-02-26",
+            "importId": "20260226390000324755",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260225077738",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.73
+                }
+            ]
+        },
+        {
+            "amount": 3.3,
+            "date": "2026-03-02",
+            "importId": "20260302390005089898",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260302105828",
+            "party": "AWS EMEA",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.3
+                }
+            ]
+        },
+        {
+            "amount": 2,
+            "date": "2026-03-02",
+            "importId": "20260302390004641787",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260301000002",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2
+                }
+            ]
+        },
+        {
+            "amount": 65.93,
+            "date": "2026-03-02",
+            "importId": "20260302390003914601",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00001301496871706984",
+            "party": "If Vahinkovakuutus Oyj, Suomen sivu",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 65.93
+                }
+            ]
+        },
+        {
+            "amount": 14.03,
+            "date": "2026-03-02",
+            "importId": "20260302390003499270",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260301068027",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.03
+                }
+            ]
+        },
+        {
+            "amount": 21.82,
+            "date": "2026-03-02",
+            "importId": "20260302390003012529",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260228100004",
+            "party": "OPENAI *CHATGPT SUBSCR",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.82
+                }
+            ]
+        },
+        {
+            "amount": 14.99,
+            "date": "2026-03-02",
+            "importId": "20260302390002982851",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260228001969",
+            "party": "Google YouTubePremium",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.99
+                }
+            ]
+        },
+        {
+            "amount": 39.99,
+            "date": "2026-03-02",
+            "importId": "20260302390002808964",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260228097608",
+            "party": "VERKKOKAUPPA.COM MYYMALAT",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 39.99
+                }
+            ]
+        },
+        {
+            "amount": 127.81,
+            "date": "2026-03-02",
+            "importId": "20260302390002732068",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260228805936",
+            "party": "NESTE EXPRESS RAISIO MYLL",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 127.81
+                }
+            ]
+        },
+        {
+            "amount": 16.93,
+            "date": "2026-03-02",
+            "importId": "20260302390002251332",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260228001756",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 16.93
+                }
+            ]
+        },
+        {
+            "amount": 12.99,
+            "date": "2026-03-02",
+            "importId": "20260302390002136468",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260228004496",
+            "party": "Spotify P3FD7E7847",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 12.99
+                }
+            ]
+        },
+        {
+            "amount": 11.3,
+            "date": "2026-03-02",
+            "importId": "20260302390001539706",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260228100091",
+            "party": "SUNO INC.",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 11.3
+                }
+            ]
+        },
+        {
+            "amount": 10.92,
+            "date": "2026-03-02",
+            "importId": "20260302390001537013",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260227100052",
+            "party": "MIDJOURNEY INC.",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 10.92
+                }
+            ]
+        },
+        {
+            "amount": 12.44,
+            "date": "2026-03-02",
+            "importId": "20260302390000923197",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260227000006",
+            "party": "Piihovi",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 12.44
+                }
+            ]
+        },
+        {
+            "amount": 3.32,
+            "date": "2026-03-02",
+            "importId": "20260302390000591571",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260227001950",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.32
+                }
+            ]
+        },
+        {
+            "amount": 31.62,
+            "date": "2026-03-02",
+            "importId": "20260302390000347724",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260227082174",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 31.62
+                }
+            ]
+        },
+        {
+            "amount": 3.6,
+            "date": "2026-03-02",
+            "importId": "20260302390000151301",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260227000008",
+            "party": "ABC Piihovi",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.6
+                }
+            ]
+        },
+        {
+            "amount": 3.62,
+            "date": "2026-03-03",
+            "importId": "20260303390001427859",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260303002174",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.62
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-03-03",
+            "importId": "20260303390000812642",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260302100024",
+            "party": "SANOMA MEDIA FINLAND",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 1027.61,
+            "date": "2026-03-03",
+            "importId": "20260303390000658326",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000080080701620363",
+            "party": "Varsinais-Suomen Asumisoikeus Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1027.61
+                }
+            ]
+        },
+        {
+            "amount": 1000,
+            "date": "2026-03-03",
+            "importId": "20260303390000658323",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | 6248496",
+            "party": "NORDNET BANK AB SUOMEN SIVULIIKE",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 1000
+                }
+            ]
+        },
+        {
+            "amount": 15.37,
+            "date": "2026-03-03",
+            "importId": "20260303390000508886",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260302084018",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 15.37
+                }
+            ]
+        },
+        {
+            "amount": 8,
+            "date": "2026-03-04",
+            "importId": "20260304390001466495",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260304100023",
+            "party": "X CORP. PAID FEATURES",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 8
+                }
+            ]
+        },
+        {
+            "amount": 14.33,
+            "date": "2026-03-04",
+            "importId": "20260304390001398085",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260303097717",
+            "party": "APTEEKKI TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.33
+                }
+            ]
+        },
+        {
+            "amount": 43,
+            "date": "2026-03-04",
+            "importId": "20260304390001212506",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260303806229",
+            "party": "NESTE EXPRESS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 43
+                }
+            ]
+        },
+        {
+            "amount": 31.98,
+            "date": "2026-03-04",
+            "importId": "20260304390001178551",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260303806228",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 31.98
+                }
+            ]
+        },
+        {
+            "amount": 10.36,
+            "date": "2026-03-04",
+            "importId": "20260304390000997997",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260303000006",
+            "party": "Puuilo Turku",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 10.36
+                }
+            ]
+        },
+        {
+            "amount": 26.9,
+            "date": "2026-03-04",
+            "importId": "20260304390000982449",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260303000005",
+            "party": "Suomalainen Kirjakauppa R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 26.9
+                }
+            ]
+        },
+        {
+            "amount": 4.51,
+            "date": "2026-03-04",
+            "importId": "20260304390000377437",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260303031300",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 4.51
+                }
+            ]
+        },
+        {
+            "amount": 3.15,
+            "date": "2026-03-05",
+            "importId": "20260305390001518139",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260304540640",
+            "party": "FOLI",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.15
+                }
+            ]
+        },
+        {
+            "amount": 48.56,
+            "date": "2026-03-05",
+            "importId": "20260305390001428077",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260304806328",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 48.56
+                }
+            ]
+        },
+        {
+            "amount": 7.32,
+            "date": "2026-03-05",
+            "importId": "20260305390000432381",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260304069559",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 7.32
+                }
+            ]
+        },
+        {
+            "amount": 9.99,
+            "date": "2026-03-06",
+            "importId": "20260306390000808602",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260305108947",
+            "party": "Prime Video Channels",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.99
+                }
+            ]
+        },
+        {
+            "amount": 34.9,
+            "date": "2026-03-09",
+            "importId": "20260309390003964323",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260308000008",
+            "party": "MOTONET OY TURK",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 34.9
+                }
+            ]
+        },
+        {
+            "amount": 25.63,
+            "date": "2026-03-09",
+            "importId": "20260309390003249213",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260308076614",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 25.63
+                }
+            ]
+        },
+        {
+            "amount": 2000,
+            "date": "2026-03-10",
+            "importId": "20260310390005319732",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Siirto omalle tilille",
+            "party": "GRÖNROOS MARKO ANTERO",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 2000
+                }
+            ]
+        },
+        {
+            "amount": 46,
+            "date": "2026-03-10",
+            "importId": "20260310390005271128",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260309800203",
+            "party": "JYSK RAISIO F903",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 46
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-03-10",
+            "importId": "20260310390004876010",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260309103019",
+            "party": "Prime Video",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 35.17,
+            "date": "2026-03-10",
+            "importId": "20260310390004865595",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260309000007",
+            "party": "Puuilo Turku",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 35.17
+                }
+            ]
+        },
+        {
+            "amount": 14.85,
+            "date": "2026-03-10",
+            "importId": "20260310390004785697",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260309000002",
+            "party": "EUROKANGAS MYLL",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.85
+                }
+            ]
+        },
+        {
+            "amount": 10.32,
+            "date": "2026-03-10",
+            "importId": "20260310390002967978",
+            "importSource": "s-pankki-csv",
+            "memo": "BONUS",
+            "party": "TOK",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 10.32
+                }
+            ]
+        },
+        {
+            "amount": 2.07,
+            "date": "2026-03-10",
+            "importId": "20260310390002190938",
+            "importSource": "s-pankki-csv",
+            "memo": "MAKSUTAPAETU",
+            "party": "TOK",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 2.07
+                }
+            ]
+        },
+        {
+            "amount": 2.99,
+            "date": "2026-03-11",
+            "importId": "20260311390000649698",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260310002020",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2.99
+                }
+            ]
+        },
+        {
+            "amount": 20.41,
+            "date": "2026-03-11",
+            "importId": "20260311390000309326",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260310077971",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 20.41
+                }
+            ]
+        },
+        {
+            "amount": 17.99,
+            "date": "2026-03-12",
+            "importId": "20260312390001503911",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260312207696",
+            "party": "Netflix.com",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.99
+                }
+            ]
+        },
+        {
+            "amount": 9.99,
+            "date": "2026-03-12",
+            "importId": "20260312390001041493",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260311000012",
+            "party": "MOTONET OY - 61",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.99
+                }
+            ]
+        },
+        {
+            "amount": 107.6,
+            "date": "2026-03-12",
+            "importId": "20260312390000862753",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260311000000",
+            "party": "TIETOKONEKAUPPA",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 107.6
+                }
+            ]
+        },
+        {
+            "amount": 2.36,
+            "date": "2026-03-12",
+            "importId": "20260312390000648312",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260311002132",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2.36
+                }
+            ]
+        },
+        {
+            "amount": 37.57,
+            "date": "2026-03-13",
+            "importId": "20260313390001902753",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Reference: 00000016600038040264 | Saajan viitenumero: RF8916600038040264",
+            "party": "ULOSOTTOLAITOS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 37.57
+                }
+            ]
+        },
+        {
+            "amount": 29.97,
+            "date": "2026-03-13",
+            "importId": "20260313390001515301",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260312807222",
+            "party": "CLAS OHLSON 214",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 29.97
+                }
+            ]
+        },
+        {
+            "amount": 7.05,
+            "date": "2026-03-13",
+            "importId": "20260313390001474975",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260312000012",
+            "party": "BAUHAUS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 7.05
+                }
+            ]
+        },
+        {
+            "amount": 64.3,
+            "date": "2026-03-16",
+            "importId": "20260316390004752179",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260315807431",
+            "party": "NESTE EXPRESS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 64.3
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-03-16",
+            "importId": "20260316390004649997",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260315000009",
+            "party": "MOTONET OY TURK",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 2,
+            "date": "2026-03-16",
+            "importId": "20260316390004645575",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260315000010",
+            "party": "BILTEMA SUOMI",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2
+                }
+            ]
+        },
+        {
+            "amount": 15.6,
+            "date": "2026-03-16",
+            "importId": "20260316390004271020",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260315003157",
+            "party": "Power Raisio Turku",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 15.6
+                }
+            ]
+        },
+        {
+            "amount": 33.14,
+            "date": "2026-03-16",
+            "importId": "20260316390003779502",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260315133779",
+            "party": "ABC Turku S-market Haline",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 33.14
+                }
+            ]
+        },
+        {
+            "amount": 10,
+            "date": "2026-03-16",
+            "importId": "20260316390003551273",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTON KORJAUS | 431871******5720 260315045934",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 10
+                }
+            ]
+        },
+        {
+            "amount": 29.95,
+            "date": "2026-03-16",
+            "importId": "20260316390003551203",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260315045930",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 29.95
+                }
+            ]
+        },
+        {
+            "amount": 6.31,
+            "date": "2026-03-16",
+            "importId": "20260316390003551193",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260315045927",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.31
+                }
+            ]
+        },
+        {
+            "amount": 60,
+            "date": "2026-03-16",
+            "importId": "20260316390003311815",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Thanks for helping me to buy gas 35r, power bank 20e and a small lamp 5e=60e",
+            "party": "SHANYING MO",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 60
+                }
+            ]
+        },
+        {
+            "amount": 41.23,
+            "date": "2026-03-16",
+            "importId": "20260316390003180302",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260314800241",
+            "party": "BYGGMAX RAISIO 3104",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 41.23
+                }
+            ]
+        },
+        {
+            "amount": 17.47,
+            "date": "2026-03-16",
+            "importId": "20260316390002880905",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260314500746",
+            "party": "IKEA RAISIO KIOSK",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.47
+                }
+            ]
+        },
+        {
+            "amount": 42.88,
+            "date": "2026-03-16",
+            "importId": "20260316390002880450",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260314500746",
+            "party": "IKEA RAISIO HFB ECO",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 42.88
+                }
+            ]
+        },
+        {
+            "amount": 9.62,
+            "date": "2026-03-16",
+            "importId": "20260316390001940038",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260314080767",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.62
+                }
+            ]
+        },
+        {
+            "amount": 21.16,
+            "date": "2026-03-16",
+            "importId": "20260316390001086841",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260313000008",
+            "party": "Puuilo Turku",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.16
+                }
+            ]
+        },
+        {
+            "amount": 27.01,
+            "date": "2026-03-16",
+            "importId": "20260316390000194714",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260313080308",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 27.01
+                }
+            ]
+        },
+        {
+            "amount": 18.03,
+            "date": "2026-03-17",
+            "importId": "20260317390000346233",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260316053235",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 18.03
+                }
+            ]
+        },
+        {
+            "amount": 3.41,
+            "date": "2026-03-18",
+            "importId": "20260318390000737836",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260317001541",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.41
+                }
+            ]
+        },
+        {
+            "amount": 16.8,
+            "date": "2026-03-18",
+            "importId": "20260318390000405362",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260317067048",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 16.8
+                }
+            ]
+        },
+        {
+            "amount": 173.94,
+            "date": "2026-03-18",
+            "importId": "20260318390000303745",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000000004431557911",
+            "party": "Oy Turku Energia-Åbo Energi Ab",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 173.94
+                }
+            ]
+        },
+        {
+            "amount": 13.41,
+            "date": "2026-03-19",
+            "importId": "20260319390001366441",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260319100005",
+            "party": "TRANSCRIBETOTEXT.AI",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 13.41
+                }
+            ]
+        },
+        {
+            "amount": 18.06,
+            "date": "2026-03-20",
+            "importId": "20260320390000490464",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260319054601",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 18.06
+                }
+            ]
+        },
+        {
+            "amount": 41.36,
+            "date": "2026-03-23",
+            "importId": "20260323390003434014",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260322069943",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 41.36
+                }
+            ]
+        },
+        {
+            "amount": 19.9,
+            "date": "2026-03-23",
+            "importId": "20260323390003252879",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00663025308234610940",
+            "party": "DNA Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.9
+                }
+            ]
+        },
+        {
+            "amount": 26.23,
+            "date": "2026-03-23",
+            "importId": "20260323390002107009",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Reference: 00000000300876958675 | OP Yrityspankki Oyj",
+            "party": "VISMA PAYMENTS OY",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 26.23
+                }
+            ]
+        },
+        {
+            "amount": 103.91,
+            "date": "2026-03-23",
+            "importId": "20260323390002058234",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Reference: 00000000300876952257 | OP Yrityspankki Oyj",
+            "party": "VISMA PAYMENTS OY",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 103.91
+                }
+            ]
+        },
+        {
+            "amount": 13.25,
+            "date": "2026-03-23",
+            "importId": "20260323390000603936",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260320002456",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 13.25
+                }
+            ]
+        },
+        {
+            "amount": 22.35,
+            "date": "2026-03-23",
+            "importId": "20260323390000425518",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260320069123",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.35
+                }
+            ]
+        },
+        {
+            "amount": 49.36,
+            "date": "2026-03-24",
+            "importId": "20260324390000118320",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000000803620579943",
+            "party": "Elisa Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 49.36
+                }
+            ]
+        },
+        {
+            "amount": 7.93,
+            "date": "2026-03-25",
+            "importId": "20260325390001216690",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260324098430",
+            "party": "APTEEKKI TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 7.93
+                }
+            ]
+        },
+        {
+            "amount": 1.13,
+            "date": "2026-03-25",
+            "importId": "20260325390001197638",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260325002067",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1.13
+                }
+            ]
+        },
+        {
+            "amount": 26.29,
+            "date": "2026-03-25",
+            "importId": "20260325390001144087",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260324808328",
+            "party": "NESTE EXPRESS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 26.29
+                }
+            ]
+        },
+        {
+            "amount": 8.45,
+            "date": "2026-03-25",
+            "importId": "20260325390001115918",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260324808327",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 8.45
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-03-25",
+            "importId": "20260325390000887735",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260324000002",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 32.05,
+            "date": "2026-03-25",
+            "importId": "20260325390000242953",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260324056951",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 32.05
+                }
+            ]
+        },
+        {
+            "amount": 22.32,
+            "date": "2026-03-26",
+            "importId": "20260326390001526224",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260325100037",
+            "party": "OPENART AI",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.32
+                }
+            ]
+        },
+        {
+            "amount": 74.47,
+            "date": "2026-03-26",
+            "importId": "20260326390001524437",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260325100060",
+            "party": "LUMA AI DREAM MACHINE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 74.47
+                }
+            ]
+        },
+        {
+            "amount": 71.54,
+            "date": "2026-03-26",
+            "importId": "20260326390000903421",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260325002459",
+            "party": "LinkedIn*P838058013",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 71.54
+                }
+            ]
+        },
+        {
+            "amount": 3.2,
+            "date": "2026-03-27",
+            "importId": "20260327390001167692",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260326000000",
+            "party": "KIRPPIS-CENTER",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.2
+                }
+            ]
+        },
+        {
+            "amount": 14.66,
+            "date": "2026-03-27",
+            "importId": "20260327390000484637",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260326087912",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.66
+                }
+            ]
+        },
+        {
+            "amount": 14.99,
+            "date": "2026-03-30",
+            "importId": "20260330390004300276",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260329001467",
+            "party": "Google YouTubePremium",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.99
+                }
+            ]
+        },
+        {
+            "amount": 29.78,
+            "date": "2026-03-30",
+            "importId": "20260330390003869319",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260329000001",
+            "party": "K-market Halinen",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 29.78
+                }
+            ]
+        },
+        {
+            "amount": 12.99,
+            "date": "2026-03-30",
+            "importId": "20260330390003811464",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260329003286",
+            "party": "Spotify P40E5893E5",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 12.99
+                }
+            ]
+        },
+        {
+            "amount": 32.36,
+            "date": "2026-03-30",
+            "importId": "20260330390003188978",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260328058981",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 32.36
+                }
+            ]
+        },
+        {
+            "amount": 11.3,
+            "date": "2026-03-30",
+            "importId": "20260330390002701858",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260328100085",
+            "party": "SUNO INC.",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 11.3
+                }
+            ]
+        },
+        {
+            "amount": 16.72,
+            "date": "2026-03-30",
+            "importId": "20260330390002432793",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260328808738",
+            "party": "NESTE EXPRESS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 16.72
+                }
+            ]
+        },
+        {
+            "amount": 41.07,
+            "date": "2026-03-30",
+            "importId": "20260330390002387326",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260328808736",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 41.07
+                }
+            ]
+        },
+        {
+            "amount": 48,
+            "date": "2026-03-30",
+            "importId": "20260330390001061389",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260327800284",
+            "party": "XXL FIN 707 SKA",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 48
+                }
+            ]
+        },
+        {
+            "amount": 14.49,
+            "date": "2026-03-30",
+            "importId": "20260330390000816883",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260327001470",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.49
+                }
+            ]
+        },
+        {
+            "amount": 22.48,
+            "date": "2026-04-01",
+            "importId": "20260401390002163387",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260331100062",
+            "party": "OPENAI *CHATGPT SUBSCR",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.48
+                }
+            ]
+        },
+        {
+            "amount": 49.37,
+            "date": "2026-04-01",
+            "importId": "20260401390001826857",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260331809028",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 49.37
+                }
+            ]
+        },
+        {
+            "amount": 29.58,
+            "date": "2026-04-01",
+            "importId": "20260401390000611769",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260331065104",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 29.58
+                }
+            ]
+        },
+        {
+            "amount": 2,
+            "date": "2026-04-02",
+            "importId": "20260402390001285453",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260401000003",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2
+                }
+            ]
+        },
+        {
+            "amount": 9.99,
+            "date": "2026-04-07",
+            "importId": "20260407390004974724",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260405105022",
+            "party": "Prime Video Channels",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.99
+                }
+            ]
+        },
+        {
+            "amount": 5.9,
+            "date": "2026-04-07",
+            "importId": "20260407390004331147",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260404098843",
+            "party": "VFI*MUOVITUKKU SIIVONEN O",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 5.9
+                }
+            ]
+        },
+        {
+            "amount": 32.37,
+            "date": "2026-04-07",
+            "importId": "20260407390004089843",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260404809425",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 32.37
+                }
+            ]
+        },
+        {
+            "amount": 14,
+            "date": "2026-04-07",
+            "importId": "20260407390003929004",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260404800254",
+            "party": "TURUN KUNINGAS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14
+                }
+            ]
+        },
+        {
+            "amount": 59.4,
+            "date": "2026-04-07",
+            "importId": "20260407390003645624",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260404100008",
+            "party": "SANOMA MEDIA FINLAND",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 59.4
+                }
+            ]
+        },
+        {
+            "amount": 43.76,
+            "date": "2026-04-07",
+            "importId": "20260407390003313308",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260404053740",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 43.76
+                }
+            ]
+        },
+        {
+            "amount": 8,
+            "date": "2026-04-07",
+            "importId": "20260407390002990774",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260404100021",
+            "party": "X CORP. PAID FEATURES",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 8
+                }
+            ]
+        },
+        {
+            "amount": 9.47,
+            "date": "2026-04-07",
+            "importId": "20260407390002414306",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260403098792",
+            "party": "APTEEKKI TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.47
+                }
+            ]
+        },
+        {
+            "amount": 99.86,
+            "date": "2026-04-07",
+            "importId": "20260407390001990478",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260403053126",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 99.86
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-04-07",
+            "importId": "20260407390000620654",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260402100015",
+            "party": "SANOMA MEDIA FINLAND",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 21.52,
+            "date": "2026-04-08",
+            "importId": "20260408390001261415",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260407809722",
+            "party": "NESTE EXPRESS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.52
+                }
+            ]
+        },
+        {
+            "amount": 1027.61,
+            "date": "2026-04-08",
+            "importId": "20260408390001246786",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000080080701620363",
+            "party": "Varsinais-Suomen Asumisoikeus Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1027.61
+                }
+            ]
+        },
+        {
+            "amount": 2000,
+            "date": "2026-04-08",
+            "importId": "20260408390001246766",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | 6248496",
+            "party": "NORDNET BANK AB SUOMEN SIVULIIKE",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 2000
+                }
+            ]
+        },
+        {
+            "amount": 23.04,
+            "date": "2026-04-08",
+            "importId": "20260408390000366366",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260407085183",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 23.04
+                }
+            ]
+        },
+        {
+            "amount": 498.75,
+            "date": "2026-04-09",
+            "importId": "20260409390000119391",
+            "importSource": "s-pankki-csv",
+            "memo": "TUKI/ETUUS | ASUMISTUKI",
+            "party": "KANSANELÄKELAITOS",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 498.75
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-04-10",
+            "importId": "20260410390005442694",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260409405385",
+            "party": "Prime Video",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 9.19,
+            "date": "2026-04-10",
+            "importId": "20260410390003135801",
+            "importSource": "s-pankki-csv",
+            "memo": "BONUS",
+            "party": "TOK",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 9.19
+                }
+            ]
+        },
+        {
+            "amount": 2.05,
+            "date": "2026-04-10",
+            "importId": "20260410390002316969",
+            "importSource": "s-pankki-csv",
+            "memo": "MAKSUTAPAETU",
+            "party": "TOK",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 2.05
+                }
+            ]
+        },
+        {
+            "amount": 0.45,
+            "date": "2026-04-10",
+            "importId": "20260410390000442080",
+            "importSource": "s-pankki-csv",
+            "memo": "TANKKAUSBONUS",
+            "party": "TOK",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 0.45
+                }
+            ]
+        },
+        {
+            "amount": 50.52,
+            "date": "2026-04-13",
+            "importId": "20260413390003535112",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260412061826",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 50.52
+                }
+            ]
+        },
+        {
+            "amount": 17.99,
+            "date": "2026-04-13",
+            "importId": "20260413390003206077",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260412222241",
+            "party": "Netflix.com",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.99
+                }
+            ]
+        },
+        {
+            "amount": 13.98,
+            "date": "2026-04-13",
+            "importId": "20260413390003010232",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260411501022",
+            "party": "IKEA RAISIO IF CUSTOMER R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 13.98
+                }
+            ]
+        },
+        {
+            "amount": 27.19,
+            "date": "2026-04-13",
+            "importId": "20260413390002895962",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260411810132",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 27.19
+                }
+            ]
+        },
+        {
+            "amount": 19.34,
+            "date": "2026-04-13",
+            "importId": "20260413390002145185",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260411056805",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.34
+                }
+            ]
+        },
+        {
+            "amount": 12,
+            "date": "2026-04-13",
+            "importId": "20260413390001128668",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260410800283",
+            "party": "TURUN KUNINGAS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 12
+                }
+            ]
+        },
+        {
+            "amount": 39,
+            "date": "2026-04-14",
+            "importId": "20260414390001379951",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260413099147",
+            "party": "VFI*RENGAS TURKU OY",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 39
+                }
+            ]
+        },
+        {
+            "amount": 64.23,
+            "date": "2026-04-14",
+            "importId": "20260414390001303270",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260413810323",
+            "party": "NESTE EXPRESS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 64.23
+                }
+            ]
+        },
+        {
+            "amount": 3.89,
+            "date": "2026-04-15",
+            "importId": "20260415390001431383",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260414001951",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.89
+                }
+            ]
+        },
+        {
+            "amount": 28.96,
+            "date": "2026-04-15",
+            "importId": "20260415390000385440",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260414089670",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 28.96
+                }
+            ]
+        },
+        {
+            "amount": 3.29,
+            "date": "2026-04-16",
+            "importId": "20260416390000688910",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260415001721",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.29
+                }
+            ]
+        },
+        {
+            "amount": 48,
+            "date": "2026-04-17",
+            "importId": "20260417390001450283",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260416099250",
+            "party": "VFI*SOITIN-LAINE OY",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 48
+                }
+            ]
+        },
+        {
+            "amount": 15.04,
+            "date": "2026-04-17",
+            "importId": "20260417390001425081",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260416099236",
+            "party": "APTEEKKI TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 15.04
+                }
+            ]
+        },
+        {
+            "amount": 22.49,
+            "date": "2026-04-17",
+            "importId": "20260417390000356782",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260416044938",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.49
+                }
+            ]
+        },
+        {
+            "amount": 1488.4,
+            "date": "2026-04-17",
+            "importId": "20260417390000154540",
+            "importSource": "s-pankki-csv",
+            "memo": "TUKI/ETUUS | PERUSPÄIVÄRAHA",
+            "party": "KANSANELÄKELAITOS",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 1488.4
+                }
+            ]
+        },
+        {
+            "amount": 37.02,
+            "date": "2026-04-20",
+            "importId": "20260420390003547084",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260419075409",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 37.02
+                }
+            ]
+        },
+        {
+            "amount": 26.12,
+            "date": "2026-04-20",
+            "importId": "20260420390002680457",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260418100017",
+            "party": "TRANSCRIBETOTEXT.AI",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 26.12
+                }
+            ]
+        },
+        {
+            "amount": 2.98,
+            "date": "2026-04-20",
+            "importId": "20260420390000923992",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260417000002",
+            "party": "K-market Kanslerintie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2.98
+                }
+            ]
+        },
+        {
+            "amount": 1.25,
+            "date": "2026-04-20",
+            "importId": "20260420390000867122",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260417001525",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1.25
+                }
+            ]
+        },
+        {
+            "amount": 38.49,
+            "date": "2026-04-20",
+            "importId": "20260420390000388802",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260417081684",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 38.49
+                }
+            ]
+        },
+        {
+            "amount": 22.89,
+            "date": "2026-04-21",
+            "importId": "20260421390000837283",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260420100038",
+            "party": "SP FLEA LELUKAUPPA",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.89
+                }
+            ]
+        },
+        {
+            "amount": 34.98,
+            "date": "2026-04-22",
+            "importId": "20260422390001337658",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260421099423",
+            "party": "VERKKOKAUPPA.COM MYYMALAT",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 34.98
+                }
+            ]
+        },
+        {
+            "amount": 22.76,
+            "date": "2026-04-22",
+            "importId": "20260422390001019746",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260421000006",
+            "party": "Puuilo Turku",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.76
+                }
+            ]
+        },
+        {
+            "amount": 34.2,
+            "date": "2026-04-22",
+            "importId": "20260422390000424466",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260421077112",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 34.2
+                }
+            ]
+        },
+        {
+            "amount": 41.07,
+            "date": "2026-04-23",
+            "importId": "20260423390001188457",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260422811227",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 41.07
+                }
+            ]
+        },
+        {
+            "amount": 73.9,
+            "date": "2026-04-23",
+            "importId": "20260423390000873472",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260421611123",
+            "party": "THOMANN DE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 73.9
+                }
+            ]
+        },
+        {
+            "amount": 16.09,
+            "date": "2026-04-23",
+            "importId": "20260423390000235245",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260422038665",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 16.09
+                }
+            ]
+        },
+        {
+            "amount": 19.9,
+            "date": "2026-04-23",
+            "importId": "20260423390000231210",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00663025308239573590",
+            "party": "DNA Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.9
+                }
+            ]
+        },
+        {
+            "amount": 50.76,
+            "date": "2026-04-24",
+            "importId": "20260424390000392706",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000000803620579943",
+            "party": "Elisa Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 50.76
+                }
+            ]
+        },
+        {
+            "amount": 45.98,
+            "date": "2026-04-27",
+            "importId": "20260427390004226402",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260426811700",
+            "party": "TOKMANNI SOMERO",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 45.98
+                }
+            ]
+        },
+        {
+            "amount": 166.59,
+            "date": "2026-04-27",
+            "importId": "20260427390003946343",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260424616404",
+            "party": "PAYPAL *SIEPER GMBH",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 166.59
+                }
+            ]
+        },
+        {
+            "amount": 15,
+            "date": "2026-04-27",
+            "importId": "20260427390001063396",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260424800288",
+            "party": "TURUN KUNINGAS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 15
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-04-27",
+            "importId": "20260427390000974433",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260424000001",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 31.31,
+            "date": "2026-04-27",
+            "importId": "20260427390000217889",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260424053690",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 31.31
+                }
+            ]
+        },
+        {
+            "amount": 11.3,
+            "date": "2026-04-28",
+            "importId": "20260428390001404637",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260428100082",
+            "party": "SUNO INC.",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 11.3
+                }
+            ]
+        },
+        {
+            "amount": 33.69,
+            "date": "2026-04-28",
+            "importId": "20260428390000981219",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260427000009",
+            "party": "Someron apteekki",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 33.69
+                }
+            ]
+        },
+        {
+            "amount": 6.95,
+            "date": "2026-04-28",
+            "importId": "20260428390000349386",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260427082040",
+            "party": "S-Market Somero",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.95
+                }
+            ]
+        },
+        {
+            "amount": 5.06,
+            "date": "2026-04-29",
+            "importId": "20260429390001104073",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260429001531",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 5.06
+                }
+            ]
+        },
+        {
+            "amount": 46.87,
+            "date": "2026-04-30",
+            "importId": "20260430390001645798",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260429811927",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 46.87
+                }
+            ]
+        },
+        {
+            "amount": 14.99,
+            "date": "2026-04-30",
+            "importId": "20260430390001479255",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260429163731",
+            "party": "WL*GOOGLE  YouTubePremiu",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.99
+                }
+            ]
+        },
+        {
+            "amount": 12.99,
+            "date": "2026-04-30",
+            "importId": "20260430390001295347",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260429003464",
+            "party": "Spotify P41E972D2F",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 12.99
+                }
+            ]
+        },
+        {
+            "amount": 119.88,
+            "date": "2026-04-30",
+            "importId": "20260430390001265323",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260429000522",
+            "party": "Dropbox*4Z7TDVLMJ5ST",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 119.88
+                }
+            ]
+        },
+        {
+            "amount": 71.95,
+            "date": "2026-04-30",
+            "importId": "20260430390001073887",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260429000133",
+            "party": "PLAYSTATION",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 71.95
+                }
+            ]
+        },
+        {
+            "amount": 23.78,
+            "date": "2026-04-30",
+            "importId": "20260430390000465461",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260429028914",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 23.78
+                }
+            ]
+        },
+        {
+            "amount": 8,
+            "date": "2026-05-04",
+            "importId": "20260504390006968250",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260504100023",
+            "party": "X CORP. PAID FEATURES",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 8
+                }
+            ]
+        },
+        {
+            "amount": 1027.61,
+            "date": "2026-05-04",
+            "importId": "20260504390005394295",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000080080701620363",
+            "party": "Varsinais-Suomen Asumisoikeus Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1027.61
+                }
+            ]
+        },
+        {
+            "amount": 166.25,
+            "date": "2026-05-04",
+            "importId": "20260504390005001573",
+            "importSource": "s-pankki-csv",
+            "memo": "TUKI/ETUUS | ASUMISTUKI",
+            "party": "KANSANELÄKELAITOS",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 166.25
+                }
+            ]
+        },
+        {
+            "amount": 56.47,
+            "date": "2026-05-04",
+            "importId": "20260504390004398105",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260502812224",
+            "party": "ALKO TURKU TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 56.47
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-05-04",
+            "importId": "20260504390003819391",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260502100016",
+            "party": "SANOMA MEDIA FINLAND",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 26.85,
+            "date": "2026-05-04",
+            "importId": "20260504390003619656",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260502076911",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 26.85
+                }
+            ]
+        },
+        {
+            "amount": 35,
+            "date": "2026-05-04",
+            "importId": "20260504390003320284",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Gas-share to Tampere at the end of April.",
+            "party": "SHANYING MO",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 35
+                }
+            ]
+        },
+        {
+            "amount": 2,
+            "date": "2026-05-04",
+            "importId": "20260504390002707170",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260501000002",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2
+                }
+            ]
+        },
+        {
+            "amount": 19.6,
+            "date": "2026-05-04",
+            "importId": "20260504390002126446",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260501089987",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.6
+                }
+            ]
+        },
+        {
+            "amount": 22.07,
+            "date": "2026-05-04",
+            "importId": "20260504390001854032",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260430100005",
+            "party": "OPENAI *CHATGPT SUBSCR",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.07
+                }
+            ]
+        },
+        {
+            "amount": 180,
+            "date": "2026-05-06",
+            "importId": "20260506390001488196",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | VARHA, luonapitokorvaukset helmi-huhtikuu 2026.",
+            "party": "VARSINAIS-SUOMEN HYVINVOINTIALUE",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 180
+                }
+            ]
+        },
+        {
+            "amount": 180,
+            "date": "2026-05-06",
+            "importId": "20260506390001487756",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | VARHA, luonapitokorvaukset helmi-huhtikuu 2026.",
+            "party": "VARSINAIS-SUOMEN HYVINVOINTIALUE",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 180
+                }
+            ]
+        },
+        {
+            "amount": 166.18,
+            "date": "2026-05-06",
+            "importId": "20260506390001487741",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | VARHA, kilometrikorvaukset helmi-huhtikuu 2026.",
+            "party": "VARSINAIS-SUOMEN HYVINVOINTIALUE",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 166.18
+                }
+            ]
+        },
+        {
+            "amount": 36.22,
+            "date": "2026-05-06",
+            "importId": "20260506390001269558",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260505099983",
+            "party": "APTEEKKI TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 36.22
+                }
+            ]
+        },
+        {
+            "amount": 9.99,
+            "date": "2026-05-06",
+            "importId": "20260506390000813094",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260505409815",
+            "party": "Prime Video Channels",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.99
+                }
+            ]
+        },
+        {
+            "amount": 19.34,
+            "date": "2026-05-06",
+            "importId": "20260506390000243852",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260505065198",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.34
+                }
+            ]
+        },
+        {
+            "amount": 11.13,
+            "date": "2026-05-08",
+            "importId": "20260508390003761317",
+            "importSource": "s-pankki-csv",
+            "memo": "BONUS",
+            "party": "TOK",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 11.13
+                }
+            ]
+        },
+        {
+            "amount": 2.22,
+            "date": "2026-05-08",
+            "importId": "20260508390002930302",
+            "importSource": "s-pankki-csv",
+            "memo": "MAKSUTAPAETU",
+            "party": "TOK",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 2.22
+                }
+            ]
+        },
+        {
+            "amount": 21.98,
+            "date": "2026-05-11",
+            "importId": "20260511390004896210",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260510100173",
+            "party": "VERKKOKAUPPA.COM MYYMALAT",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.98
+                }
+            ]
+        },
+        {
+            "amount": 169.4,
+            "date": "2026-05-11",
+            "importId": "20260511390004838028",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260510813030",
+            "party": "NESTE EXPRESS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 169.4
+                }
+            ]
+        },
+        {
+            "amount": 28.88,
+            "date": "2026-05-11",
+            "importId": "20260511390004728983",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260510000010",
+            "party": "MOTONET OY TURK",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 28.88
+                }
+            ]
+        },
+        {
+            "amount": 28.57,
+            "date": "2026-05-11",
+            "importId": "20260511390003804222",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260510068293",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 28.57
+                }
+            ]
+        },
+        {
+            "amount": 28.05,
+            "date": "2026-05-11",
+            "importId": "20260511390003295457",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260509100150",
+            "party": "VFI*TOEBOYS CRAFT OY",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 28.05
+                }
+            ]
+        },
+        {
+            "amount": 2.9,
+            "date": "2026-05-11",
+            "importId": "20260511390003294761",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260509100148",
+            "party": "VFI*LELULIIKE CASAGRANDE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2.9
+                }
+            ]
+        },
+        {
+            "amount": 17.98,
+            "date": "2026-05-11",
+            "importId": "20260511390003051282",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260509813023",
+            "party": "CLAS OHLSON 214",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.98
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-05-11",
+            "importId": "20260511390002937249",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260509403981",
+            "party": "Prime Video",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 29.01,
+            "date": "2026-05-11",
+            "importId": "20260511390002219201",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260509073486",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 29.01
+                }
+            ]
+        },
+        {
+            "amount": 18.4,
+            "date": "2026-05-11",
+            "importId": "20260511390001787235",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260508100102",
+            "party": "VFI*MUOVITUKKU SIIVONEN O",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 18.4
+                }
+            ]
+        },
+        {
+            "amount": 18,
+            "date": "2026-05-11",
+            "importId": "20260511390001055013",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260508800292",
+            "party": "TURUN KUNINGAS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 18
+                }
+            ]
+        },
+        {
+            "amount": 57.62,
+            "date": "2026-05-11",
+            "importId": "20260511390000386692",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260508072390",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 57.62
+                }
+            ]
+        },
+        {
+            "amount": 12.03,
+            "date": "2026-05-11",
+            "importId": "20260511390000386517",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260508071820",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 12.03
+                }
+            ]
+        },
+        {
+            "amount": 17.99,
+            "date": "2026-05-12",
+            "importId": "20260512390001061493",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260511405878",
+            "party": "NETFLIX.COM",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.99
+                }
+            ]
+        },
+        {
+            "amount": 10.3,
+            "date": "2026-05-12",
+            "importId": "20260512390000350009",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260511086943",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 10.3
+                }
+            ]
+        },
+        {
+            "amount": 14.68,
+            "date": "2026-05-13",
+            "importId": "20260513390000263534",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260512087700",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.68
+                }
+            ]
+        },
+        {
+            "amount": 27.8,
+            "date": "2026-05-15",
+            "importId": "20260515390000628951",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260513000000",
+            "party": "BILTEMA RAISIO",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 27.8
+                }
+            ]
+        },
+        {
+            "amount": 3.2,
+            "date": "2026-05-15",
+            "importId": "20260515390000624742",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260513001488",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.2
+                }
+            ]
+        },
+        {
+            "amount": 55.29,
+            "date": "2026-05-15",
+            "importId": "20260515390000244880",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260513088146",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 55.29
+                }
+            ]
+        },
+        {
+            "amount": 26.45,
+            "date": "2026-05-18",
+            "importId": "20260518390004838457",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260518100007",
+            "party": "TRANSCRIBETOTEXT.AI",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 26.45
+                }
+            ]
+        },
+        {
+            "amount": 27.55,
+            "date": "2026-05-18",
+            "importId": "20260518390002284324",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260516043043",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 27.55
+                }
+            ]
+        },
+        {
+            "amount": 18.32,
+            "date": "2026-05-18",
+            "importId": "20260518390000640139",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260515079096",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 18.32
+                }
+            ]
+        },
+        {
+            "amount": 22.98,
+            "date": "2026-05-19",
+            "importId": "20260519390000866361",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260516813823",
+            "party": "TOKMANNI LANSIKESKUS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.98
+                }
+            ]
+        },
+        {
+            "amount": 76.5,
+            "date": "2026-05-20",
+            "importId": "20260520390000474093",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000000004433059860",
+            "party": "Oy Turku Energia-Åbo Energi Ab",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 76.5
+                }
+            ]
+        },
+        {
+            "amount": 60.44,
+            "date": "2026-05-20",
+            "importId": "20260520390000237266",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260519072549",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 60.44
+                }
+            ]
+        },
+        {
+            "amount": 9.87,
+            "date": "2026-05-21",
+            "importId": "20260521390001022968",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260520001817",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.87
+                }
+            ]
+        },
+        {
+            "amount": 21.52,
+            "date": "2026-05-21",
+            "importId": "20260521390000356723",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260520029418",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.52
+                }
+            ]
+        },
+        {
+            "amount": 17.76,
+            "date": "2026-05-22",
+            "importId": "20260522390001189027",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260521000008",
+            "party": "Puuilo Turku",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.76
+                }
+            ]
+        },
+        {
+            "amount": 14.42,
+            "date": "2026-05-22",
+            "importId": "20260522390000489854",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260521074447",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.42
+                }
+            ]
+        },
+        {
+            "amount": 68.11,
+            "date": "2026-05-25",
+            "importId": "20260525390004479244",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260524501451",
+            "party": "IKEA RAISIO HFB MAIN",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 68.11
+                }
+            ]
+        },
+        {
+            "amount": 6.99,
+            "date": "2026-05-25",
+            "importId": "20260525390004202869",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260524000002",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.99
+                }
+            ]
+        },
+        {
+            "amount": 19.9,
+            "date": "2026-05-25",
+            "importId": "20260525390003607584",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00663025308244493296",
+            "party": "DNA Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.9
+                }
+            ]
+        },
+        {
+            "amount": 53.39,
+            "date": "2026-05-25",
+            "importId": "20260525390003552252",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000000803620579943",
+            "party": "Elisa Oyj",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 53.39
+                }
+            ]
+        },
+        {
+            "amount": 35.29,
+            "date": "2026-05-25",
+            "importId": "20260525390003451853",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260524085924",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 35.29
+                }
+            ]
+        },
+        {
+            "amount": 56.4,
+            "date": "2026-05-25",
+            "importId": "20260525390002684344",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260523000013",
+            "party": "BAUHAUS TURKU",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 56.4
+                }
+            ]
+        },
+        {
+            "amount": 2.39,
+            "date": "2026-05-25",
+            "importId": "20260525390000943647",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260522001445",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2.39
+                }
+            ]
+        },
+        {
+            "amount": 6.55,
+            "date": "2026-05-25",
+            "importId": "20260525390000330036",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260522075403",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.55
+                }
+            ]
+        },
+        {
+            "amount": 16.36,
+            "date": "2026-05-26",
+            "importId": "20260526390001515158",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260525814601",
+            "party": "TOKMANNI LANSIKESKUS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 16.36
+                }
+            ]
+        },
+        {
+            "amount": 4.13,
+            "date": "2026-05-26",
+            "importId": "20260526390001444574",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260526001250",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 4.13
+                }
+            ]
+        },
+        {
+            "amount": 1500,
+            "date": "2026-05-26",
+            "importId": "20260526390000049401",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | Siirto omalle tilille",
+            "party": "GRÖNROOS MARKO ANTERO",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 1500
+                }
+            ]
+        },
+        {
+            "amount": 297.08,
+            "date": "2026-05-27",
+            "importId": "20260527390001550603",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260526100004",
+            "party": "OPENART* TKWDXOD7",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 297.08
+                }
+            ]
+        },
+        {
+            "amount": 11.97,
+            "date": "2026-05-27",
+            "importId": "20260527390000304382",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260526058725",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 11.97
+                }
+            ]
+        },
+        {
+            "amount": 11.3,
+            "date": "2026-05-28",
+            "importId": "20260528390000684963",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260528100077",
+            "party": "SUNO INC.",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 11.3
+                }
+            ]
+        },
+        {
+            "amount": 8.01,
+            "date": "2026-05-28",
+            "importId": "20260528390000165876",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260527070056",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 8.01
+                }
+            ]
+        },
+        {
+            "amount": 15.14,
+            "date": "2026-05-29",
+            "importId": "20260529390000694626",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260528070919",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 15.14
+                }
+            ]
+        },
+        {
+            "amount": 15.8,
+            "date": "2026-05-29",
+            "importId": "20260529390000093312",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260527100815",
+            "party": "APTEEKKI TAMPEREENTIE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 15.8
+                }
+            ]
+        },
+        {
+            "amount": 22.13,
+            "date": "2026-06-01",
+            "importId": "20260601390005767191",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260531100034",
+            "party": "OPENAI *CHATGPT SUBSCR",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 22.13
+                }
+            ]
+        },
+        {
+            "amount": 27.3,
+            "date": "2026-06-01",
+            "importId": "20260601390005448104",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260531800195",
+            "party": "TURUN KUNINGAS",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 27.3
+                }
+            ]
+        },
+        {
+            "amount": 7.99,
+            "date": "2026-06-01",
+            "importId": "20260601390005245865",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260531167233",
+            "party": "WL*GOOGLE  YouTube",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 7.99
+                }
+            ]
+        },
+        {
+            "amount": 64.43,
+            "date": "2026-06-01",
+            "importId": "20260601390004314244",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00001301896886594697",
+            "party": "If Vahinkovakuutus Oyj, Suomen sivu",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 64.43
+                }
+            ]
+        },
+        {
+            "amount": 9.59,
+            "date": "2026-06-01",
+            "importId": "20260601390004146101",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260531065732",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 9.59
+                }
+            ]
+        },
+        {
+            "amount": 166.25,
+            "date": "2026-06-01",
+            "importId": "20260601390003712225",
+            "importSource": "s-pankki-csv",
+            "memo": "TUKI/ETUUS | ASUMISTUKI",
+            "party": "KANSANELÄKELAITOS",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 166.25
+                }
+            ]
+        },
+        {
+            "amount": 3.5,
+            "date": "2026-06-01",
+            "importId": "20260601390003283277",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260530100968",
+            "party": "VFI*TOEBOYS CRAFT OY",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 3.5
+                }
+            ]
+        },
+        {
+            "amount": 6.9,
+            "date": "2026-06-01",
+            "importId": "20260601390003282835",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260530100969",
+            "party": "VFI*LELULIIKE CASAGRANDE",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 6.9
+                }
+            ]
+        },
+        {
+            "amount": 19.05,
+            "date": "2026-06-01",
+            "importId": "20260601390003210765",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260530501511",
+            "party": "IKEA RAISIO IF CUSTOMER R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.05
+                }
+            ]
+        },
+        {
+            "amount": 19.94,
+            "date": "2026-06-01",
+            "importId": "20260601390003210688",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260530501511",
+            "party": "IKEA RAISIO HFB ECO",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 19.94
+                }
+            ]
+        },
+        {
+            "amount": 7.99,
+            "date": "2026-06-01",
+            "importId": "20260601390003040450",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260530815122",
+            "party": "CLAS OHLSON 214",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 7.99
+                }
+            ]
+        },
+        {
+            "amount": 17.9,
+            "date": "2026-06-01",
+            "importId": "20260601390002850182",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260530000005",
+            "party": "Suomalainen Kirjakauppa R",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 17.9
+                }
+            ]
+        },
+        {
+            "amount": 26.12,
+            "date": "2026-06-01",
+            "importId": "20260601390002194578",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260530034071",
+            "party": "Prisma Tampereentie",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 26.12
+                }
+            ]
+        },
+        {
+            "amount": 5.44,
+            "date": "2026-06-01",
+            "importId": "20260601390001359511",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260530001170",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 5.44
+                }
+            ]
+        },
+        {
+            "amount": 14.99,
+            "date": "2026-06-01",
+            "importId": "20260601390001101454",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260529167073",
+            "party": "WL*GOOGLE  YouTubePremiu",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 14.99
+                }
+            ]
+        },
+        {
+            "amount": 12.99,
+            "date": "2026-06-01",
+            "importId": "20260601390000996400",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260529002526",
+            "party": "Spotify P42F574F65",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 12.99
+                }
+            ]
+        },
+        {
+            "amount": 1.95,
+            "date": "2026-06-01",
+            "importId": "20260601390000384402",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260529034572",
+            "party": "S-Market Halinen",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1.95
+                }
+            ]
+        },
+        {
+            "amount": 21.5,
+            "date": "2026-06-02",
+            "importId": "20260602390001779801",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260601101046",
+            "party": "VFI*MINIGOLF PARK AY",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 21.5
+                }
+            ]
+        },
+        {
+            "amount": 2,
+            "date": "2026-06-02",
+            "importId": "20260602390000886547",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260601000003",
+            "party": "PTL*Iltalehti",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2
+                }
+            ]
+        },
+        {
+            "amount": 5.34,
+            "date": "2026-06-02",
+            "importId": "20260602390000490750",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260601072748",
+            "party": "Prisma Itäharju",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 5.34
+                }
+            ]
+        },
+        {
+            "amount": 1027.61,
+            "date": "2026-06-02",
+            "importId": "20260602390000302809",
+            "importSource": "s-pankki-csv",
+            "memo": "E-LASKU | Reference: 00000080080701620363",
+            "party": "Varsinais-Suomen Asumisoikeus Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 1027.61
+                }
+            ]
+        },
+        {
+            "amount": 2.95,
+            "date": "2026-06-02",
+            "importId": "20260602390000168857",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260601001904",
+            "party": "S-Market Halinen",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2.95
+                }
+            ]
+        },
+        {
+            "amount": 2.03,
+            "date": "2026-06-03",
+            "importId": "20260603390000987213",
+            "importSource": "s-pankki-csv",
+            "memo": "KORTTIOSTO | 431871******5720 260602001704",
+            "party": "EasyPark Oy",
+            "sourceAccount": "S-Pankki",
+            "targets": [
+                {
+                    "account": "Luokittelemattomat",
+                    "amount": 2.03
+                }
+            ]
+        },
+        {
+            "amount": 1500,
+            "date": "2026-06-03",
+            "importId": "20260603390000656563",
+            "importSource": "s-pankki-csv",
+            "memo": "TILISIIRTO | 6248496",
+            "party": "NORDNET BANK AB SUOMEN SIVULIIKE",
+            "sourceAccount": "Luokittelemattomat",
+            "targets": [
+                {
+                    "account": "S-Pankki",
+                    "amount": 1500
+                }
+            ]
+        }
+    ],
+    "version": 1
+}
